@@ -68,11 +68,21 @@ public class RadioBrowser {
     }
 
 
+    /**
+     * Creates a new API client.
+     * @param timeout the timeout for connect and read requests in milliseconds. Must be greater than zero.
+     * @param userAgent the user agent String for your user agent. Must be something to point to you.
+     */
     public RadioBrowser(final int timeout,
                         final String userAgent) {
         this(API_URL, timeout, userAgent);
     }
 
+    /**
+     * Transfer the paging parameters the the passed multi valued map.
+     * @param paging the source of the paging params.
+     * @param requestParams the target of the paging params.
+     * */
     private static void applyPaging(Paging paging, MultivaluedMap<String, String> requestParams) {
         Objects.requireNonNull(paging, "Paging must be non-null");
         log.info("paging={}", paging);
