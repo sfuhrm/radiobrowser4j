@@ -1,0 +1,28 @@
+{
+  "id" : "165753cf-1e94-4a64-b44f-01a62fe6267e",
+  "name" : "json_stations_broken",
+  "request" : {
+    "url" : "/json/stations/broken",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=5",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"id\":\"94738\",\"name\":\"Radioattività Sport\",\"url\":\"http://178.250.66.145:9000/stream\",\"homepage\":\"http://www.radioattivita.com/\",\"favicon\":\"http://www.radioattivita.com//favicon.ico\",\"tags\":\"trieste,italian pop,sport\",\"country\":\"Italy\",\"state\":\"Friuli-Venezia Giulia\",\"language\":\"Italian\",\"votes\":\"0\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"96\",\"hls\":\"0\",\"lastcheckok\":\"0\",\"lastchecktime\":\"2017-11-26 15:10:11\",\"lastcheckoktime\":\"2017-11-24 07:40:41\",\"clicktimestamp\":\"2017-11-26 01:45:49\",\"clickcount\":\"1\",\"clicktrend\":\"-1\",\"lastchangetime\":\"2017-04-23 19:03:34\",\"ip\":\"\"},{\"id\":\"95082\",\"name\":\"Dixie Radio\",\"url\":\"http://stream.dixieradio.se/stream/3/\",\"homepage\":\"http://www.dixieradio.se/\",\"favicon\":\"https://scontent.ftun3-1.fna.fbcdn.net/v/t1.0-9/13267736_1023592111022765_8681898603414246532_n.png?oh=d8394744bacab87139f6151fc48106e5&oe=5A79C930\",\"tags\":\"rock,country\",\"country\":\"Sweden\",\"state\":\"\",\"language\":\"Swedish\",\"votes\":\"5\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"256\",\"hls\":\"0\",\"lastcheckok\":\"0\",\"lastchecktime\":\"2017-11-26 11:50:54\",\"lastcheckoktime\":\"2017-10-31 12:30:21\",\"clicktimestamp\":\"2017-11-02 01:13:56\",\"clickcount\":\"0\",\"clicktrend\":\"0\",\"lastchangetime\":\"2017-10-15 02:03:48\",\"ip\":\"197.1.210.192\"},{\"id\":\"45511\",\"name\":\"Paris One Reverse\",\"url\":\"http://www.paris-one.com/pls/radio_v6.pls\",\"homepage\":\"http://www.paris-one.com/\",\"favicon\":\"http://www.paris-one.com/favicon.ico\",\"tags\":\"\",\"country\":\"France\",\"state\":\"\",\"language\":\"French\",\"votes\":\"8\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"0\",\"lastchecktime\":\"2017-11-26 11:22:32\",\"lastcheckoktime\":\"2017-11-13 09:40:37\",\"clicktimestamp\":\"2017-11-07 23:26:44\",\"clickcount\":\"0\",\"clicktrend\":\"0\",\"lastchangetime\":\"2017-11-07 00:23:23\",\"ip\":\"24.246.81.175\"},{\"id\":\"95689\",\"name\":\"Top FM 95.1 Santa Cruz\",\"url\":\"http://167.114.119.103:10995/topfm\",\"homepage\":\"http://top95fm.aw/\",\"favicon\":\"http://top95fm.aw/new-logo.png\",\"tags\":\"santa cruz,top 40,pop,adult contemporary\",\"country\":\"Aruba\",\"state\":\"\",\"language\":\"Papiamento\",\"votes\":\"0\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"0\",\"lastchecktime\":\"2017-11-26 15:41:13\",\"lastcheckoktime\":\"2017-10-15 22:40:03\",\"clicktimestamp\":\"\",\"clickcount\":\"0\",\"clicktrend\":\"0\",\"lastchangetime\":\"2017-05-05 21:04:36\",\"ip\":\"\"},{\"id\":\"97520\",\"name\":\"Euro Five Rádió\",\"url\":\"http://stream.meisterhosting.hu:4010/live.mp3\",\"homepage\":\"http://eurofiveradio.eu/\",\"favicon\":\"http://eurofiveradio.eu///gallery/efr-ts1476009015.jpg\",\"tags\":\"pop\",\"country\":\"Hungary\",\"state\":\"\",\"language\":\"Hungarian\",\"votes\":\"0\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"160\",\"hls\":\"0\",\"lastcheckok\":\"0\",\"lastchecktime\":\"2017-11-26 09:31:41\",\"lastcheckoktime\":\"2017-11-20 12:30:27\",\"clicktimestamp\":\"2017-11-16 08:44:05\",\"clickcount\":\"0\",\"clicktrend\":\"0\",\"lastchangetime\":\"2017-10-09 20:27:14\",\"ip\":\"92.249.185.232\"}]",
+    "headers" : {
+      "Date" : "Sun, 26 Nov 2017 14:45:21 GMT",
+      "Server" : "Apache/2.4.18 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Keep-Alive" : "timeout=5, max=90",
+      "Connection" : "Keep-Alive",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "165753cf-1e94-4a64-b44f-01a62fe6267e",
+  "persistent" : true
+}

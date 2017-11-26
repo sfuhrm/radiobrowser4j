@@ -1,0 +1,28 @@
+{
+  "id" : "70e06d82-4a63-4786-9e22-47fba1fbccd9",
+  "name" : "json_stations_improvable",
+  "request" : {
+    "url" : "/json/stations/improvable",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=5",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"id\":\"45622\",\"name\":\"Radio Nova\",\"url\":\"http://stream3.bauermedia.fi/nova.mp3\",\"homepage\":\"http://radionova.fi/\",\"favicon\":\"https://vignette.wikia.nocookie.net/logopedia/images/b/b9/Nova_Logo_2.png/revision/latest/scale-to-width-down/220?cb=20150505191959\",\"tags\":\"\",\"country\":\"Finland\",\"state\":\"\",\"language\":\"\",\"votes\":\"19\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"0\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-24 14:00:24\",\"lastcheckoktime\":\"2017-11-24 14:00:24\",\"clicktimestamp\":\"2017-11-26 08:55:17\",\"clickcount\":\"1\",\"clicktrend\":\"0\",\"lastchangetime\":\"2017-11-20 00:16:52\",\"ip\":\"197.3.193.115\"},{\"id\":\"86079\",\"name\":\"MFM Radio Nouvelle Scène\",\"url\":\"http://mfm-wr4.ice.infomaniak.ch/mfm-wr4-64.mp3\",\"homepage\":\"http://mfmradio.fr/\",\"favicon\":\"http://mfmradio.fr/icon-normal.png\",\"tags\":\"\",\"country\":\"France\",\"state\":\"\",\"language\":\"French\",\"votes\":\"3\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-25 20:40:31\",\"lastcheckoktime\":\"2017-11-25 20:40:31\",\"clicktimestamp\":\"2017-11-10 20:27:00\",\"clickcount\":\"0\",\"clicktrend\":\"0\",\"lastchangetime\":\"2016-04-23 16:38:43\",\"ip\":\"\"},{\"id\":\"102317\",\"name\":\"FluxFM - BoomFM Classics\",\"url\":\"http://streams.fluxfm.de/boomfmclassics/mp3-320/audio/play.m3u\",\"homepage\":\"http://www.fluxfm.de\",\"favicon\":\"https://www.fluxfm.de/wp-content/uploads/2016/11/fluxfm_boomfm_classics_n1-250x250.jpg\",\"tags\":\"\",\"country\":\"Germany\",\"state\":\"Berlin\",\"language\":\"German\",\"votes\":\"0\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"320\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-24 21:10:02\",\"lastcheckoktime\":\"2017-11-24 21:10:02\",\"clicktimestamp\":\"2017-11-18 16:16:06\",\"clickcount\":\"0\",\"clicktrend\":\"0\",\"lastchangetime\":\"2017-10-17 17:20:49\",\"ip\":\"178.12.145.132\"},{\"id\":\"101455\",\"name\":\"Rádio CPAD FM 96.1\",\"url\":\"http://server3.webradios.com.br:9404/;\",\"homepage\":\"http://www.radiocpadfm.com.br/\",\"favicon\":\"http://www.radiocpadfm.com.br/favicon.ico\",\"tags\":\"\",\"country\":\"Brazil\",\"state\":\"Rio de Janeiro\",\"language\":\"Portuguese\",\"votes\":\"0\",\"negativevotes\":\"0\",\"codec\":\"AAC+\",\"bitrate\":\"32\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-24 22:30:15\",\"lastcheckoktime\":\"2017-11-24 22:30:15\",\"clicktimestamp\":\"2017-11-19 08:32:39\",\"clickcount\":\"0\",\"clicktrend\":\"0\",\"lastchangetime\":\"2017-09-23 22:24:57\",\"ip\":\"2804:d41:517:9c00:c08b:f0c8:9685:3bd4\"},{\"id\":\"88292\",\"name\":\"Number1 Slow\",\"url\":\"http://nr1digitalsc.radyotvonline.com/stream/224/\",\"homepage\":\"http://www.numberone.com.tr/\",\"favicon\":\"https://www.numberone.com.tr/wp-content/uploads/2015/12/N1_Slow-1-275x275.png\",\"tags\":\"\",\"country\":\"Turkey\",\"state\":\"\",\"language\":\"\",\"votes\":\"5\",\"negativevotes\":\"0\",\"codec\":\"AAC+\",\"bitrate\":\"64\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-25 00:00:36\",\"lastcheckoktime\":\"2017-11-25 00:00:36\",\"clicktimestamp\":\"2017-11-25 17:52:55\",\"clickcount\":\"2\",\"clicktrend\":\"2\",\"lastchangetime\":\"2017-08-11 21:15:14\",\"ip\":\"\"}]",
+    "headers" : {
+      "Date" : "Sun, 26 Nov 2017 14:45:20 GMT",
+      "Server" : "Apache/2.4.18 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Keep-Alive" : "timeout=5, max=98",
+      "Connection" : "Keep-Alive",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "70e06d82-4a63-4786-9e22-47fba1fbccd9",
+  "persistent" : true
+}

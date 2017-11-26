@@ -119,6 +119,20 @@ public class RadioBrowserTest {
     }
 
     @Test
+    public void listBrokenStations() {
+        List<Station> stations = browser.listBrokenStations(new Paging(0,5));
+        assertThat(stations, notNullValue());
+        assertThat(stations.size(), is(5));
+    }
+
+    @Test
+    public void listImprovableStations() {
+        List<Station> stations = browser.listImprovableStations(new Paging(0,5));
+        assertThat(stations, notNullValue());
+        assertThat(stations.size(), is(5));
+    }
+
+    @Test
     public void listStationsByWithName() {
         List<Station> stations = browser.listStationsBy(new Paging(0,5), SearchMode.byname, "synthradio");
         assertThat(stations, notNullValue());

@@ -129,16 +129,17 @@ public class RadioBrowser {
         return retrieveValueStationCountList("json/tags");
     }
 
-    /** Get a list of all stations. Will return a single batch.
+    /** Get a list of all stations on a certain API path.
      * @param paging the offset and limit of the page to retrieve.
+     * @param path the path to retrieve, i.e. "json/stations"
      * @return the partial list of the stations. Can be empty for exceeding the
      * possible stations.
      */
-    public List<Station> listStations(Paging paging) {
+    private List<Station> listStationsPath(Paging paging, String path) {
         MultivaluedMap<String, String> requestParams = new MultivaluedHashMap<>();
         applyPaging(paging, requestParams);
         Entity entity = Entity.form(requestParams);
-        Response response = webTarget.path("json/stations")
+        Response response = webTarget.path(path)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .header("User-Agent", userAgent)
@@ -146,6 +147,33 @@ public class RadioBrowser {
         log.debug("response status={}, length={}", response.getStatus(), response.getLength());
 
         return response.readEntity(new GenericType<List<Station>>() {});
+    }
+
+    /** Get a list of all stations. Will return a single batch.
+     * @param paging the offset and limit of the page to retrieve.
+     * @return the partial list of the stations. Can be empty for exceeding the
+     * possible stations.
+     */
+    public List<Station> listStations(Paging paging) {
+        return listStationsPath(paging,"json/stations");
+    }
+
+    /** Get a list of all broken stations. Will return a single batch.
+     * @param paging the offset and limit of the page to retrieve.
+     * @return the partial list of the broken stations. Can be empty for exceeding the
+     * possible stations.
+     */
+    public List<Station> listBrokenStations(Paging paging) {
+        return listStationsPath(paging,"json/stations/broken");
+    }
+
+    /** Get a list of all broken stations. Will return a single batch.
+     * @param paging the offset and limit of the page to retrieve.
+     * @return the partial list of the broken stations. Can be empty for exceeding the
+     * possible stations.
+     */
+    public List<Station> listImprovableStations(Paging paging) {
+        return listStationsPath(paging,"json/stations/improvable");
     }
 
     /** Get a list of stations matching a certain search criteria. Will return a single batch.
