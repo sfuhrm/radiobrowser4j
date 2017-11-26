@@ -24,7 +24,7 @@ import lombok.Getter;
  * @author Stephan Fuhrmann
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UrlResponse {
+class UrlResponse {
     /** Whether this operation went ok. */
     @Getter
     private boolean ok;
