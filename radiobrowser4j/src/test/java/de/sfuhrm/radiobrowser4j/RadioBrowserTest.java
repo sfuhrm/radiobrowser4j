@@ -48,7 +48,7 @@ public class RadioBrowserTest {
     public final static boolean RECORDING = false;
 
     @BeforeClass
-    public static void createBrowserForRecording() {
+    public static void createBrowser() {
         WireMockConfiguration wireMockConfiguration = new WireMockConfiguration();
         wireMockConfiguration.port(WIREMOCK_PORT);
         wireMockServer = new WireMockServer(wireMockConfiguration);
@@ -63,7 +63,7 @@ public class RadioBrowserTest {
     }
 
     @AfterClass
-    public static void shutdownBrowserForRecording() {
+    public static void shutdownBrowser() {
         if (RECORDING) {
             SnapshotRecordResult recordedMappings = wireMockClient.stopStubRecording();
         }
