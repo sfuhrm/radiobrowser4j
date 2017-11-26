@@ -48,7 +48,8 @@ public final class RadioBrowser {
 
     /** The base URL of the REST service.
      * */
-    protected static final String API_URL = "http://www.radio-browser.info/webservice/";
+    protected static final String API_URL =
+            "http://www.radio-browser.info/webservice/";
 
     /** The JAX-RS web target for service access. */
     private final WebTarget webTarget;
@@ -484,11 +485,15 @@ public final class RadioBrowser {
 
     /** Transfers all parameters for a new station to the given target params.
      * @param sourceStation the station to get fields from.
-     * @param targetParams the target multi valued map to write the request params to.
+     * @param targetParams the target multi valued map to write the
+     *                     request params to.
      * */
-    private static void transferToMultivaluedMap(Station sourceStation, MultivaluedMap<String, String> targetParams) {
-        targetParams.put("name", Collections.singletonList(sourceStation.getName()));
-        targetParams.put("url", Collections.singletonList(sourceStation.getUrl()));
+    private static void transferToMultivaluedMap(final Station sourceStation,
+                     final MultivaluedMap<String, String> targetParams) {
+        targetParams.put("name",
+                Collections.singletonList(sourceStation.getName()));
+        targetParams.put("url",
+                Collections.singletonList(sourceStation.getUrl()));
 
         if (sourceStation.getHomepage() != null) {
             targetParams.put("homepage",
