@@ -1,4 +1,4 @@
-## RadioBrowser4j ![Travis CI Status](https://travis-ci.org/sfuhrm/radiobrowser4j.svg?branch=master) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/radiobrowser4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/radiobrowser4j) 
+## RadioBrowser4j ![Travis CI Status](https://travis-ci.org/sfuhrm/radiobrowser4j.svg?branch=master) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/radiobrowser4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/radiobrowser4j) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/def6bf015f664ed3b9cf19d93232f4bc)](https://www.codacy.com/app/sfuhrm/radiobrowser4j?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sfuhrm/radiobrowser4j&amp;utm_campaign=Badge_Grade)
 
 A Java API for the [RadioBrowser](http://www.radio-browser.info)
 internet radio station online repository.
