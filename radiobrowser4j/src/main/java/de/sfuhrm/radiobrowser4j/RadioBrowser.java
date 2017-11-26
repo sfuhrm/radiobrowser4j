@@ -16,6 +16,8 @@
 package de.sfuhrm.radiobrowser4j;
 
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -330,9 +332,10 @@ public final class RadioBrowser {
 
     /** Resolves the streaming URL for the given station.
      * @param station the station to retrieve the stream URL for.
-     * @return the URL response that either describes the error or the result.
+     * @return the URL of the stream.
+     * @throws RadioBrowserException if the URL could not be retrieed
      */
-    public UrlResponse resolveStreamUrl(final Station station) {
+    public URL resolveStreamUrl(final Station station) {
         Objects.requireNonNull(station, "station must be non-null");
 
         Response response = null;
@@ -345,14 +348,80 @@ public final class RadioBrowser {
 
             checkResponseStatus(response);
             log.debug("URI is {}", webTarget.getUri());
-            return response.readEntity(UrlResponse.class);
+            try {
+                UrlResponse urlResponse = response.readEntity(
+                        UrlResponse.class);
+                if (!urlResponse.isOk()) {
+                    throw new RadioBrowserException(urlResponse.getMessage());
+                }
+                return new URL(urlResponse.getUrl());
+            } catch (MalformedURLException e) {
+                throw new RadioBrowserException(e);
+            }
         } finally {
             close(response);
         }
     }
 
+    /**
+     * Calls a state alteration method for one station.
+     * @param station the station to undelete/delete from the REST service.
+     * @param path the URL path of the state alteration endpoint.
+     * @see <a href="http://www.radio-browser.info/webservice#station_delete">
+     *     The API endpoint</a>
+     */
+    private void triggerStationState(final Station station,
+                                     final String path) {
+        Objects.requireNonNull(station, "station must be non-null");
+        MultivaluedMap<String, String> requestParams =
+                new MultivaluedHashMap<>();
+
+        Entity entity = Entity.form(requestParams);
+
+        Response response = null;
+
+        try {
+            response = webTarget.path(path)
+                    .path(station.getId())
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .accept(MediaType.APPLICATION_JSON_TYPE)
+                    .header("User-Agent", userAgent)
+                    .post(entity);
+            logResponseStatus(response);
+            UrlResponse urlResponse = response.readEntity(
+                    UrlResponse.class);
+            if (!urlResponse.isOk()) {
+                throw new RadioBrowserException(urlResponse.getMessage());
+            }
+        } finally {
+            close(response);
+        }
+    }
+
+    /** Deletes a station.
+     * The station is only marked as being deleted.
+     * @param station the station to delete from the REST service.
+     * @see <a href="http://www.radio-browser.info/webservice#station_delete">
+     *     The API endpoint</a>
+     */
+    public void deleteStation(final Station station) {
+        triggerStationState(station, "json/delete");
+    }
+
+    /** Undeletes a station.
+     * The station is only marked as being deleted.
+     * @param station the station to delete from the REST service.
+     * @see <a href="http://www.radio-browser.info/webservice#station_delete">
+     *     The API endpoint</a>
+     */
+    public void undeleteStation(final Station station) {
+        triggerStationState(station, "json/undelete");
+    }
+
     /** Posts a new station to the server.
      * Note: This call only transmits certain fields.
+     * The fields are:
+     * name, url, homepage, favicon, country, state, language and tags.
      * @param station the station to add to the REST service.
      * @see <a href="http://www.radio-browser.info/webservice#add_station">
      *     The API endpoint</a>
@@ -400,15 +469,34 @@ public final class RadioBrowser {
                     .header("User-Agent", userAgent)
                     .post(entity);
 
-            Map<String, Object> map = response.readEntity(
-                    new GenericType<Map<String, Object>>() { });
-
+            logResponseStatus(response);
+            UrlResponse urlResponse = response.readEntity(
+                    UrlResponse.class);
 
             if (log.isDebugEnabled()) {
-                log.debug("Result: {}", map);
+                log.debug("Result: {}", urlResponse);
             }
         } finally {
             close(response);
+        }
+    }
+
+
+    /** Log the response.
+     * @param response the response to log the status
+     *                 code of.
+     * */
+    private static void logResponseStatus(final Response response) {
+        if (response.getStatus() != HttpURLConnection.HTTP_OK) {
+            log.warn("Non HTTP OK/200 status: status={}, reason={}",
+                    response.getStatus(),
+                    response.getStatusInfo().getReasonPhrase()
+            );
+        } else {
+            log.debug("HTTP response status={}, reason={}, length={}",
+                    response.getStatus(),
+                    response.getStatusInfo().getReasonPhrase(),
+                    response.getLength());
         }
     }
 
@@ -420,17 +508,10 @@ public final class RadioBrowser {
      * 200.
      * */
     private static void checkResponseStatus(final Response response) {
+        logResponseStatus(response);
         if (response.getStatus() != HttpURLConnection.HTTP_OK) {
-            log.warn("Non HTTP OK/200 status: status={}, reason={}",
-                    response.getStatus(),
-                    response.getStatusInfo().getReasonPhrase()
-                    );
             throw new RadioBrowserException(
                     response.getStatusInfo().getReasonPhrase());
-        } else {
-            log.debug("HTTP response status={}, length={}",
-                    response.getStatus(),
-                    response.getLength());
         }
     }
 
