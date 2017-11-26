@@ -453,37 +453,10 @@ public final class RadioBrowser {
         Objects.requireNonNull(station, "station must be non-null");
         MultivaluedMap<String, String> requestParams =
                 new MultivaluedHashMap<>();
-        requestParams.put("name", Collections.singletonList(station.getName()));
-        requestParams.put("url", Collections.singletonList(station.getUrl()));
-
-        if (station.getHomepage() != null) {
-            requestParams.put("homepage",
-                    Collections.singletonList(station.getHomepage()));
-        }
-        if (station.getFavicon() != null) {
-            requestParams.put("favicon",
-                    Collections.singletonList(station.getFavicon()));
-        }
-        if (station.getCountry() != null) {
-            requestParams.put("country",
-                    Collections.singletonList(station.getCountry()));
-        }
-        if (station.getState() != null) {
-            requestParams.put("state",
-                    Collections.singletonList(station.getState()));
-        }
-        if (station.getLanguage() != null) {
-            requestParams.put("language",
-                    Collections.singletonList(station.getLanguage()));
-        }
-        if (station.getTags() != null) {
-            requestParams.put("tags",
-                    Collections.singletonList(station.getTags()));
-        }
+        transferToMultivaluedMap(station, requestParams);
         Entity entity = Entity.form(requestParams);
 
         Response response = null;
-
         try {
             response = webTarget.path("json/add")
                     .request(MediaType.APPLICATION_JSON_TYPE)
@@ -506,6 +479,40 @@ public final class RadioBrowser {
             return urlResponse.getId();
         } finally {
             close(response);
+        }
+    }
+
+    /** Transfers all parameters for a new station to the given target params.
+     * @param sourceStation the station to get fields from.
+     * @param targetParams the target multi valued map to write the request params to.
+     * */
+    private static void transferToMultivaluedMap(Station sourceStation, MultivaluedMap<String, String> targetParams) {
+        targetParams.put("name", Collections.singletonList(sourceStation.getName()));
+        targetParams.put("url", Collections.singletonList(sourceStation.getUrl()));
+
+        if (sourceStation.getHomepage() != null) {
+            targetParams.put("homepage",
+                    Collections.singletonList(sourceStation.getHomepage()));
+        }
+        if (sourceStation.getFavicon() != null) {
+            targetParams.put("favicon",
+                    Collections.singletonList(sourceStation.getFavicon()));
+        }
+        if (sourceStation.getCountry() != null) {
+            targetParams.put("country",
+                    Collections.singletonList(sourceStation.getCountry()));
+        }
+        if (sourceStation.getState() != null) {
+            targetParams.put("state",
+                    Collections.singletonList(sourceStation.getState()));
+        }
+        if (sourceStation.getLanguage() != null) {
+            targetParams.put("language",
+                    Collections.singletonList(sourceStation.getLanguage()));
+        }
+        if (sourceStation.getTags() != null) {
+            targetParams.put("tags",
+                    Collections.singletonList(sourceStation.getTags()));
         }
     }
 
