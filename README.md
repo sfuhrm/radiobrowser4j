@@ -25,6 +25,11 @@ by creating one instance and using it
     RadioBrowser browser = new RadioBrowser(5000, "Demo agent/1.0");
     browser.listStations(Paging.at(0,16));
 
+### How it is tested
+
+The API is tested using the WireMock REST testing
+framework. Mocked web requests/responses are
+located in the test resources.
 
 ## License
 
