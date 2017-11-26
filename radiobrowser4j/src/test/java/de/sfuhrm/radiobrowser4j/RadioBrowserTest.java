@@ -15,6 +15,8 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -178,11 +180,11 @@ public class RadioBrowserTest {
     }
 
     @Test
-    public void resolveStreamUrl() {
+    public void resolveStreamUrl() throws MalformedURLException {
         List<Station> stations = browser.listStationsBy(FIVE, SearchMode.byname, "synthradio");
-        UrlResponse response = browser.resolveStreamUrl(stations.get(0));
+        URL response = browser.resolveStreamUrl(stations.get(0));
         assertThat(response, notNullValue());
-        assertThat(response.getUrl(), is("http://86.62.102.131:8005/live192"));
+        assertThat(response, is(new URL("http://86.62.102.131:8005/live192")));
     }
 
     @Test
