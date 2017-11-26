@@ -182,7 +182,7 @@ public class RadioBrowserTest {
         List<Station> stations = browser.listStationsBy(FIVE, SearchMode.byname, "synthradio");
         UrlResponse response = browser.resolveStreamUrl(stations.get(0));
         assertThat(response, notNullValue());
-        assertThat(response.url, is("http://86.62.102.131:8005/live192"));
+        assertThat(response.getUrl(), is("http://86.62.102.131:8005/live192"));
     }
 
     @Test

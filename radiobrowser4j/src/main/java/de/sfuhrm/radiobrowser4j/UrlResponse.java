@@ -16,6 +16,7 @@
 package de.sfuhrm.radiobrowser4j;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
 
 
 /**
@@ -24,10 +25,24 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UrlResponse {
-    public String ok;
-    public String message;
-    public String id;
-    public String name;
-    public String url;
+    /** Whether this operation went ok. */
+    @Getter
+    private boolean ok;
+
+    /** The error message of this operation. */
+    @Getter
+    private String message;
+
+    /** The id of the referenced entity. */
+    @Getter
+    private String id;
+
+    /** The name of the referenced entity. */
+    @Getter
+    private String name;
+
+    /** The url of the referenced entity. */
+    @Getter
+    private String url;
 
 }

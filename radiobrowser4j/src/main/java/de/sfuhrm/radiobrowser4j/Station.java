@@ -15,10 +15,12 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -75,14 +77,20 @@ public class Station {
     @Getter @Setter
     private String lastcheckok;
 
-    @Getter @Setter
-    private String lastchecktime;
+    @Getter
+    @Setter
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    private Date lastchecktime;
 
-    @Getter @Setter
-    private String lastcheckoktime;
+    @Getter
+    @Setter
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    private Date lastcheckoktime;
 
-    @Getter @Setter
-    private String clicktimestamp;
+    @Getter
+    @Setter
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    private Date clicktimestamp;
 
     @Getter @Setter
     private String clickcount;
@@ -90,8 +98,10 @@ public class Station {
     @Getter @Setter
     private String clicktrend;
 
-    @Getter @Setter
-    private String lastchangetime;
+    @Getter
+    @Setter
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    private Date lastchangetime;
 
     @Override
     public String toString() {
