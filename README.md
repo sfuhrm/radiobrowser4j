@@ -21,8 +21,9 @@ For maven you need this dependency:
 After adding this dependency, you can start
 by creating one instance and using it
 
-    // retrieve the first 16 stations
+    // 5000ms timeout, user agent is Demo agent/1.0
     RadioBrowser browser = new RadioBrowser(5000, "Demo agent/1.0");
+    // retrieve the first 16 stations
     browser.listStations(Paging.at(0,16));
 
 ### How it is tested
