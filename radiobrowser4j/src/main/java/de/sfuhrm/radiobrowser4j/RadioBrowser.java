@@ -75,16 +75,15 @@ public class RadioBrowser {
         requestParams.put("offset", Collections.singletonList(Integer.toString(paging.getOffset())));
     }
 
-    /** List the known countries.
-     * @return a list of countries (keys) and country usages (values).
-     * @see <a href="http://www.radio-browser.info/webservice#list_countries">API</a>
+    /** Retrieve a generic list containing a value/stationcount mapping.
+     * @return map of value and stationcount pairs.
      * */
-    public Map<String, Integer> listCountries() {
+    private Map<String, Integer> retrieveValueStationCountList(String subpath) {
         MultivaluedMap<String, String> requestParams = new MultivaluedHashMap<>();
 
         Entity entity = Entity.form(requestParams);
 
-        Response response = webTarget.path("json/countries")
+        Response response = webTarget.path(subpath)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .header("User-Agent", userAgent)
@@ -96,6 +95,38 @@ public class RadioBrowser {
                 m -> m.get("value"),
                 m-> Integer.parseInt(m.get("stationcount"))));
         return result;
+    }
+
+    /** List the known countries.
+     * @return a list of countries (keys) and country usages (values).
+     * @see <a href="http://www.radio-browser.info/webservice#list_countries">API</a>
+     * */
+    public Map<String, Integer> listCountries() {
+        return retrieveValueStationCountList("json/countries");
+    }
+
+    /** List the known codecs.
+     * @return a list of codecs (keys) and codec usages (values).
+     * @see <a href="http://www.radio-browser.info/webservice#list_codecs">API</a>
+     * */
+    public Map<String, Integer> listCodecs() {
+        return retrieveValueStationCountList("json/codecs");
+    }
+
+    /** List the known languages.
+     * @return a list of languages (keys) and language usages (values).
+     * @see <a href="http://www.radio-browser.info/webservice#list_languages">API</a>
+     * */
+    public Map<String, Integer> listLanguages() {
+        return retrieveValueStationCountList("json/languages");
+    }
+
+    /** List the known tags.
+     * @return a list of tags (keys) and tag usages (values).
+     * @see <a href="http://www.radio-browser.info/webservice#list_tags">API</a>
+     * */
+    public Map<String, Integer> listTags() {
+        return retrieveValueStationCountList("json/tags");
     }
 
     /** Get a list of all stations. Will return a single batch.

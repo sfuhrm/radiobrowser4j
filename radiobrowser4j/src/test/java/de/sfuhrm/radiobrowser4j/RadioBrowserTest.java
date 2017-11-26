@@ -30,8 +30,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Some integration tests against the real service.
- * This kind of testing sucks.
+ * Some integration tests.
+ * Uses either the real service or mocked stubs that are delivered from WireMock.
+ * Please trigger {@linkplain #RECORDING} for recording.
  * @author Stephan Fuhrmann
  */
 public class RadioBrowserTest {
@@ -84,6 +85,30 @@ public class RadioBrowserTest {
         assertThat(countries, notNullValue());
         assertThat(countries.size(), is(178));
         assertThat(countries.get("Germany"), is(1658));
+    }
+
+    @Test
+    public void listCodecs() {
+        Map<String, Integer> codecs = browser.listCodecs();
+        assertThat(codecs, notNullValue());
+        assertThat(codecs.size(), is(5));
+        assertThat(codecs.containsKey("AAC"), is(true));
+    }
+
+    @Test
+    public void listLanguages() {
+        Map<String, Integer> languages = browser.listLanguages();
+        assertThat(languages, notNullValue());
+        assertThat(languages.size(), is(878));
+        assertThat(languages.containsKey("German"), is(true));
+    }
+
+    @Test
+    public void listTags() {
+        Map<String, Integer> tags = browser.listTags();
+        assertThat(tags, notNullValue());
+        assertThat(tags.size(), is(4845));
+        assertThat(tags.containsKey("80s"), is(true));
     }
 
     @Test
