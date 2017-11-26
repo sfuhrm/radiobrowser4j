@@ -13,8 +13,6 @@ if [ "x${NEWVERSION}" = "x" ]; then
 	exit 10
 fi
 
-ROOT=${PWD}
-
 echo "- pom.xml"
 mvn versions:set -DnewVersion=${NEWVERSION} || exit
 rm -f pom.xml.versionsBackup
