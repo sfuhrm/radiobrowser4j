@@ -24,7 +24,7 @@ by creating one instance and using it
     // 5000ms timeout, user agent is Demo agent/1.0
     RadioBrowser browser = new RadioBrowser(5000, "Demo agent/1.0");
     // retrieve the first 16 stations
-    browser.listStations(Paging.at(0,16));
+    List<Station> stations = browser.listStations(Paging.at(0,16));
 
 ### How it is tested
 
