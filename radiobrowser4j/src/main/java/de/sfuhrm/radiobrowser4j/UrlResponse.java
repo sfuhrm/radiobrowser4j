@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 /**
+ * API response from the radio browser API.
  * @author Stephan Fuhrmann
  */
 @JsonIgnoreProperties(ignoreUnknown = true)

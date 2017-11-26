@@ -45,7 +45,7 @@ public class RadioBrowserTest {
     private static WireMock wireMockClient;
     private static WireMockServer wireMockServer;
 
-    private final static Paging FIVE = new Paging(0, 5);
+    private final static Paging FIVE = Paging.at(0, 5);
 
     /** Trigger this to record instead of playback of recorded responses
      * in {@code src/test/resources/mappings}.

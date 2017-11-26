@@ -40,7 +40,10 @@ public final class Paging {
     @Getter
     private final int limit;
 
-    public Paging(int myOffset, int myLimit) {
+    /** Creates a new paging. This method is private.
+     * @see #at(int, int)
+     * */
+    private Paging(int myOffset, int myLimit) {
         if (myOffset < 0) {
             throw new IllegalArgumentException("Offset is "+myOffset+", but must be >= 0");
         }
@@ -49,6 +52,15 @@ public final class Paging {
         }
         this.offset = myOffset;
         this.limit = myLimit;
+    }
+
+    /** Creates a new paging at the given offset and limit.
+     * @param offset the positive offset of the page.
+     * @param limit the maximum number of entries.
+     * @return the paging instance created.
+     * */
+    public static Paging at(int offset, int limit) {
+        return new Paging(offset, limit);
     }
 
     /** Address the previous paging.
