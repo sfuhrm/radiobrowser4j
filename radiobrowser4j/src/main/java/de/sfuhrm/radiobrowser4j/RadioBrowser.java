@@ -88,18 +88,24 @@ public class RadioBrowser {
 
         Entity entity = Entity.form(requestParams);
 
-        Response response = webTarget.path(subpath)
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("User-Agent", userAgent)
-                .post(entity);
+        Response response = null;
+        try {
+            response = webTarget.path(subpath)
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .accept(MediaType.APPLICATION_JSON_TYPE)
+                    .header("User-Agent", userAgent)
+                    .post(entity);
 
-        List<Map<String, String>> map = response.readEntity(new GenericType<List<Map<String, String>>>() {});
+            List<Map<String, String>> map = response.readEntity(new GenericType<List<Map<String, String>>>() {
+            });
 
-        Map<String, Integer> result = map.stream().collect(Collectors.toMap(
-                m -> m.get("value"),
-                m-> Integer.parseInt(m.get("stationcount"))));
-        return result;
+            Map<String, Integer> result = map.stream().collect(Collectors.toMap(
+                    m -> m.get("value"),
+                    m -> Integer.parseInt(m.get("stationcount"))));
+            return result;
+        } finally {
+            close(response);
+        }
     }
 
     /** List the known countries.
@@ -145,14 +151,20 @@ public class RadioBrowser {
 
         paging.ifPresent(p -> applyPaging(p, requestParams));
         Entity entity = Entity.form(requestParams);
-        Response response = webTarget.path(path)
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("User-Agent", userAgent)
-                .post(entity);
-        log.debug("response status={}, length={}", response.getStatus(), response.getLength());
+        Response response = null;
+        try {
+            response = webTarget.path(path)
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .accept(MediaType.APPLICATION_JSON_TYPE)
+                    .header("User-Agent", userAgent)
+                    .post(entity);
+            log.debug("response status={}, length={}", response.getStatus(), response.getLength());
 
-        return response.readEntity(new GenericType<List<Station>>() {});
+            return response.readEntity(new GenericType<List<Station>>() {
+            });
+        } finally {
+            close(response);
+        }
     }
 
     /** Get a list of all stations. Will return a single batch.
@@ -242,15 +254,22 @@ public class RadioBrowser {
         MultivaluedMap<String, String> requestParams = new MultivaluedHashMap<>();
         applyPaging(paging, requestParams);
         Entity entity = Entity.form(requestParams);
-        Response response = webTarget
-                .path("json/stations").path(searchMode.name()).path(searchTerm)
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("User-Agent", userAgent)
-                .post(entity);
-        log.debug("response status={}, length={}", response.getStatus(), response.getLength());
+        Response response = null;
 
-        return response.readEntity(new GenericType<List<Station>>() {});
+        try {
+            response = webTarget
+                    .path("json/stations").path(searchMode.name()).path(searchTerm)
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .accept(MediaType.APPLICATION_JSON_TYPE)
+                    .header("User-Agent", userAgent)
+                    .post(entity);
+            log.debug("response status={}, length={}", response.getStatus(), response.getLength());
+
+            return response.readEntity(new GenericType<List<Station>>() {
+            });
+        } finally {
+            close(response);
+        }
     }
 
     /** Resolves the streaming URL for the given station.
@@ -259,19 +278,24 @@ public class RadioBrowser {
      */
     public UrlResponse resolveStreamUrl(Station station) {
         Objects.requireNonNull(station, "station must be non-null");
-        // http://www.radio-browser.info/webservice/v2/json/url/stationid
-        Response response = webTarget.path("v2/json/url").path(station.getId())
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("User-Agent", userAgent)
-                .get();
 
-        log.debug("URI is {}", webTarget.getUri());
-        if (response.getStatus() != 200) {
-            log.warn("Non 200 status: {} {}", response.getStatus(), response.getStatusInfo().getReasonPhrase());
-            throw new RadioBrowserException(response.getStatusInfo().getReasonPhrase());
+        Response response = null;
+        try {
+            response = webTarget.path("v2/json/url").path(station.getId())
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .accept(MediaType.APPLICATION_JSON_TYPE)
+                    .header("User-Agent", userAgent)
+                    .get();
+
+            log.debug("URI is {}", webTarget.getUri());
+            if (response.getStatus() != 200) {
+                log.warn("Non 200 status: {} {}", response.getStatus(), response.getStatusInfo().getReasonPhrase());
+                throw new RadioBrowserException(response.getStatusInfo().getReasonPhrase());
+            }
+            return response.readEntity(UrlResponse.class);
+        } finally {
+            close(response);
         }
-        return response.readEntity(UrlResponse.class);
     }
 
     /** Posts a new station to the server.
@@ -306,17 +330,33 @@ public class RadioBrowser {
         }
         Entity entity = Entity.form(requestParams);
 
-        Response response = webTarget.path("json/add")
-        .request(MediaType.APPLICATION_JSON_TYPE)
-        .accept(MediaType.APPLICATION_JSON_TYPE)
-        .header("User-Agent", userAgent)
-        .post(entity);
+        Response response = null;
 
-        Map<String, Object> map = response.readEntity(new GenericType<Map<String, Object>>() {});
+        try {
+            response = webTarget.path("json/add")
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .accept(MediaType.APPLICATION_JSON_TYPE)
+                    .header("User-Agent", userAgent)
+                    .post(entity);
+
+            Map<String, Object> map = response.readEntity(new GenericType<Map<String, Object>>() {
+            });
 
 
-        if (log.isDebugEnabled()) {
-            log.debug("Result: {}", map);
+            if (log.isDebugEnabled()) {
+                log.debug("Result: {}", map);
+            }
+        } finally {
+            close(response);
+        }
+    }
+
+    /** Close the response if non-null.
+     * @param response the response to close.
+     * */
+    private static void close(Response response) {
+        if (response != null) {
+            response.close();
         }
     }
 }
