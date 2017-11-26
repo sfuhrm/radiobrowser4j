@@ -53,7 +53,7 @@ public class RadioBrowserTest {
     private final static Paging FIVE = Paging.at(0, 5);
 
     /** Name of test station to generate. */
-    private static String TEST_NAME = "Integration test for radiobrowser4j - ignore";
+    private final static String TEST_NAME = "Integration test for radiobrowser4j - ignore";
 
     /** Trigger this to record instead of playback of recorded responses
      * in {@code src/test/resources/mappings}.
@@ -176,6 +176,7 @@ public class RadioBrowserTest {
 
         Station first = stations.get(0);
         Optional<Station> station = browser.getStationById(first.getId());
+        assertThat(station.isPresent(), is(true));
         assertThat(station.get(), is(first));
     }
 

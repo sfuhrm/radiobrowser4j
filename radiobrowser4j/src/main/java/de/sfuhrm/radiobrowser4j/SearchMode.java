@@ -45,5 +45,5 @@ public enum SearchMode {
     /** Search by tag. */
     bytag,
     /** Search by exact tag. */
-    bytagexact;
+    bytagexact
 }
