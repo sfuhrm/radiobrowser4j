@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -94,6 +95,12 @@ public final class RadioBrowser {
         this(API_URL, timeout, myUserAgent);
     }
 
+    private Invocation.Builder builder(WebTarget in) {
+        return in.request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .header("User-Agent", userAgent);
+    }
+
     /**
      * Transfer the paging parameters the the passed multi valued map.
      * @param paging the source of the paging params.
@@ -122,10 +129,7 @@ public final class RadioBrowser {
 
         Response response = null;
         try {
-            response = webTarget.path(subpath)
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .accept(MediaType.APPLICATION_JSON_TYPE)
-                    .header("User-Agent", userAgent)
+            response = builder(webTarget.path(subpath))
                     .post(entity);
 
             List<Map<String, String>> map = response.readEntity(
@@ -192,10 +196,7 @@ public final class RadioBrowser {
         Entity entity = Entity.form(requestParams);
         Response response = null;
         try {
-            response = webTarget.path(path)
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .accept(MediaType.APPLICATION_JSON_TYPE)
-                    .header("User-Agent", userAgent)
+            response = builder(webTarget.path(path))
                     .post(entity);
             checkResponseStatus(response);
 
@@ -333,13 +334,10 @@ public final class RadioBrowser {
         Response response = null;
 
         try {
-            response = webTarget
-                    .path("json/stations")
-                    .path(searchMode.name())
-                    .path(searchTerm)
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .accept(MediaType.APPLICATION_JSON_TYPE)
-                    .header("User-Agent", userAgent)
+            response = builder(webTarget
+                       .path("json/stations")
+                       .path(searchMode.name())
+                       .path(searchTerm))
                     .post(entity);
             checkResponseStatus(response);
             return response.readEntity(new GenericType<List<Station>>() {
@@ -359,10 +357,8 @@ public final class RadioBrowser {
 
         Response response = null;
         try {
-            response = webTarget.path("v2/json/url").path(station.getId())
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .accept(MediaType.APPLICATION_JSON_TYPE)
-                    .header("User-Agent", userAgent)
+            response = builder(webTarget.path("v2/json/url")
+                    .path(station.getId()))
                     .get();
 
             checkResponseStatus(response);
@@ -400,11 +396,9 @@ public final class RadioBrowser {
         Response response = null;
 
         try {
-            response = webTarget.path(path)
-                    .path(station.getId())
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .accept(MediaType.APPLICATION_JSON_TYPE)
-                    .header("User-Agent", userAgent)
+            response = builder(webTarget
+                        .path(path)
+                        .path(station.getId()))
                     .post(entity);
             logResponseStatus(response);
             UrlResponse urlResponse = response.readEntity(
@@ -458,10 +452,8 @@ public final class RadioBrowser {
 
         Response response = null;
         try {
-            response = webTarget.path("json/add")
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .accept(MediaType.APPLICATION_JSON_TYPE)
-                    .header("User-Agent", userAgent)
+            response = builder(webTarget
+                    .path("json/add"))
                     .post(entity);
 
             logResponseStatus(response);
