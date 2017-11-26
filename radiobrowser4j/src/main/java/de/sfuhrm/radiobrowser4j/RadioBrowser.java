@@ -48,7 +48,7 @@ public final class RadioBrowser {
 
     /** The base URL of the REST service.
      * */
-    static final String API_URL = "http://www.radio-browser.info/webservice/";
+    protected static final String API_URL = "http://www.radio-browser.info/webservice/";
 
     /** The JAX-RS web target for service access. */
     private final WebTarget webTarget;
