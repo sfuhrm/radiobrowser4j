@@ -16,6 +16,8 @@
 package de.sfuhrm.radiobrowser4j;
 
 import java.util.List;
+import java.util.Map;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
@@ -76,6 +78,13 @@ public class RadioBrowserTest {
         }
     }
 
+    @Test
+    public void listCountries() {
+        Map<String, Integer> countries = browser.listCountries();
+        assertThat(countries, notNullValue());
+        assertThat(countries.size(), is(178));
+        assertThat(countries.get("Germany"), is(1658));
+    }
 
     @Test
     public void listStations() {

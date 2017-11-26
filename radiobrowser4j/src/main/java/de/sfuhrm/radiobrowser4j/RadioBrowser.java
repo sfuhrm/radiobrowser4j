@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -74,6 +75,28 @@ public class RadioBrowser {
         requestParams.put("offset", Collections.singletonList(Integer.toString(paging.getOffset())));
     }
 
+    /** List the known countries.
+     * @return a list of countries (keys) and country usages (values).
+     * @see <a href="http://www.radio-browser.info/webservice#list_countries">API</a>
+     * */
+    public Map<String, Integer> listCountries() {
+        MultivaluedMap<String, String> requestParams = new MultivaluedHashMap<>();
+
+        Entity entity = Entity.form(requestParams);
+
+        Response response = webTarget.path("json/countries")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .header("User-Agent", userAgent)
+                .post(entity);
+
+        List<Map<String, String>> map = response.readEntity(new GenericType<List<Map<String, String>>>() {});
+
+        Map<String, Integer> result = map.stream().collect(Collectors.toMap(
+                m -> m.get("value"),
+                m-> Integer.parseInt(m.get("stationcount"))));
+        return result;
+    }
 
     /** Get a list of all stations. Will return a single batch.
      * @param paging the offset and limit of the page to retrieve.
