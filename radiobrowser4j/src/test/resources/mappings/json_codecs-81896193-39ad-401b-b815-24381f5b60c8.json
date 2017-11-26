@@ -1,0 +1,24 @@
+{
+  "id" : "81896193-39ad-401b-b815-24381f5b60c8",
+  "name" : "json_codecs",
+  "request" : {
+    "url" : "/json/codecs",
+    "method" : "POST"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"name\":\"AAC\",\"value\":\"AAC\",\"stationcount\":\"306\"},{\"name\":\"AAC+\",\"value\":\"AAC+\",\"stationcount\":\"2978\"},{\"name\":\"MP3\",\"value\":\"MP3\",\"stationcount\":\"13248\"},{\"name\":\"OGG\",\"value\":\"OGG\",\"stationcount\":\"190\"},{\"name\":\"UNKNOWN\",\"value\":\"UNKNOWN\",\"stationcount\":\"307\"}]",
+    "headers" : {
+      "Date" : "Sun, 26 Nov 2017 22:27:41 GMT",
+      "Server" : "Apache/2.4.18 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Keep-Alive" : "timeout=5, max=31",
+      "Connection" : "Keep-Alive",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "81896193-39ad-401b-b815-24381f5b60c8",
+  "persistent" : true
+}

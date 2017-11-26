@@ -1,0 +1,28 @@
+{
+  "id" : "e8f63acf-2ed8-4716-8e33-66b5f3f66092",
+  "name" : "json_stations_improvable",
+  "request" : {
+    "url" : "/json/stations/improvable",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=5",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"id\":\"83271\",\"name\":\"Rádio Max\",\"url\":\"http://mp3stream4.abradio.cz:8000/max128.mp3\",\"homepage\":\"http://www.radiomax.sk\",\"favicon\":\"http://www.radiomax.sk/favicon.ico\",\"tags\":\"\",\"country\":\"Slovakia\",\"state\":\"Slovakia\",\"language\":\"Slovakian\",\"votes\":\"1\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-24 16:30:10\",\"lastcheckoktime\":\"2017-11-24 16:30:10\",\"clicktimestamp\":\"2017-11-14 22:07:15\",\"clickcount\":\"0\",\"clicktrend\":\"0\",\"lastchangetime\":\"2016-04-11 21:59:30\",\"ip\":\"\"},{\"id\":\"97998\",\"name\":\"YLE Radio Suomi - Kotka\",\"url\":\"http://yleuni-f.akamaihd.net/i/yleliveradiohd_16@113893/master.m3u8\",\"homepage\":\"https://yle.fi/radio/radiosuomi/kotka/suora/\",\"favicon\":\"https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Ylen_logo.svg/280px-Ylen_logo.svg.png\",\"tags\":\"\",\"country\":\"Finland\",\"state\":\"\",\"language\":\"Finnish\",\"votes\":\"0\",\"negativevotes\":\"0\",\"codec\":\"UNKNOWN\",\"bitrate\":\"0\",\"hls\":\"1\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-26 21:30:38\",\"lastcheckoktime\":\"2017-11-26 21:30:38\",\"clicktimestamp\":\"2017-11-25 16:25:11\",\"clickcount\":\"0\",\"clicktrend\":\"-1\",\"lastchangetime\":\"2017-11-20 00:24:29\",\"ip\":\"197.3.193.115\"},{\"id\":\"86097\",\"name\":\"Trace FM Paris\",\"url\":\"http://stream.trace.tv/trace_paris-midfi.aac\",\"homepage\":\"http://fr.trace.tv/program/tracefmparis/\",\"favicon\":\"http://fr.trace.tv/wp-content/themes/trace.tv/assets/favicons/favicon-32x32.png\",\"tags\":\"\",\"country\":\"France\",\"state\":\"Île-de-France\",\"language\":\"French\",\"votes\":\"2\",\"negativevotes\":\"0\",\"codec\":\"AAC+\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-25 21:01:08\",\"lastcheckoktime\":\"2017-11-25 21:01:08\",\"clicktimestamp\":\"2017-11-26 09:04:16\",\"clickcount\":\"1\",\"clicktrend\":\"-12\",\"lastchangetime\":\"2017-07-20 14:17:24\",\"ip\":\"\"},{\"id\":\"45472\",\"name\":\"Laser 80\",\"url\":\"http://streaming.radionomy.com/bleudream-80\",\"homepage\":\"http://www.laser80.com/\",\"favicon\":\"http://www.laser80.com/favicon.ico\",\"tags\":\"\",\"country\":\"France\",\"state\":\"\",\"language\":\"French\",\"votes\":\"2\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-25 10:30:30\",\"lastcheckoktime\":\"2017-11-25 10:30:30\",\"clicktimestamp\":\"2017-11-26 22:32:17\",\"clickcount\":\"0\",\"clicktrend\":\"0\",\"lastchangetime\":\"2016-10-01 14:51:42\",\"ip\":\"\"},{\"id\":\"97171\",\"name\":\"Rádió Szentendre\",\"url\":\"http://92.61.114.195:13040/;\",\"homepage\":\"http://www.radioszentendre.hu/\",\"favicon\":\"https://i1.sndcdn.com/avatars-000059951181-hm3y84-t500x500.jpg\",\"tags\":\"\",\"country\":\"Hungary\",\"state\":\"Pest\",\"language\":\"Hungarian\",\"votes\":\"0\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"160\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-26 23:10:07\",\"lastcheckoktime\":\"2017-11-26 23:10:07\",\"clicktimestamp\":\"\",\"clickcount\":\"0\",\"clicktrend\":\"0\",\"lastchangetime\":\"2017-06-15 22:44:02\",\"ip\":\"\"}]",
+    "headers" : {
+      "Date" : "Sun, 26 Nov 2017 22:27:41 GMT",
+      "Server" : "Apache/2.4.18 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Keep-Alive" : "timeout=5, max=32",
+      "Connection" : "Keep-Alive",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "e8f63acf-2ed8-4716-8e33-66b5f3f66092",
+  "persistent" : true
+}

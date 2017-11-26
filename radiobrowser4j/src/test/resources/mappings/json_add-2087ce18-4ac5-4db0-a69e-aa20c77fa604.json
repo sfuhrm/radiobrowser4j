@@ -1,0 +1,28 @@
+{
+  "id" : "2087ce18-4ac5-4db0-a69e-aa20c77fa604",
+  "name" : "json_add",
+  "request" : {
+    "url" : "/json/add",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "favicon=https%3A%2F%2Fgithub.com%2Ffavicon.ico&name=Integration+test+for+radiobrowser4j+-+ignore&url&homepage=https%3A%2F%2Fgithub.com%2Fsfuhrm%2Fradiobrowser4j",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"ok\":\"false\",\"message\":\"url is mandatory\"}",
+    "headers" : {
+      "Date" : "Sun, 26 Nov 2017 22:27:44 GMT",
+      "Server" : "Apache/2.4.18 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Keep-Alive" : "timeout=5, max=94",
+      "Connection" : "Keep-Alive",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "2087ce18-4ac5-4db0-a69e-aa20c77fa604",
+  "persistent" : true
+}

@@ -23,7 +23,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Spliterators;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -217,6 +221,17 @@ public final class RadioBrowser {
                 "json/stations");
     }
 
+    /** Get a list of all stations. Will return all
+     * stations in a stream..
+     * @return the full stream of stations..
+     */
+    public Stream<Station> listStations() {
+        return StreamSupport.stream(
+                new PagingSpliterator<>(
+                        p -> listStations(p)),
+                false);
+    }
+
     /** Get a list of all broken stations. Will return a single batch.
      * @param paging the offset and limit of the page to retrieve.
      * @return the partial list of the broken stations. Can be empty
@@ -227,15 +242,37 @@ public final class RadioBrowser {
                 "json/stations/broken");
     }
 
-    /** Get a list of all broken stations. Will return a single batch.
+    /** Get a list of all broken stations as one continuous stream.
+     * @return the continuous stream of all broken stations.
+     */
+    public Stream<Station> listBrokenStations() {
+        return StreamSupport.stream(
+                new PagingSpliterator<>(
+                        p -> listStationsPath(Optional.of(p),
+                                "json/stations/broken")),
+                false);
+    }
+
+    /** Get a list of all improvable stations. Will return a single batch.
      * @param paging the offset and limit of the page to retrieve.
-     * @return the partial list of the broken stations.
+     * @return the partial list of the improvable stations.
      * Can be empty for exceeding the
      * possible stations.
      */
     public List<Station> listImprovableStations(final Paging paging) {
         return listStationsPath(Optional.of(paging),
                 "json/stations/improvable");
+    }
+
+    /** Get a list of all broken stations as one continuous stream.
+     * @return the continuous stream of all improvable stations.
+     */
+    public Stream<Station> listImprovableStations() {
+        return StreamSupport.stream(
+                new PagingSpliterator<>(
+                        p -> listStationsPath(Optional.of(p),
+                                "json/stations/improvable")),
+                false);
     }
 
     /** Get a list of the top click stations. Will return a single batch.
@@ -249,6 +286,17 @@ public final class RadioBrowser {
                 "json/stations/topclick");
     }
 
+    /** Get a stream of all top click stations.
+     * @return the complete stream of all top click stations.
+     */
+    public Stream<Station> listTopClickStations() {
+        return StreamSupport.stream(
+                new PagingSpliterator<>(
+                        p -> listStationsPath(Optional.of(p),
+                                "json/stations/topclick")),
+                false);
+    }
+
     /** Get a list of the top vote stations. Will return a single batch.
      * @param paging the offset and limit of the page to retrieve.
      * @return the partial list of the top vote stations.
@@ -258,6 +306,17 @@ public final class RadioBrowser {
     public List<Station> listTopVoteStations(final Paging paging) {
         return listStationsPath(Optional.of(paging),
                 "json/stations/topvote");
+    }
+
+    /** Get a stream of the top vote stations.
+     * @return the complete stream of the top vote stations.
+     */
+    public Stream<Station> listTopVoteStations() {
+        return StreamSupport.stream(
+                new PagingSpliterator<>(
+                        p -> listStationsPath(Optional.of(p),
+                                "json/stations/topvote")),
+                false);
     }
 
     /** Get a list of the last clicked stations. Will return a single batch.
@@ -271,7 +330,18 @@ public final class RadioBrowser {
                 "json/stations/lastclick");
     }
 
-    /** Get a list of the last clicked stations. Will return a single batch.
+    /** Get a stream of last clicked stations.
+     * @return the complete stream of the last clicked stations.
+     */
+    public Stream<Station> listLastClickStations() {
+        return StreamSupport.stream(
+                new PagingSpliterator<>(
+                        p -> listStationsPath(Optional.of(p),
+                                "json/stations/lastclick")),
+                false);
+    }
+
+    /** Get a list of the last changed stations. Will return a single batch.
      * @param paging the offset and limit of the page to retrieve.
      * @return the partial list of the last clicked stations.
      * Can be empty for exceeding the
@@ -280,6 +350,17 @@ public final class RadioBrowser {
     public List<Station> listLastChangedStations(final Paging paging) {
         return listStationsPath(Optional.of(paging),
                 "json/stations/lastchange");
+    }
+
+    /** Get a stream of last changed stations.
+     * @return the complete stream of the last changed stations.
+     */
+    public Stream<Station> listLastChangedStations() {
+        return StreamSupport.stream(
+                new PagingSpliterator<>(
+                        p -> listStationsPath(Optional.of(p),
+                                "json/stations/lastchange")),
+                false);
     }
 
     /** Get a list of the deleted stations. Will return a single batch.
@@ -345,6 +426,44 @@ public final class RadioBrowser {
         } finally {
             close(response);
         }
+    }
+
+    /** Get a stream of stations matching a certain search criteria.
+     * @param searchMode the field to match.
+     * @param searchTerm the term to search for.
+     * @return the full stream of matching stations.
+     */
+    public Stream<Station> listStationsBy(final SearchMode searchMode,
+                                        final String searchTerm) {
+        Objects.requireNonNull(searchMode,
+                "searchMode must be non-null");
+        Objects.requireNonNull(searchTerm,
+                "searchTerm must be non-null");
+
+        Function<Paging, List<Station>> fetcher = p -> {
+            MultivaluedMap<String, String> requestParams =
+                    new MultivaluedHashMap<>();
+            applyPaging(p, requestParams);
+            Entity entity = Entity.form(requestParams);
+            Response response = null;
+
+            try {
+                response = builder(webTarget
+                        .path("json/stations")
+                        .path(searchMode.name())
+                        .path(searchTerm))
+                        .post(entity);
+                checkResponseStatus(response);
+                return response.readEntity(new GenericType<List<Station>>() {
+                });
+            } finally {
+                close(response);
+            }
+        };
+
+        return StreamSupport.stream(
+                new PagingSpliterator<>(
+                        fetcher), false);
     }
 
     /** Resolves the streaming URL for the given station.

@@ -18,9 +18,11 @@ package de.sfuhrm.radiobrowser4j;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -112,7 +114,7 @@ public class RadioBrowserTest {
     public void listLanguages() {
         Map<String, Integer> languages = browser.listLanguages();
         assertThat(languages, notNullValue());
-        assertThat(languages.size(), is(878));
+        assertThat(languages.size(), is(not(0)));
         assertThat(languages.containsKey("German"), is(true));
     }
 
@@ -120,7 +122,7 @@ public class RadioBrowserTest {
     public void listTags() {
         Map<String, Integer> tags = browser.listTags();
         assertThat(tags, notNullValue());
-        assertThat(tags.size(), is(4845));
+        assertThat(tags.size(), is(not(0)));
         assertThat(tags.containsKey("80s"), is(true));
     }
 
@@ -132,10 +134,41 @@ public class RadioBrowserTest {
     }
 
     @Test
+    public void listStationsWithStream() {
+        List<Station> stations = browser
+                .listStations()
+                .limit(256)
+                .collect(Collectors.toList());
+        assertThat(stations, notNullValue());
+        assertThat(stations, is(not(Collections.emptyList())));
+        assertThat(new HashSet<>(stations).size(), is(stations.size()));
+    }
+
+    @Test
+    public void listStationsWithFullStream() {
+        List<Station> stations = browser
+                .listStations()
+                .collect(Collectors.toList());
+        assertThat(stations, notNullValue());
+        assertThat(stations, is(not(Collections.emptyList())));
+        assertThat(new HashSet<>(stations).size(), is(stations.size()));
+    }
+
+    @Test
     public void listBrokenStations() {
         List<Station> stations = browser.listBrokenStations(FIVE);
         assertThat(stations, notNullValue());
         assertThat(stations.size(), is(5));
+    }
+
+    @Test
+    public void listBrokenStationsWithStream() {
+        List<Station> stations = browser
+                .listBrokenStations()
+                .limit(256)
+                .collect(Collectors.toList());
+        assertThat(stations, notNullValue());
+        assertThat(stations, is(not(Collections.emptyList())));
     }
 
     @Test
@@ -146,10 +179,32 @@ public class RadioBrowserTest {
     }
 
     @Test
+    public void listTopClickStationsWithStream() {
+        List<Station> stations = browser
+                .listTopClickStations()
+                .limit(256)
+                .collect(Collectors.toList());
+        assertThat(stations, notNullValue());
+        assertThat(stations, is(not(Collections.emptyList())));
+        assertThat(new HashSet<>(stations).size(), is(stations.size()));
+    }
+
+    @Test
     public void listTopVoteStations() {
         List<Station> stations = browser.listTopVoteStations(FIVE);
         assertThat(stations, notNullValue());
         assertThat(stations.size(), is(5));
+    }
+
+    @Test
+    public void listTopVoteStationsWithStream() {
+        List<Station> stations = browser
+                .listTopVoteStations()
+                .limit(256)
+                .collect(Collectors.toList());
+        assertThat(stations, notNullValue());
+        assertThat(stations, is(not(Collections.emptyList())));
+        assertThat(new HashSet<>(stations).size(), is(stations.size()));
     }
 
     @Test
@@ -160,10 +215,32 @@ public class RadioBrowserTest {
     }
 
     @Test
+    public void listLastClickStationsWithStream() {
+        List<Station> stations = browser
+                .listLastClickStations()
+                .limit(256)
+                .collect(Collectors.toList());
+        assertThat(stations, notNullValue());
+        assertThat(stations, is(not(Collections.emptyList())));
+        assertThat(new HashSet<>(stations).size(), is(stations.size()));
+    }
+
+    @Test
     public void listLastChangedStations() {
         List<Station> stations = browser.listLastChangedStations(FIVE);
         assertThat(stations, notNullValue());
         assertThat(stations.size(), is(5));
+    }
+
+    @Test
+    public void listLastChangedStationsWithStream() {
+        List<Station> stations = browser
+                .listLastChangedStations()
+                .limit(256)
+                .collect(Collectors.toList());
+        assertThat(stations, notNullValue());
+        assertThat(stations, is(not(Collections.emptyList())));
+        assertThat(new HashSet<>(stations).size(), is(stations.size()));
     }
 
     @Test
@@ -191,6 +268,16 @@ public class RadioBrowserTest {
     }
 
     @Test
+    public void listImprovableStationsWithStream() {
+        List<Station> stations = browser
+                .listImprovableStations()
+                .limit(256)
+                .collect(Collectors.toList());
+        assertThat(stations, notNullValue());
+        assertThat(stations, is(not(Collections.emptyList())));
+    }
+
+    @Test
     public void listStationsByWithName() {
         List<Station> stations = browser.listStationsBy(FIVE, SearchMode.byname, "synthradio");
         assertThat(stations, notNullValue());
@@ -212,6 +299,17 @@ public class RadioBrowserTest {
         assertThat(stations, notNullValue());
         assertThat(stations.size(), is(5));
         assertThat(stations.get(0).getName().toLowerCase(), containsString("ding"));
+    }
+
+    @Test
+    public void listStationsByWithStream() {
+        List<Station> stations = browser
+                .listStationsBy(SearchMode.byname, "pop")
+                .limit(256)
+                .collect(Collectors.toList());
+        assertThat(stations, notNullValue());
+        assertThat(stations, is(not(Collections.emptyList())));
+        assertThat(new HashSet<>(stations).size(), is(stations.size()));
     }
 
     @Test(expected = RadioBrowserException.class)
