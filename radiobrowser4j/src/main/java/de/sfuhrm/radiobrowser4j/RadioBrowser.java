@@ -442,7 +442,7 @@ public final class RadioBrowser {
      * The fields are:
      * name, url, homepage, favicon, country, state, language and tags.
      * @param station the station to add to the REST service.
-     * @return the {@linkplain Station#getId() id} of the new station.
+     * @return the {@linkplain Station#id id} of the new station.
      * @throws RadioBrowserException if there was a problem
      * creating the station.
      * @see <a href="http://www.radio-browser.info/webservice#add_station">
