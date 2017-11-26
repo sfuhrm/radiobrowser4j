@@ -21,7 +21,10 @@ package de.sfuhrm.radiobrowser4j;
  */
 public class RadioBrowserException extends RuntimeException {
 
-    public RadioBrowserException(String message) {
+    /** Constructs an exception from an error message.
+     * @param message the error message for this exception.
+     * */
+    public RadioBrowserException(final String message) {
         super(message);
     }
 

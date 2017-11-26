@@ -15,9 +15,10 @@
 */
 
 /**
- * An API for the <a href="http://www.radio-browser.info/">RadioBrowser</a> service.
- * The API facade is the {@linkplain de.sfuhrm.radiobrowser4j.RadioBrowser} class which
- * needs to be instantiated.
+ * An API for the <a href="http://www.radio-browser.info/">
+ *     RadioBrowser</a> service.
+ * The API facade is the {@linkplain de.sfuhrm.radiobrowser4j.RadioBrowser}
+ * class which needs to be instantiated.
  * @author Stephan Fuhrmann
  */
 package de.sfuhrm.radiobrowser4j;

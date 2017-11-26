@@ -17,130 +17,117 @@ package de.sfuhrm.radiobrowser4j;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * Representation of a Radio Station.
  * @author Stephan Fuhrmann
  */
+@EqualsAndHashCode(of = {"id", "name"})
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Station {
+public final class Station {
+    /** The station id. The ID is usually numeric. */
     @Getter @Setter
     private String id;
 
+    /** The name of the station. */
     @Getter @Setter
     private String name;
 
-    @Getter @Setter
-    private String ip;
-
+    /** The URL of the stream. */
     @Getter @Setter
     private String url;
 
+    /** The URL of the stations homepage. */
     @Getter @Setter
     private String homepage;
 
+    /** The URL of the stations favicon. */
     @Getter @Setter
     private String favicon;
 
+    /** The comma separated tags for this station. */
     @Getter @Setter
     private String tags;
 
+    /** The country this station is located at. */
     @Getter @Setter
     private String country;
 
+    /** The state this station is located at. */
     @Getter @Setter
     private String state;
 
+    /** The language of this station. */
     @Getter @Setter
     private String language;
 
+    /** The votes for this station. */
     @Getter @Setter
     private String votes;
 
+    /** The negative votes for this station. */
     @Getter @Setter
     private String negativevotes;
 
+    /** The codec used for the stream. */
     @Getter @Setter
     private String codec;
 
+    /** The bitrate used for the stream. */
     @Getter @Setter
     private String bitrate;
 
+    /** Dunno. */
     @Getter @Setter
     private String hls;
 
+    /** Was the last stream check ok? */
     @Getter @Setter
-    private String lastcheckok;
+    private boolean lastcheckok;
 
+    /** When was the last stream check? */
     @Getter
     @Setter
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,
+            pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastchecktime;
 
+    /** When was the last stream check ok? */
     @Getter
     @Setter
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,
+            pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastcheckoktime;
 
+    /** When was the last stream click? */
     @Getter
     @Setter
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,
+            pattern = "yyyy-MM-dd hh:mm:ss")
     private Date clicktimestamp;
 
+    /** Number of clicks. */
     @Getter @Setter
     private String clickcount;
 
+    /** Click trend. */
     @Getter @Setter
     private String clicktrend;
 
+    /** Timestamp of the last change of the stations data. */
     @Getter
     @Setter
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,
+            pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastchangetime;
 
     @Override
     public String toString() {
         return "Station{" + "name=" + name + ", url=" + url + '}';
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 31 * hash + Objects.hashCode(this.id);
-        hash = 31 * hash + Objects.hashCode(this.name);
-        hash = 31 * hash + Objects.hashCode(this.url);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Station other = (Station) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.url, other.url)) {
-            return false;
-        }
-        return true;
-    }
-
-
-
 }

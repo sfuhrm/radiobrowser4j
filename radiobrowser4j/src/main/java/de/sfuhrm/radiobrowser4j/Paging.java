@@ -30,7 +30,7 @@ import lombok.ToString;
 public final class Paging {
     /** A default start page with offset 0 and limit 64.
      * */
-    public final static Paging DEFAULT_START = new Paging(0, 64);
+    public static final Paging DEFAULT_START = new Paging(0, 64);
 
     /** The start element to start processing. */
     @Getter
@@ -41,14 +41,19 @@ public final class Paging {
     private final int limit;
 
     /** Creates a new paging. This method is private.
+     * @param myOffset the offset to use.
+     * @param myLimit the limit to use.
+     * @throws IllegalArgumentException if limit or offset are wrong.
      * @see #at(int, int)
      * */
-    private Paging(int myOffset, int myLimit) {
+    private Paging(final int myOffset, final int myLimit) {
         if (myOffset < 0) {
-            throw new IllegalArgumentException("Offset is "+myOffset+", but must be >= 0");
+            throw new IllegalArgumentException(
+                    "Offset is " + myOffset + ", but must be >= 0");
         }
         if (myLimit <= 0) {
-            throw new IllegalArgumentException("Limit is "+myLimit+", but must be > 0");
+            throw new IllegalArgumentException(
+                    "Limit is " + myLimit + ", but must be > 0");
         }
         this.offset = myOffset;
         this.limit = myLimit;
@@ -59,7 +64,7 @@ public final class Paging {
      * @param limit the maximum number of entries.
      * @return the paging instance created.
      * */
-    public static Paging at(int offset, int limit) {
+    public static Paging at(final int offset, final int limit) {
         return new Paging(offset, limit);
     }
 
