@@ -21,7 +21,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.regex.Matcher;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -173,6 +172,7 @@ public class RadioBrowserTest {
 
         Station first = stations.get(0);
         Optional<Station> station = browser.getStationById(first.getId());
+        assertThat(station.isPresent(), is(true));
         assertThat(station.get(), is(first));
     }
 
@@ -230,6 +230,6 @@ public class RadioBrowserTest {
         stationOpt.ifPresent(s -> browser.deleteStation(s));
     }
 
-    private static String TEST_NAME = "Integration test for radiobrowser4j - ignore";
+    private static final String TEST_NAME = "Integration test for radiobrowser4j - ignore";
 
 }

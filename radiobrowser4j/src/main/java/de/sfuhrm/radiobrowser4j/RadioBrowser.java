@@ -131,11 +131,10 @@ public final class RadioBrowser {
                     new GenericType<List<Map<String, String>>>() {
             });
             checkResponseStatus(response);
-            Map<String, Integer> result = map.stream()
+            return map.stream()
                     .collect(Collectors.toMap(
                     m -> m.get("value"),
                     m -> Integer.parseInt(m.get("stationcount"))));
-            return result;
         } finally {
             close(response);
         }
