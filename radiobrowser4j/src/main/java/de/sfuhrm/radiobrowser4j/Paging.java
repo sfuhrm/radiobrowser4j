@@ -20,6 +20,10 @@ import lombok.Getter;
 import lombok.ToString;
 
 /** Immutable paging configuration.
+ * The paging is used to address a sub list that can be retrieved in
+ * one logical page. This enables the client to itereate thru a
+ * long list without needing to store the whole result in memory.
+ * @author Stephan fuhrmann
  * */
 @ToString
 @EqualsAndHashCode

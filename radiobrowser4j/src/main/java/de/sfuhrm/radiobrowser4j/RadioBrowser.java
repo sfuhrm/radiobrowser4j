@@ -35,6 +35,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
+/** API fascade for the RadioBrowser.
+ * You usually create a new {@linkplain #RadioBrowser(int, String) instance}
+ * and then use the methods to invoke API calls.
+ * */
 @Slf4j
 public class RadioBrowser {
 
