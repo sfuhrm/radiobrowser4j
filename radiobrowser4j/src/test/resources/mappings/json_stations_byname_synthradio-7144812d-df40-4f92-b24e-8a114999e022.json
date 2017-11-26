@@ -1,5 +1,5 @@
 {
-  "id" : "c0474a59-ba23-4f18-b131-870969d261b1",
+  "id" : "7144812d-df40-4f92-b24e-8a114999e022",
   "name" : "json_stations_byname_synthradio",
   "request" : {
     "url" : "/json/stations/byname/synthradio",
@@ -13,19 +13,18 @@
     "status" : 200,
     "body" : "[{\"id\":\"97564\",\"name\":\"Synthradio\",\"url\":\"http://synth-radio.ru/synthradio192.m3u\",\"homepage\":\"http://synth-radio.ru/\",\"favicon\":\"http://en.synth-radio.ru/img/russians/8.jpg\",\"tags\":\"synthesizer,synthwave,new wave,synth\",\"country\":\"Russia\",\"state\":\"\",\"language\":\"English\",\"votes\":\"22\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"192\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-24 13:40:11\",\"lastcheckoktime\":\"2017-11-24 13:40:11\",\"clicktimestamp\":\"2017-11-26 13:32:59\",\"clickcount\":\"1\",\"clicktrend\":\"-1\",\"lastchangetime\":\"2017-10-07 03:26:50\",\"ip\":\"197.2.142.185\"}]",
     "headers" : {
-      "Date" : "Sun, 26 Nov 2017 15:04:38 GMT",
+      "Date" : "Sun, 26 Nov 2017 17:22:57 GMT",
       "Server" : "Apache/2.4.18 (Ubuntu)",
       "Access-Control-Allow-Origin" : "*",
       "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type",
       "Access-Control-Allow-Methods" : "GET,POST",
-      "Keep-Alive" : "timeout=5, max=97",
+      "Keep-Alive" : "timeout=5, max=82",
       "Connection" : "Keep-Alive",
       "Content-Type" : "application/json"
     }
   },
-  "uuid" : "c0474a59-ba23-4f18-b131-870969d261b1",
+  "uuid" : "7144812d-df40-4f92-b24e-8a114999e022",
   "persistent" : true,
   "scenarioName" : "scenario-byname-synthradio",
-  "requiredScenarioState" : "Started",
-  "newScenarioState" : "scenario-byname-synthradio-2"
+  "requiredScenarioState" : "scenario-byname-synthradio-2"
 }

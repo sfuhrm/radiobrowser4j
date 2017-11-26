@@ -291,6 +291,25 @@ public final class RadioBrowser {
                 "json/stations/deleted");
     }
 
+    /** Get a station referenced by the ID.
+     * @param id the id of the station to retrieve.
+     * @return an optional containing either the station or nothing.
+     * Nothing is returned if the API didn't find the station by the
+     * given ID:
+     */
+    public Optional<Station> getStationById(final String id) {
+        Objects.requireNonNull(id, "id must be non-null");
+        List<Station> stationList = listStationsBy(
+                Paging.at(0, 1),
+                SearchMode.byid,
+                        id);
+        if (stationList.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(stationList.get(0));
+        }
+    }
+
     /** Get a list of stations matching a certain search criteria.
      * Will return a single batch.
      * @param paging the offset and limit of the page to retrieve.
@@ -423,10 +442,13 @@ public final class RadioBrowser {
      * The fields are:
      * name, url, homepage, favicon, country, state, language and tags.
      * @param station the station to add to the REST service.
+     * @return the {@linkplain Station#getId() id} of the new station.
+     * @throws RadioBrowserException if there was a problem
+     * creating the station.
      * @see <a href="http://www.radio-browser.info/webservice#add_station">
      *     The API endpoint</a>
      */
-    public void postNewStation(final Station station) {
+    public String postNewStation(final Station station) {
         // http://www.radio-browser.info/webservice/json/add
         Objects.requireNonNull(station, "station must be non-null");
         MultivaluedMap<String, String> requestParams =
@@ -476,6 +498,12 @@ public final class RadioBrowser {
             if (log.isDebugEnabled()) {
                 log.debug("Result: {}", urlResponse);
             }
+
+            if (!urlResponse.isOk()) {
+                throw new RadioBrowserException(urlResponse.getMessage());
+            }
+
+            return urlResponse.getId();
         } finally {
             close(response);
         }

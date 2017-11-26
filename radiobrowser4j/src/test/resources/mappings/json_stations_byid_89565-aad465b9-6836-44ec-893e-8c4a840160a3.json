@@ -1,0 +1,28 @@
+{
+  "id" : "aad465b9-6836-44ec-893e-8c4a840160a3",
+  "name" : "json_stations_byid_89565",
+  "request" : {
+    "url" : "/json/stations/byid/89565",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=1",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"id\":\"89565\",\"name\":\"#/g/punk radio\",\"url\":\"http://cyberadio.pw:8000/stream\",\"homepage\":\"http://cyberadio.pw\",\"favicon\":\"http://cyberadio.pw/waterfall.gif\",\"tags\":\"cyberpunk,g\",\"country\":\"United States of America\",\"state\":\"\",\"language\":\"English\",\"votes\":\"51\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-25 06:40:26\",\"lastcheckoktime\":\"2017-11-25 06:40:26\",\"clicktimestamp\":\"2017-11-25 19:04:08\",\"clickcount\":\"0\",\"clicktrend\":\"-9\",\"lastchangetime\":\"2017-09-10 17:48:06\",\"ip\":\"\"}]",
+    "headers" : {
+      "Date" : "Sun, 26 Nov 2017 17:22:57 GMT",
+      "Server" : "Apache/2.4.18 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Keep-Alive" : "timeout=5, max=89",
+      "Connection" : "Keep-Alive",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "aad465b9-6836-44ec-893e-8c4a840160a3",
+  "persistent" : true
+}

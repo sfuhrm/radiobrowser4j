@@ -1,0 +1,28 @@
+{
+  "id" : "7d853b00-1487-42d7-a1f7-2319ae399436",
+  "name" : "json_stations_lastchange",
+  "request" : {
+    "url" : "/json/stations/lastchange",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=5",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"id\":\"86781\",\"name\":\"Radio UNAM 860 AM\",\"url\":\"http://62.210.87.41:25224/stream\",\"homepage\":\"http://www.radiounam.unam.mx/\",\"favicon\":\"http://www.radiounam.unam.mx/wp-content/uploads/2017/04/RU_logocolornuevo.jpg\",\"tags\":\"unam,university radio,cultural,universitaria\",\"country\":\"México\",\"state\":\"Ciudad de México\",\"language\":\"Spanish\",\"votes\":\"22\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"80\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-26 18:20:57\",\"lastcheckoktime\":\"2017-11-26 18:20:57\",\"clicktimestamp\":\"2017-11-26 18:21:48\",\"clickcount\":\"2\",\"clicktrend\":\"1\",\"lastchangetime\":\"2017-11-26 18:20:57\",\"ip\":\"189.149.192.37\"},{\"id\":\"104633\",\"name\":\"RMF Michael Jackson\",\"url\":\"http://195.150.20.243/MICHALEJACKSON\",\"homepage\":\"http://www.rmfon.pl/play,73\",\"favicon\":\"http://static.radio.fr/images/broadcasts/97/fa/13307/c175.png\",\"tags\":\"\",\"country\":\"Poland\",\"state\":\"Krakow\",\"language\":\"Polish\",\"votes\":\"0\",\"negativevotes\":\"0\",\"codec\":\"AAC+\",\"bitrate\":\"48000\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-26 16:41:10\",\"lastcheckoktime\":\"2017-11-26 16:41:10\",\"clicktimestamp\":\"2017-11-26 17:28:55\",\"clickcount\":\"0\",\"clicktrend\":\"0\",\"lastchangetime\":\"2017-11-26 16:41:09\",\"ip\":\"77.136.19.77\"},{\"id\":\"62796\",\"name\":\"MagicFM\",\"url\":\"http://live.magicfm.ro:9128/magicfm.aacp\",\"homepage\":\"http://www.magicfm.ro/\",\"favicon\":\"http://www.magicfm.ro/media/emisiuni/article_inima.jpg\",\"tags\":\"muzica inimii tale,romania,Pop\",\"country\":\"Romania\",\"state\":\"\",\"language\":\"Romanian\",\"votes\":\"59\",\"negativevotes\":\"0\",\"codec\":\"AAC\",\"bitrate\":\"48\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-26 16:38:45\",\"lastcheckoktime\":\"2017-11-26 16:38:45\",\"clicktimestamp\":\"2017-11-26 17:29:02\",\"clickcount\":\"4\",\"clicktrend\":\"0\",\"lastchangetime\":\"2017-11-26 16:38:45\",\"ip\":\"92.81.41.88\"},{\"id\":\"104632\",\"name\":\"Radio Perfecto\",\"url\":\"http://radioperfecto.net-radio.fr/perfecto.mp3\",\"homepage\":\"http://www.radioperfecto.com/\",\"favicon\":\"http://www.radioperfecto.com/wp-content/uploads/2017/06/cropped-LOGO-RADIO-PERFECTO_trans2-270x270.png\",\"tags\":\"hard rock,classic rock\",\"country\":\"France\",\"state\":\"\",\"language\":\"French\",\"votes\":\"1\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"0\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-26 12:45:22\",\"lastcheckoktime\":\"2017-11-26 12:45:22\",\"clicktimestamp\":\"2017-11-26 14:50:14\",\"clickcount\":\"0\",\"clicktrend\":\"0\",\"lastchangetime\":\"2017-11-26 12:45:22\",\"ip\":\"188.224.31.115\"},{\"id\":\"64096\",\"name\":\"BBC Radio 4\",\"url\":\"http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio4fm_mf_p\",\"homepage\":\"http://www.bbc.co.uk/radio4/\",\"favicon\":\"https://www.companyshop.co.uk/media/2273/bbc-radio-4-logo.jpg\",\"tags\":\"128 kbps,bbc,drama,news talk,news,talk\",\"country\":\"United Kingdom\",\"state\":\"\",\"language\":\"English\",\"votes\":\"1111\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"0\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-26 12:22:02\",\"lastcheckoktime\":\"2017-11-26 12:22:02\",\"clicktimestamp\":\"2017-11-26 17:51:30\",\"clickcount\":\"103\",\"clicktrend\":\"43\",\"lastchangetime\":\"2017-11-26 12:22:02\",\"ip\":\"86.7.225.78\"}]",
+    "headers" : {
+      "Date" : "Sun, 26 Nov 2017 17:22:55 GMT",
+      "Server" : "Apache/2.4.18 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Keep-Alive" : "timeout=5, max=100",
+      "Connection" : "Keep-Alive",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "7d853b00-1487-42d7-a1f7-2319ae399436",
+  "persistent" : true
+}

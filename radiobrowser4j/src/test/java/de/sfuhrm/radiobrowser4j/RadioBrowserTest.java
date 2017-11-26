@@ -17,8 +17,11 @@ package de.sfuhrm.radiobrowser4j;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.regex.Matcher;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -41,7 +44,7 @@ public class RadioBrowserTest {
 
     private final static int WIREMOCK_PORT = 9123;
     private final static String API_URL = "http://localhost:"+WIREMOCK_PORT+"/";
-    private final static String USER_AGENT = "https://github.com/sfuhrm/radiorecorder";
+    private final static String USER_AGENT = "https://github.com/sfuhrm/radiobrowser4j";
 
     private static RadioBrowser browser;
     private static WireMock wireMockClient;
@@ -161,7 +164,16 @@ public class RadioBrowserTest {
     public void listDeletedStations() {
         List<Station> stations = browser.listDeletedStations();
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(337));
+        assertThat(stations.size(), is(not(Collections.emptyList())));
+    }
+
+    @Test
+    public void getStationById() {
+        List<Station> stations = browser.listStations(FIVE);
+
+        Station first = stations.get(0);
+        Optional<Station> station = browser.getStationById(first.getId());
+        assertThat(station.get(), is(first));
     }
 
     @Test
@@ -194,4 +206,30 @@ public class RadioBrowserTest {
         assertThat(stations.size(), is(5));
         assertThat(stations.get(0).getName().toLowerCase(), containsString("ding"));
     }
+
+    @Test(expected = RadioBrowserException.class)
+    public void postNewWithFail() {
+        Station station = new Station();
+        // URL is missing
+        station.setHomepage("https://github.com/sfuhrm/radiobrowser4j");
+        station.setName(TEST_NAME);
+        station.setFavicon("https://github.com/favicon.ico");
+        String id = browser.postNewStation(station);
+    }
+
+    @Test
+    public void postNewWithSuccess() {
+        Station station = new Station();
+        station.setUrl("https://github.com/sfuhrm/radiobrowser4j");
+        station.setHomepage("https://github.com/sfuhrm/radiobrowser4j");
+        station.setName(TEST_NAME);
+        station.setFavicon("https://github.com/favicon.ico");
+        String id = browser.postNewStation(station);
+
+        Optional<Station> stationOpt = browser.getStationById(id);
+        stationOpt.ifPresent(s -> browser.deleteStation(s));
+    }
+
+    private static String TEST_NAME = "Integration test for radiobrowser4j - ignore";
+
 }
