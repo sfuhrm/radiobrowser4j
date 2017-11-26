@@ -45,6 +45,8 @@ public class RadioBrowserTest {
     private static WireMock wireMockClient;
     private static WireMockServer wireMockServer;
 
+    private final static Paging FIVE = new Paging(0, 5);
+
     /** Trigger this to record instead of playback of recorded responses
      * in {@code src/test/resources/mappings}.
      * */
@@ -113,28 +115,63 @@ public class RadioBrowserTest {
 
     @Test
     public void listStations() {
-        List<Station> stations = browser.listStations(new Paging(0,5));
+        List<Station> stations = browser.listStations(FIVE);
         assertThat(stations, notNullValue());
         assertThat(stations.size(), is(5));
     }
 
     @Test
     public void listBrokenStations() {
-        List<Station> stations = browser.listBrokenStations(new Paging(0,5));
+        List<Station> stations = browser.listBrokenStations(FIVE);
         assertThat(stations, notNullValue());
         assertThat(stations.size(), is(5));
     }
 
     @Test
+    public void listTopClickStations() {
+        List<Station> stations = browser.listTopClickStations(FIVE);
+        assertThat(stations, notNullValue());
+        assertThat(stations.size(), is(5));
+    }
+
+    @Test
+    public void listTopVoteStations() {
+        List<Station> stations = browser.listTopVoteStations(FIVE);
+        assertThat(stations, notNullValue());
+        assertThat(stations.size(), is(5));
+    }
+
+    @Test
+    public void listLastClickStations() {
+        List<Station> stations = browser.listLastClickStations(FIVE);
+        assertThat(stations, notNullValue());
+        assertThat(stations.size(), is(5));
+    }
+
+    @Test
+    public void listLastChangedStations() {
+        List<Station> stations = browser.listLastChangedStations(FIVE);
+        assertThat(stations, notNullValue());
+        assertThat(stations.size(), is(5));
+    }
+
+    @Test
+    public void listDeletedStations() {
+        List<Station> stations = browser.listDeletedStations();
+        assertThat(stations, notNullValue());
+        assertThat(stations.size(), is(337));
+    }
+
+    @Test
     public void listImprovableStations() {
-        List<Station> stations = browser.listImprovableStations(new Paging(0,5));
+        List<Station> stations = browser.listImprovableStations(FIVE);
         assertThat(stations, notNullValue());
         assertThat(stations.size(), is(5));
     }
 
     @Test
     public void listStationsByWithName() {
-        List<Station> stations = browser.listStationsBy(new Paging(0,5), SearchMode.byname, "synthradio");
+        List<Station> stations = browser.listStationsBy(FIVE, SearchMode.byname, "synthradio");
         assertThat(stations, notNullValue());
         assertThat(stations.size(), is(1));
         assertThat(stations.get(0).getUrl(), is("http://synth-radio.ru/synthradio192.m3u"));
@@ -142,7 +179,7 @@ public class RadioBrowserTest {
 
     @Test
     public void resolveStreamUrl() {
-        List<Station> stations = browser.listStationsBy(new Paging(0,5), SearchMode.byname, "synthradio");
+        List<Station> stations = browser.listStationsBy(FIVE, SearchMode.byname, "synthradio");
         UrlResponse response = browser.resolveStreamUrl(stations.get(0));
         assertThat(response, notNullValue());
         assertThat(response.url, is("http://86.62.102.131:8005/live192"));
@@ -150,7 +187,7 @@ public class RadioBrowserTest {
 
     @Test
     public void listStationsBy() {
-        List<Station> stations = browser.listStationsBy(new Paging(0,5), SearchMode.byname, "ding");
+        List<Station> stations = browser.listStationsBy(FIVE, SearchMode.byname, "ding");
         assertThat(stations, notNullValue());
         assertThat(stations.size(), is(5));
         assertThat(stations.get(0).getName().toLowerCase(), containsString("ding"));

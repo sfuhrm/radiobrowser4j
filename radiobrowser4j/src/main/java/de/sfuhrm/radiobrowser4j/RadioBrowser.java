@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -135,9 +136,10 @@ public class RadioBrowser {
      * @return the partial list of the stations. Can be empty for exceeding the
      * possible stations.
      */
-    private List<Station> listStationsPath(Paging paging, String path) {
+    private List<Station> listStationsPath(Optional<Paging> paging, String path) {
         MultivaluedMap<String, String> requestParams = new MultivaluedHashMap<>();
-        applyPaging(paging, requestParams);
+
+        paging.ifPresent(p -> applyPaging(p, requestParams));
         Entity entity = Entity.form(requestParams);
         Response response = webTarget.path(path)
                 .request(MediaType.APPLICATION_JSON_TYPE)
@@ -155,7 +157,7 @@ public class RadioBrowser {
      * possible stations.
      */
     public List<Station> listStations(Paging paging) {
-        return listStationsPath(paging,"json/stations");
+        return listStationsPath(Optional.of(paging),"json/stations");
     }
 
     /** Get a list of all broken stations. Will return a single batch.
@@ -164,7 +166,7 @@ public class RadioBrowser {
      * possible stations.
      */
     public List<Station> listBrokenStations(Paging paging) {
-        return listStationsPath(paging,"json/stations/broken");
+        return listStationsPath(Optional.of(paging),"json/stations/broken");
     }
 
     /** Get a list of all broken stations. Will return a single batch.
@@ -173,7 +175,51 @@ public class RadioBrowser {
      * possible stations.
      */
     public List<Station> listImprovableStations(Paging paging) {
-        return listStationsPath(paging,"json/stations/improvable");
+        return listStationsPath(Optional.of(paging),"json/stations/improvable");
+    }
+
+    /** Get a list of the top click stations. Will return a single batch.
+     * @param paging the offset and limit of the page to retrieve.
+     * @return the partial list of the top click stations. Can be empty for exceeding the
+     * possible stations.
+     */
+    public List<Station> listTopClickStations(Paging paging) {
+        return listStationsPath(Optional.of(paging),"json/stations/topclick");
+    }
+
+    /** Get a list of the top vote stations. Will return a single batch.
+     * @param paging the offset and limit of the page to retrieve.
+     * @return the partial list of the top vote stations. Can be empty for exceeding the
+     * possible stations.
+     */
+    public List<Station> listTopVoteStations(Paging paging) {
+        return listStationsPath(Optional.of(paging),"json/stations/topvote");
+    }
+
+    /** Get a list of the last clicked stations. Will return a single batch.
+     * @param paging the offset and limit of the page to retrieve.
+     * @return the partial list of the last clicked stations. Can be empty for exceeding the
+     * possible stations.
+     */
+    public List<Station> listLastClickStations(Paging paging) {
+        return listStationsPath(Optional.of(paging),"json/stations/lastclick");
+    }
+
+    /** Get a list of the last clicked stations. Will return a single batch.
+     * @param paging the offset and limit of the page to retrieve.
+     * @return the partial list of the last clicked stations. Can be empty for exceeding the
+     * possible stations.
+     */
+    public List<Station> listLastChangedStations(Paging paging) {
+        return listStationsPath(Optional.of(paging),"json/stations/lastchange");
+    }
+
+    /** Get a list of the deleted stations. Will return a single batch.
+     * @return the partial list of the deleted stations. Can be empty for exceeding the
+     * possible stations.
+     */
+    public List<Station> listDeletedStations() {
+        return listStationsPath(Optional.empty(),"json/stations/deleted");
     }
 
     /** Get a list of stations matching a certain search criteria. Will return a single batch.
