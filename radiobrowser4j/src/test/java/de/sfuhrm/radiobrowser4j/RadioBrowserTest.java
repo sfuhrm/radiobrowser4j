@@ -43,13 +43,18 @@ public class RadioBrowserTest {
 
     private final static int WIREMOCK_PORT = 9123;
     private final static String API_URL = "http://localhost:"+WIREMOCK_PORT+"/";
+
     private final static String USER_AGENT = "https://github.com/sfuhrm/radiobrowser4j";
 
     private static RadioBrowser browser;
     private static WireMock wireMockClient;
     private static WireMockServer wireMockServer;
 
+    /** Paging with 5 elements. */
     private final static Paging FIVE = Paging.at(0, 5);
+
+    /** Name of test station to generate. */
+    private static String TEST_NAME = "Integration test for radiobrowser4j - ignore";
 
     /** Trigger this to record instead of playback of recorded responses
      * in {@code src/test/resources/mappings}.
@@ -228,7 +233,4 @@ public class RadioBrowserTest {
         Optional<Station> stationOpt = browser.getStationById(id);
         stationOpt.ifPresent(s -> browser.deleteStation(s));
     }
-
-    private static String TEST_NAME = "Integration test for radiobrowser4j - ignore";
-
 }
