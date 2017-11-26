@@ -74,7 +74,7 @@ public class RadioBrowserTest {
     @AfterClass
     public static void shutdownBrowser() {
         if (RECORDING) {
-            SnapshotRecordResult recordedMappings = wireMockClient.stopStubRecording();
+            wireMockClient.stopStubRecording();
         }
 
         if (wireMockClient != null) {
