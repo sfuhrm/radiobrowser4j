@@ -1,4 +1,4 @@
-## RadioBrowser4j
+## RadioBrowser4j ![Travis CI Status](https://travis-ci.org/sfuhrm/radiobrowser4j.svg?branch=master) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 A Java API for the [RadioBrowser](http://www.radio-browser.info)
 internet radio station online repository.
