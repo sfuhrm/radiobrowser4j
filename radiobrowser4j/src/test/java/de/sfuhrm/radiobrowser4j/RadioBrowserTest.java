@@ -57,6 +57,9 @@ public class RadioBrowserTest {
 
     /** Trigger this to record instead of playback of recorded responses
      * in {@code src/test/resources/mappings}.
+     *
+     * WARNING! This calls radiobrowser.info API directly and
+     * creates entities which are deleted afterwards!
      * */
     public final static boolean RECORDING = false;
 
