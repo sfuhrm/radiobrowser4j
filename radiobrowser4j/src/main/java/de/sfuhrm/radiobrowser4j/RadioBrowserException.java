@@ -28,4 +28,12 @@ public class RadioBrowserException extends RuntimeException {
         super(message);
     }
 
+    /** Constructs an exception from another exception
+     * which is the cause.
+     * @param inner the cause of this exception.
+     * */
+    public RadioBrowserException(final Throwable inner) {
+        super(inner);
+    }
+
 }
