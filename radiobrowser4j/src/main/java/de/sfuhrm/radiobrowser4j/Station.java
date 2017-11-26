@@ -88,7 +88,7 @@ public final class Station {
 
     /** Was the last stream check ok? */
     @Getter @Setter
-    private boolean lastcheckok;
+    private int lastcheckok;
 
     /** When was the last stream check? */
     @Getter
