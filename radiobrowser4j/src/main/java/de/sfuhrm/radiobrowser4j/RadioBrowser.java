@@ -128,7 +128,7 @@ public final class RadioBrowser {
             List<Map<String, String>> map = response.readEntity(
                     new GenericType<List<Map<String, String>>>() {
             });
-
+            checkResponseStatus(response);
             Map<String, Integer> result = map.stream()
                     .collect(Collectors.toMap(
                     m -> m.get("value"),
@@ -195,9 +195,7 @@ public final class RadioBrowser {
                     .accept(MediaType.APPLICATION_JSON_TYPE)
                     .header("User-Agent", userAgent)
                     .post(entity);
-            log.debug("response status={}, length={}",
-                    response.getStatus(),
-                    response.getLength());
+            checkResponseStatus(response);
 
             return response.readEntity(new GenericType<List<Station>>() {
             });
@@ -322,10 +320,7 @@ public final class RadioBrowser {
                     .accept(MediaType.APPLICATION_JSON_TYPE)
                     .header("User-Agent", userAgent)
                     .post(entity);
-            log.debug("response status={}, length={}",
-                    response.getStatus(),
-                    response.getLength());
-
+            checkResponseStatus(response);
             return response.readEntity(new GenericType<List<Station>>() {
             });
         } finally {
@@ -348,14 +343,8 @@ public final class RadioBrowser {
                     .header("User-Agent", userAgent)
                     .get();
 
+            checkResponseStatus(response);
             log.debug("URI is {}", webTarget.getUri());
-            if (response.getStatus() != HttpURLConnection.HTTP_OK) {
-                log.warn("Non 200 status: {} {}",
-                        response.getStatus(),
-                        response.getStatusInfo().getReasonPhrase());
-                throw new RadioBrowserException(
-                        response.getStatusInfo().getReasonPhrase());
-            }
             return response.readEntity(UrlResponse.class);
         } finally {
             close(response);
@@ -420,6 +409,28 @@ public final class RadioBrowser {
             }
         } finally {
             close(response);
+        }
+    }
+
+    /** Check the response for a non 200 status code
+     * and throw an exception if needed.
+     * @param response the response to check the status
+     *                 code of.
+     * @throws RadioBrowserException if the HTTP code was not
+     * 200.
+     * */
+    private static void checkResponseStatus(final Response response) {
+        if (response.getStatus() != HttpURLConnection.HTTP_OK) {
+            log.warn("Non HTTP OK/200 status: status={}, reason={}",
+                    response.getStatus(),
+                    response.getStatusInfo().getReasonPhrase()
+                    );
+            throw new RadioBrowserException(
+                    response.getStatusInfo().getReasonPhrase());
+        } else {
+            log.debug("HTTP response status={}, length={}",
+                    response.getStatus(),
+                    response.getLength());
         }
     }
 
