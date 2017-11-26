@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Spliterators;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -99,7 +98,13 @@ public final class RadioBrowser {
         this(API_URL, timeout, myUserAgent);
     }
 
-    private Invocation.Builder builder(WebTarget in) {
+    /** Creates a builder from the given web target
+     * applying the standard request and accept
+     * types.
+     * @param in the web target to create a builder from.
+     * @return a invocation builder that is built from the web target.
+     * */
+    private Invocation.Builder builder(final WebTarget in) {
         return in.request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .header("User-Agent", userAgent);

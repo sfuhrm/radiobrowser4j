@@ -23,10 +23,14 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /** A spliterator that iterates over a paged set of entities.
+ * @param <T> the element type to return in the spliteration.
  * @author Stephan Fuhrmann
  * */
 @Slf4j
 class PagingSpliterator<T> extends Spliterators.AbstractSpliterator<T> {
+    /** Default page size. */
+    private static final int FETCH_SIZE_DEFAULT = 32;
+
     /** The current paging. */
     private Paging currentPage;
 
@@ -45,7 +49,7 @@ class PagingSpliterator<T> extends Spliterators.AbstractSpliterator<T> {
      * */
     PagingSpliterator(final Function<Paging, List<T>> fetchPageFunction) {
         super(Long.MAX_VALUE, 0);
-        currentPage = Paging.at(0, 32);
+        currentPage = Paging.at(0, FETCH_SIZE_DEFAULT);
         this.fetchPage = fetchPageFunction;
         loadPage();
     }
@@ -59,7 +63,7 @@ class PagingSpliterator<T> extends Spliterators.AbstractSpliterator<T> {
     }
 
     @Override
-    public boolean tryAdvance(Consumer<? super T> action) {
+    public boolean tryAdvance(final Consumer<? super T> action) {
         if (pageIndex >= currentData.size()) {
             currentPage = currentPage.next();
             loadPage();
