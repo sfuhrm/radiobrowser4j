@@ -28,7 +28,6 @@ import static org.hamcrest.CoreMatchers.*;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-import com.github.tomakehurst.wiremock.recording.SnapshotRecordResult;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -218,7 +217,7 @@ public class RadioBrowserTest {
         station.setHomepage("https://github.com/sfuhrm/radiobrowser4j");
         station.setName(TEST_NAME);
         station.setFavicon("https://github.com/favicon.ico");
-        String id = browser.postNewStation(station);
+        browser.postNewStation(station);
     }
 
     @Test
@@ -229,6 +228,7 @@ public class RadioBrowserTest {
         station.setName(TEST_NAME);
         station.setFavicon("https://github.com/favicon.ico");
         String id = browser.postNewStation(station);
+        assertNotNull(id);
 
         Optional<Station> stationOpt = browser.getStationById(id);
         stationOpt.ifPresent(s -> browser.deleteStation(s));
