@@ -15,7 +15,7 @@ For maven you need this dependency:
     <dependency>
         <groupId>de.sfuhrm</groupId>
         <artifactId>radiobrowser4j</artifactId>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
     </dependency>
 
 After adding this dependency, you can start
