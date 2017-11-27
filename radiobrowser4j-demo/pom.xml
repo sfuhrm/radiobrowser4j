@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>de.sfuhrm</groupId>
@@ -8,8 +9,8 @@
     </parent>
     <artifactId>radiobrowser4j-demo</artifactId>
     <name>RadioBrowser4j Demo</name>
-    <description>RadioBrowser4j is a Java API for the RadioBrowser service at http://www.radio-browser.info/webservice</description>
-    <url>https://github.com/sfuhrm/radiobrowser4j</url>
+    <description>Demonstration code to show the usage of the API
+    </description>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,10 +18,23 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
-    <dependency>
-        <groupId>de.sfuhrm</groupId>
-        <artifactId>radiobrowser4j</artifactId>
-        <version>${project.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>de.sfuhrm</groupId>
+            <artifactId>radiobrowser4j</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
