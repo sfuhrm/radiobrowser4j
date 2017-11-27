@@ -1,0 +1,31 @@
+{
+  "id" : "f0d2fed2-2a9b-44eb-a081-4ed6aa959942",
+  "name" : "json_stations_byid_104691",
+  "request" : {
+    "url" : "/json/stations/byid/104691",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=1",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"id\":\"104691\",\"name\":\"Integration test for radiobrowser4j - ignore\",\"url\":\"https://github.com/sfuhrm/radiobrowser4j\",\"homepage\":\"https://github.com/sfuhrm/radiobrowser4j\",\"favicon\":\"https://github.com/favicon.ico\",\"tags\":\"\",\"country\":\"\",\"state\":\"\",\"language\":\"\",\"votes\":\"0\",\"negativevotes\":\"0\",\"codec\":\"\",\"bitrate\":\"0\",\"hls\":\"0\",\"lastcheckok\":\"0\",\"lastchecktime\":\"2017-11-27 22:36:50\",\"lastcheckoktime\":\"\",\"clicktimestamp\":\"\",\"clickcount\":\"0\",\"clicktrend\":\"0\",\"lastchangetime\":\"2017-11-27 22:36:49\",\"ip\":\"178.5.56.186\"}]",
+    "headers" : {
+      "Date" : "Mon, 27 Nov 2017 21:36:50 GMT",
+      "Server" : "Apache/2.4.18 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Keep-Alive" : "timeout=5, max=28",
+      "Connection" : "Keep-Alive",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "f0d2fed2-2a9b-44eb-a081-4ed6aa959942",
+  "persistent" : true,
+  "scenarioName" : "scenario-byid-104691",
+  "requiredScenarioState" : "Started",
+  "newScenarioState" : "scenario-byid-104691-2"
+}

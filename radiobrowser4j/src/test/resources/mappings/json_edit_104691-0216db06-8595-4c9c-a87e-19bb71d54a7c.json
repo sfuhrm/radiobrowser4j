@@ -1,0 +1,28 @@
+{
+  "id" : "0216db06-8595-4c9c-a87e-19bb71d54a7c",
+  "name" : "json_edit_104691",
+  "request" : {
+    "url" : "/json/edit/104691",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "tagList=&country=&favicon=https%3A%2F%2Fgithub.com%2Ffavicon.ico&name=Foo+bar+baz&language=&state=&url=https%3A%2F%2Fgithub.com%2Fsfuhrm%2Fradiobrowser4j&homepage=https%3A%2F%2Fgithub.com%2Fsfuhrm%2Fradiobrowser4j",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"ok\":\"true\",\"message\":\"changed station successfully\",\"id\":\"104691\",\"stream_check_done\":\"true\",\"stream_check_ok\":\"false\",\"favicon_check_done\":\"false\"}",
+    "headers" : {
+      "Date" : "Mon, 27 Nov 2017 21:36:50 GMT",
+      "Server" : "Apache/2.4.18 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Keep-Alive" : "timeout=5, max=27",
+      "Connection" : "Keep-Alive",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "0216db06-8595-4c9c-a87e-19bb71d54a7c",
+  "persistent" : true
+}

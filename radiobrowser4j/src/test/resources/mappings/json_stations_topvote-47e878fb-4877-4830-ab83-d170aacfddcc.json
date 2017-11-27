@@ -1,0 +1,28 @@
+{
+  "id" : "47e878fb-4877-4830-ab83-d170aacfddcc",
+  "name" : "json_stations_topvote",
+  "request" : {
+    "url" : "/json/stations/topvote",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=5",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"id\":\"59591\",\"name\":\"Deutschlandfunk\",\"url\":\"http://st01.dlf.de/dlf/01/104/ogg/stream.ogg\",\"homepage\":\"http://www.deutschlandfunk.de/\",\"favicon\":\"http://www.deutschlandfunk.de/themes/dradio/icons/dlf/favicon-196x196.png\",\"tags\":\"104 kbps,news,information\",\"country\":\"Germany\",\"state\":\"\",\"language\":\"German\",\"votes\":\"3109\",\"negativevotes\":\"0\",\"codec\":\"OGG\",\"bitrate\":\"0\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-26 00:00:15\",\"lastcheckoktime\":\"2017-11-26 00:00:15\",\"clicktimestamp\":\"2017-11-27 22:27:22\",\"clickcount\":\"246\",\"clicktrend\":\"11\",\"lastchangetime\":\"2017-10-12 16:07:07\",\"ip\":\"178.12.145.189\"},{\"id\":\"87480\",\"name\":\"Electro Swing Revolution Radio\",\"url\":\"http://groove.wavestreamer.com:7115/live\",\"homepage\":\"http://www.electroswing-radio.com/\",\"favicon\":\"http://www.electroswing-radio.com/wp-content/uploads/2017/06/ESR_Logo_140.png\",\"tags\":\"swing,dance,electro swing\",\"country\":\"Germany\",\"state\":\"\",\"language\":\"English\",\"votes\":\"2268\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-27 14:50:09\",\"lastcheckoktime\":\"2017-11-27 14:50:09\",\"clicktimestamp\":\"2017-11-27 22:22:36\",\"clickcount\":\"125\",\"clicktrend\":\"-4\",\"lastchangetime\":\"2017-11-25 07:13:41\",\"ip\":\"93.103.227.41\"},{\"id\":\"96789\",\"name\":\"2ROCK\",\"url\":\"http://streaming.radionomy.com/2ROCK\",\"homepage\":\"http://2rock.playtheradio.com/\",\"favicon\":\"https://i3.radionomy.com/radios/400/16f0899d-e88b-4a2e-a6ea-fa51f42a4acf.png?clearcache=true&version=636321768337227894&original=true\",\"tags\":\"rock & roll,rock,classic rock,hard rock\",\"country\":\"Germany\",\"state\":\"\",\"language\":\"German\",\"votes\":\"1875\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-25 17:00:39\",\"lastcheckoktime\":\"2017-11-25 17:00:39\",\"clicktimestamp\":\"2017-11-27 22:22:39\",\"clickcount\":\"135\",\"clicktrend\":\"13\",\"lastchangetime\":\"2017-11-14 13:46:38\",\"ip\":\"109.68.173.126\"},{\"id\":\"96788\",\"name\":\"ERiKA 1\",\"url\":\"http://listen.radionomy.com/erika1\",\"homepage\":\"http://erika1.playtheradio.com/\",\"favicon\":\"https://i3.radionomy.com/radios/400/e998fade-5c2a-426c-9520-0aa02849f49e.jpg?clearcache=true&version=636321761844328654&original=true\",\"tags\":\"volksmusik,schlager\",\"country\":\"Germany\",\"state\":\"\",\"language\":\"German\",\"votes\":\"1663\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-25 19:50:06\",\"lastcheckoktime\":\"2017-11-25 19:50:06\",\"clicktimestamp\":\"2017-11-27 22:22:42\",\"clickcount\":\"55\",\"clicktrend\":\"0\",\"lastchangetime\":\"2017-11-12 13:10:16\",\"ip\":\"2003:c5:13ce:3001:3577:797:3515:fc82\"},{\"id\":\"86408\",\"name\":\"BBC World Service\",\"url\":\"http://bbcwssc.ic.llnwd.net/stream/bbcwssc_mp1_ws-einws\",\"homepage\":\"http://www.bbc.co.uk/worldserviceradio\",\"favicon\":\"https://scontent-mxp1-1.xx.fbcdn.net/v/t1.0-9/22539683_1747406968611755_4542463485308116925_n.jpg?oh=4842a105640dffbe074aa937adf11c1a&oe=5A8CC7F7\",\"tags\":\"56 kbps,bbc,international,world radio,news talk,talk,news\",\"country\":\"United Kingdom\",\"state\":\"\",\"language\":\"English\",\"votes\":\"1627\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"0\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-27 20:40:11\",\"lastcheckoktime\":\"2017-11-27 20:40:11\",\"clicktimestamp\":\"2017-11-27 22:35:30\",\"clickcount\":\"154\",\"clicktrend\":\"-13\",\"lastchangetime\":\"2017-11-25 13:03:00\",\"ip\":\"24.184.60.73\"}]",
+    "headers" : {
+      "Date" : "Mon, 27 Nov 2017 21:36:53 GMT",
+      "Server" : "Apache/2.4.18 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Keep-Alive" : "timeout=5, max=90",
+      "Connection" : "Keep-Alive",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "47e878fb-4877-4830-ab83-d170aacfddcc",
+  "persistent" : true
+}

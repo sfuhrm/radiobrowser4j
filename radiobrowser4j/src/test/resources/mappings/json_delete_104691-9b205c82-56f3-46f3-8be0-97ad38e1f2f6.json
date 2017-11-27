@@ -1,0 +1,24 @@
+{
+  "id" : "9b205c82-56f3-46f3-8be0-97ad38e1f2f6",
+  "name" : "json_delete_104691",
+  "request" : {
+    "url" : "/json/delete/104691",
+    "method" : "POST"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"ok\":\"true\",\"message\":\"deleted station successfully\"}",
+    "headers" : {
+      "Date" : "Mon, 27 Nov 2017 21:36:51 GMT",
+      "Server" : "Apache/2.4.18 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Keep-Alive" : "timeout=5, max=25",
+      "Connection" : "Keep-Alive",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "9b205c82-56f3-46f3-8be0-97ad38e1f2f6",
+  "persistent" : true
+}

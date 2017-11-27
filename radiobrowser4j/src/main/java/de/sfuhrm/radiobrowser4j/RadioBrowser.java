@@ -18,6 +18,7 @@ package de.sfuhrm.radiobrowser4j;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -192,16 +193,19 @@ public final class RadioBrowser {
 
     /** Get a list of all stations on a certain API path.
      * @param paging the offset and limit of the page to retrieve.
-     * @param path the path to retrieve, i.e. "json/stations"
+     * @param path the path to retrieve, for example "json/stations".
+     * @param listParam the optional listing parameters.
      * @return the partial list of the stations. Can be empty for exceeding the
      * possible stations.
      */
     private List<Station> listStationsPath(final Optional<Paging> paging,
-                                           final String path) {
+                                           final String path,
+                                           final ListParameter...listParam) {
         MultivaluedMap<String, String> requestParams =
                 new MultivaluedHashMap<>();
 
         paging.ifPresent(p -> applyPaging(p, requestParams));
+        Arrays.stream(listParam).forEach(lp -> lp.applyTo(requestParams));
         Entity entity = Entity.form(requestParams);
         Response response = null;
         try {
@@ -218,22 +222,26 @@ public final class RadioBrowser {
 
     /** Get a list of all stations. Will return a single batch.
      * @param paging the offset and limit of the page to retrieve.
+     * @param listParam the optional listing parameters.
      * @return the partial list of the stations. Can be empty for exceeding the
      * possible stations.
      */
-    public List<Station> listStations(final Paging paging) {
+    public List<Station> listStations(final Paging paging,
+                                      final ListParameter...listParam) {
         return listStationsPath(Optional.of(paging),
-                "json/stations");
+                "json/stations",
+                listParam);
     }
 
     /** Get a list of all stations. Will return all
      * stations in a stream..
+     * @param listParam the optional listing parameters.
      * @return the full stream of stations..
      */
-    public Stream<Station> listStations() {
+    public Stream<Station> listStations(final ListParameter...listParam) {
         return StreamSupport.stream(
                 new PagingSpliterator<>(
-                        p -> listStations(p)),
+                        p -> listStations(p, listParam)),
                 false);
     }
 
@@ -244,7 +252,8 @@ public final class RadioBrowser {
      */
     public List<Station> listBrokenStations(final Paging paging) {
         return listStationsPath(Optional.of(paging),
-                "json/stations/broken");
+                "json/stations/broken"
+                );
     }
 
     /** Get a list of all broken stations as one continuous stream.
@@ -402,12 +411,14 @@ public final class RadioBrowser {
      * @param paging the offset and limit of the page to retrieve.
      * @param searchMode the field to match.
      * @param searchTerm the term to search for.
+     * @param listParam the optional listing parameters.
      * @return the partial list of the stations. Can be empty for exceeding the
      * number of matching stations.
      */
     public List<Station> listStationsBy(final Paging paging,
                                         final SearchMode searchMode,
-                                        final String searchTerm) {
+                                        final String searchTerm,
+                                        final ListParameter...listParam) {
         Objects.requireNonNull(searchMode,
                 "searchMode must be non-null");
         Objects.requireNonNull(searchTerm,
@@ -416,6 +427,7 @@ public final class RadioBrowser {
         MultivaluedMap<String, String> requestParams =
                 new MultivaluedHashMap<>();
         applyPaging(paging, requestParams);
+        Arrays.stream(listParam).forEach(l -> l.applyTo(requestParams));
         Entity entity = Entity.form(requestParams);
         Response response = null;
 
@@ -567,6 +579,39 @@ public final class RadioBrowser {
      *     The API endpoint</a>
      */
     public String postNewStation(final Station station) {
+        return postNewOrEditStation(station, "json/add");
+    }
+
+    /** Edits an existing station on the server.
+     * Note: This call only transmits certain fields.
+     * The fields are:
+     * name, url, homepage, favicon, country, state, language and tags.
+     * @param station the station to edit with the REST service.
+     * @return the {@linkplain Station#id id} of the station.
+     * @throws RadioBrowserException if there was a problem
+     * editing the station.
+     * @see <a href="http://www.radio-browser.info/webservice#add_station">
+     *     The API endpoint</a>
+     */
+    public String editStation(final Station station) {
+        Objects.requireNonNull(station.getId(), "id must be non-null");
+        return postNewOrEditStation(station, "json/edit/" + station.getId());
+    }
+
+    /** Posts a new station to the server.
+     * Note: This call only transmits certain fields.
+     * The fields are:
+     * name, url, homepage, favicon, country, state, language and tags.
+     * @param station the station to add to the REST service.
+     * @param path the path of the new / edit call.
+     * @return the {@linkplain Station#id id} of the new station.
+     * @throws RadioBrowserException if there was a problem
+     * creating the station.
+     * @see <a href="http://www.radio-browser.info/webservice#add_station">
+     *     The API endpoint</a>
+     */
+    private String postNewOrEditStation(final Station station,
+                                        final String path) {
         // http://www.radio-browser.info/webservice/json/add
         Objects.requireNonNull(station, "station must be non-null");
         MultivaluedMap<String, String> requestParams =
@@ -577,7 +622,7 @@ public final class RadioBrowser {
         Response response = null;
         try {
             response = builder(webTarget
-                    .path("json/add"))
+                    .path(path))
                     .post(entity);
 
             logResponseStatus(response);

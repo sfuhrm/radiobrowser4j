@@ -1,0 +1,28 @@
+{
+  "id" : "175d4c78-21ef-4fcc-ac10-a4a8e84f416a",
+  "name" : "json_stations_byname_pop",
+  "request" : {
+    "url" : "/json/stations/byname/pop",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=160&limit=32",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[]",
+    "headers" : {
+      "Date" : "Mon, 27 Nov 2017 21:36:53 GMT",
+      "Server" : "Apache/2.4.18 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Keep-Alive" : "timeout=5, max=92",
+      "Connection" : "Keep-Alive",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "175d4c78-21ef-4fcc-ac10-a4a8e84f416a",
+  "persistent" : true
+}

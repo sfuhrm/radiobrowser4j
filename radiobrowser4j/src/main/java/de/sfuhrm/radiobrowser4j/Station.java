@@ -24,6 +24,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -62,7 +63,7 @@ public final class Station {
      * @see #getTags()
      * */
     @Getter @Setter @JsonIgnore
-    private List<String> tagList;
+    private List<String> tagList = new ArrayList<>();
 
     /** The country this station is located at. */
     @Getter @Setter

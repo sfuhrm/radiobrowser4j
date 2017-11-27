@@ -1,0 +1,31 @@
+{
+  "id" : "a1ea3214-ad84-4edb-bd97-9da115c65320",
+  "name" : "json_stations",
+  "request" : {
+    "url" : "/json/stations",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=5",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"id\":\"89565\",\"name\":\"#/g/punk radio\",\"url\":\"http://cyberadio.pw:8000/stream\",\"homepage\":\"http://cyberadio.pw\",\"favicon\":\"http://cyberadio.pw/waterfall.gif\",\"tags\":\"cyberpunk,g\",\"country\":\"United States of America\",\"state\":\"\",\"language\":\"English\",\"votes\":\"51\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-27 14:10:36\",\"lastcheckoktime\":\"2017-11-27 14:10:36\",\"clicktimestamp\":\"2017-11-27 20:04:59\",\"clickcount\":\"3\",\"clicktrend\":\"2\",\"lastchangetime\":\"2017-09-10 17:48:06\",\"ip\":\"\"},{\"id\":\"85619\",\"name\":\"#1 Jazz Radio\",\"url\":\"http://listen.radionomy.com/-1jazzradio.m3u\",\"homepage\":\"http://www.radionomy.com/en/radio/-1JazzRadio\",\"favicon\":\"https://i3.radionomy.com/radios/400/df621702-a544-4fd4-9e69-15ed44f17875.jpg\",\"tags\":\"jazz,classic jazz,smooth jazz\",\"country\":\"Spain\",\"state\":\"\",\"language\":\"English\",\"votes\":\"67\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-26 02:50:03\",\"lastcheckoktime\":\"2017-11-26 02:50:03\",\"clicktimestamp\":\"2017-11-27 20:31:04\",\"clickcount\":\"4\",\"clicktrend\":\"-2\",\"lastchangetime\":\"2017-07-08 14:59:28\",\"ip\":\"\"},{\"id\":\"104674\",\"name\":\"#LoveRadio\",\"url\":\"http://listen.radionomy.com/-loveradio.m3u\",\"homepage\":\"http://love.popradio.co/\",\"favicon\":\"https://i3.radionomy.com/radios/400/c3fb5ea3-f19d-40c6-bdf9-9da54de71cb0.jpg\",\"tags\":\"love songs,soft music\",\"country\":\"Colombia\",\"state\":\"\",\"language\":\"English\",\"votes\":\"0\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-27 19:01:16\",\"lastcheckoktime\":\"2017-11-27 19:01:16\",\"clicktimestamp\":\"2017-11-27 20:13:40\",\"clickcount\":\"0\",\"clicktrend\":\"0\",\"lastchangetime\":\"2017-11-27 19:01:15\",\"ip\":\"138.197.165.228\"},{\"id\":\"94588\",\"name\":\"#PopHits\",\"url\":\"http://listen.radionomy.com/-pophits.m3u\",\"homepage\":\"http://pophitsradio.weebly.com/\",\"favicon\":\"http://pophitsradio.weebly.com/uploads/5/8/9/4/58942281/7318102.png?1441477845\",\"tags\":\"top 40,pop,hits\",\"country\":\"Colombia\",\"state\":\"\",\"language\":\"Spanish\",\"votes\":\"20\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-27 18:30:41\",\"lastcheckoktime\":\"2017-11-27 18:30:41\",\"clicktimestamp\":\"2017-11-27 18:25:05\",\"clickcount\":\"5\",\"clicktrend\":\"-2\",\"lastchangetime\":\"2017-04-20 07:16:08\",\"ip\":\"\"},{\"id\":\"89880\",\"name\":\".977 80s\",\"url\":\"http://playerservices.streamtheworld.com/pls/977_80.pls\",\"homepage\":\"http://www.977music.com/\",\"favicon\":\"http://977music.com/images/logo.gif\",\"tags\":\"1980s,80s\",\"country\":\"United States of America\",\"state\":\"Florida\",\"language\":\"English\",\"votes\":\"175\",\"negativevotes\":\"0\",\"codec\":\"MP3\",\"bitrate\":\"128\",\"hls\":\"0\",\"lastcheckok\":\"1\",\"lastchecktime\":\"2017-11-25 18:20:43\",\"lastcheckoktime\":\"2017-11-25 18:20:43\",\"clicktimestamp\":\"2017-11-27 22:28:22\",\"clickcount\":\"23\",\"clicktrend\":\"8\",\"lastchangetime\":\"2017-09-26 14:06:28\",\"ip\":\"178.62.112.25\"}]",
+    "headers" : {
+      "Date" : "Mon, 27 Nov 2017 21:35:41 GMT",
+      "Server" : "Apache/2.4.18 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Keep-Alive" : "timeout=5, max=98",
+      "Connection" : "Keep-Alive",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "a1ea3214-ad84-4edb-bd97-9da115c65320",
+  "persistent" : true,
+  "scenarioName" : "scenario-json-stations",
+  "requiredScenarioState" : "Started",
+  "newScenarioState" : "scenario-json-stations-2"
+}

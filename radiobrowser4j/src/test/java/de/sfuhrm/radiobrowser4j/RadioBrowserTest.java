@@ -17,6 +17,7 @@ package de.sfuhrm.radiobrowser4j;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -98,15 +99,15 @@ public class RadioBrowserTest {
     public void listCountries() {
         Map<String, Integer> countries = browser.listCountries();
         assertThat(countries, notNullValue());
-        assertThat(countries.size(), is(178));
-        assertThat(countries.get("Germany"), is(1658));
+        assertThat(countries.size(), is(not(0)));
+        assertThat(countries.get("Germany"), is(not(0)));
     }
 
     @Test
     public void listCodecs() {
         Map<String, Integer> codecs = browser.listCodecs();
         assertThat(codecs, notNullValue());
-        assertThat(codecs.size(), is(5));
+        assertThat(codecs.size(), is(not(0)));
         assertThat(codecs.containsKey("AAC"), is(true));
     }
 
@@ -130,7 +131,7 @@ public class RadioBrowserTest {
     public void listStations() {
         List<Station> stations = browser.listStations(FIVE);
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(5));
+        assertThat(stations.size(), is(FIVE.getLimit()));
     }
 
     @Test
@@ -142,6 +143,24 @@ public class RadioBrowserTest {
         assertThat(stations, notNullValue());
         assertThat(stations, is(not(Collections.emptyList())));
         assertThat(new HashSet<>(stations).size(), is(stations.size()));
+    }
+
+    @Test
+    public void listStationsWithStreamAndOrder() {
+        List<Station> stations = browser
+                .listStations(ListParameter.create().order(FieldName.name))
+                .limit(256)
+                .collect(Collectors.toList());
+
+        List<String> streamOrder = stations
+                .stream()
+                .map(s -> s.getName())
+                .collect(Collectors.toList());
+
+        List<String> selfOrder = new ArrayList<>(streamOrder);
+        Collections.sort(selfOrder, String.CASE_INSENSITIVE_ORDER);
+
+        assertThat(streamOrder, is(selfOrder));
     }
 
     @Test
@@ -158,7 +177,7 @@ public class RadioBrowserTest {
     public void listBrokenStations() {
         List<Station> stations = browser.listBrokenStations(FIVE);
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(5));
+        assertThat(stations.size(), is(FIVE.getLimit()));
     }
 
     @Test
@@ -175,7 +194,7 @@ public class RadioBrowserTest {
     public void listTopClickStations() {
         List<Station> stations = browser.listTopClickStations(FIVE);
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(5));
+        assertThat(stations.size(), is(FIVE.getLimit()));
     }
 
     @Test
@@ -193,7 +212,7 @@ public class RadioBrowserTest {
     public void listTopVoteStations() {
         List<Station> stations = browser.listTopVoteStations(FIVE);
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(5));
+        assertThat(stations.size(), is(FIVE.getLimit()));
     }
 
     @Test
@@ -211,7 +230,7 @@ public class RadioBrowserTest {
     public void listLastClickStations() {
         List<Station> stations = browser.listLastClickStations(FIVE);
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(5));
+        assertThat(stations.size(), is(FIVE.getLimit()));
     }
 
     @Test
@@ -229,7 +248,7 @@ public class RadioBrowserTest {
     public void listLastChangedStations() {
         List<Station> stations = browser.listLastChangedStations(FIVE);
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(5));
+        assertThat(stations.size(), is(FIVE.getLimit()));
     }
 
     @Test
@@ -264,7 +283,7 @@ public class RadioBrowserTest {
     public void listImprovableStations() {
         List<Station> stations = browser.listImprovableStations(FIVE);
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(5));
+        assertThat(stations.size(), is(FIVE.getLimit()));
     }
 
     @Test
@@ -297,7 +316,7 @@ public class RadioBrowserTest {
     public void listStationsBy() {
         List<Station> stations = browser.listStationsBy(FIVE, SearchMode.byname, "ding");
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(5));
+        assertThat(stations.size(), is(FIVE.getLimit()));
         assertThat(stations.get(0).getName().toLowerCase(), containsString("ding"));
     }
 
@@ -334,5 +353,29 @@ public class RadioBrowserTest {
 
         Optional<Station> stationOpt = browser.getStationById(id);
         stationOpt.ifPresent(s -> browser.deleteStation(s));
+    }
+
+    @Test
+    public void editStation() {
+        Station station = new Station();
+        station.setUrl("https://github.com/sfuhrm/radiobrowser4j");
+        station.setHomepage("https://github.com/sfuhrm/radiobrowser4j");
+        station.setName(TEST_NAME);
+        station.setFavicon("https://github.com/favicon.ico");
+        String id = browser.postNewStation(station);
+        assertNotNull(id);
+
+        Optional<Station> readBack1 = browser.getStationById(id);
+
+        readBack1.ifPresent(s -> s.setName("Foo bar baz"));
+
+        // changes the name
+        browser.editStation(readBack1.get());
+
+        Optional<Station> readBack2 = browser.getStationById(id);
+
+        assertThat(readBack2.get().getName(), is("Foo bar baz"));
+
+        browser.deleteStation(readBack2.get());
     }
 }
