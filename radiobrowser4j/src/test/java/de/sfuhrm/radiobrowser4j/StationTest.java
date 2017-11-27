@@ -18,11 +18,6 @@ package de.sfuhrm.radiobrowser4j;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.StreamSupport;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -36,14 +31,14 @@ public class StationTest {
     @Test
     public void setTagsCommaSeparated() {
         Station testMe = new Station();
-        testMe.setTagsCommaSeparated("foo,bar,baz");
-        assertThat(Arrays.asList("foo", "bar", "baz"), is(testMe.getTags()));
+        testMe.setTags("foo,bar,baz");
+        assertThat(Arrays.asList("foo", "bar", "baz"), is(testMe.getTagList()));
     }
 
     @Test
     public void getTagsCommaSeparated() {
         Station testMe = new Station();
-        testMe.setTags(Arrays.asList("foo", "bar", "baz"));
-        assertThat("foo,bar,baz", is(testMe.getTagsCommaSeparated()));
+        testMe.setTagList(Arrays.asList("foo", "bar", "baz"));
+        assertThat("foo,bar,baz", is(testMe.getTags()));
     }
 }

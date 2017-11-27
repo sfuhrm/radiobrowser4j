@@ -631,9 +631,9 @@ public final class RadioBrowser {
                     Collections.singletonList(sourceStation.getLanguage()));
         }
         if (sourceStation.getTags() != null) {
-            targetParams.put("tags",
+            targetParams.put("tagList",
                     Collections.singletonList(
-                            sourceStation.getTagsCommaSeparated()));
+                            sourceStation.getTags()));
         }
     }
 

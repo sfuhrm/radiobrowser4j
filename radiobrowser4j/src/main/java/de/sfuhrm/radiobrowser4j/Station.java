@@ -56,9 +56,13 @@ public final class Station {
     @Getter @Setter
     private String favicon;
 
-    /** The tags for this station. */
+    /** The tags for this station as a list.
+     * The comma separated version can be obtained using
+     * {@link #getTags()}.
+     * @see #getTags()
+     * */
     @Getter @Setter @JsonIgnore
-    private List<String> tags;
+    private List<String> tagList;
 
     /** The country this station is located at. */
     @Getter @Setter
@@ -132,24 +136,24 @@ public final class Station {
             pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastchangetime;
 
-    /** JSON getter for the {@link #tags}.
-     * You'll probably prefer the {@link #tags} property.
+    /** JSON getter for the {@link #tagList}.
+     * You'll probably prefer the {@link #tagList} property.
      * @return comma separated tag names.
-     * @see #setTagsCommaSeparated(String)
+     * @see #setTags(String)
      * */
     @JsonGetter("tags")
-    public String getTagsCommaSeparated() {
-        return tags.stream().collect(Collectors.joining(","));
+    public String getTags() {
+        return tagList.stream().collect(Collectors.joining(","));
     }
 
-    /** JSON setter for the {@link #tags}.
-     * You'll probably prefer the {@link #tags} property.
+    /** JSON setter for the {@link #tagList}.
+     * You'll probably prefer the {@link #tagList} property.
      * @param commaTags comma separated tag names.
-     * @see #getTagsCommaSeparated()
+     * @see #getTags()
      * */
     @JsonSetter("tags")
-    public void setTagsCommaSeparated(final String commaTags) {
-        tags = Arrays.asList(commaTags.split(","));
+    public void setTags(final String commaTags) {
+        tagList = Arrays.asList(commaTags.split(","));
     }
 
     @Override
