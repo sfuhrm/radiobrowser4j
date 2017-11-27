@@ -23,8 +23,13 @@ by creating one instance and using it
 
     // 5000ms timeout, user agent is Demo agent/1.0
     RadioBrowser browser = new RadioBrowser(5000, "Demo agent/1.0");
-    // retrieve the first 16 stations
-    List<Station> stations = browser.listStations(Paging.at(0,16));
+    // print the first 64 stations in station name order
+    browser.listStations(ListParameter.create().order(FieldName.name))
+           .limit(64)
+           .forEach(s -> System.out.printf("%s: %s%n",
+                            s.getName(),
+                            s.getUrl()
+                   ));
 
 ### How it is tested
 
