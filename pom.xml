@@ -153,5 +153,6 @@
     </reporting>
     <modules>
         <module>radiobrowser4j</module>
+        <module>radiobrowser4j-demo</module>
     </modules>
 </project>
