@@ -448,10 +448,12 @@ public final class RadioBrowser {
     /** Get a stream of stations matching a certain search criteria.
      * @param searchMode the field to match.
      * @param searchTerm the term to search for.
+     * @param listParam the optional listing parameters.
      * @return the full stream of matching stations.
      */
     public Stream<Station> listStationsBy(final SearchMode searchMode,
-                                        final String searchTerm) {
+                                        final String searchTerm,
+                                        final ListParameter...listParam) {
         Objects.requireNonNull(searchMode,
                 "searchMode must be non-null");
         Objects.requireNonNull(searchTerm,
@@ -461,6 +463,7 @@ public final class RadioBrowser {
             MultivaluedMap<String, String> requestParams =
                     new MultivaluedHashMap<>();
             applyPaging(p, requestParams);
+            Arrays.stream(listParam).forEach(l -> l.applyTo(requestParams));
             Entity entity = Entity.form(requestParams);
             Response response = null;
 
