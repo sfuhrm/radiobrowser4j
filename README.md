@@ -32,6 +32,16 @@ The API is tested using the WireMock REST testing
 framework. Mocked web requests/responses are
 located in the test resources.
 
+
+## Version history
+
+* v1.1.0:
+  - Added stream API calls.
+  - Added tags list version to Station.
+  - ListParameter for list order control.
+  - editStation call in RadioBrowser.
+* v1.0.0: First maven release.
+
 ## License
 
 Copyright 2017 Stephan Fuhrmann
