@@ -15,6 +15,8 @@
 */
 package de.sfuhrm.radiobrowser4j.demo;
 
+import de.sfuhrm.radiobrowser4j.FieldName;
+import de.sfuhrm.radiobrowser4j.ListParameter;
 import de.sfuhrm.radiobrowser4j.RadioBrowser;
 
 /** List all radio stations.
@@ -24,6 +26,9 @@ public final class ListDemo {
 
     /** Timeout in millis. */
     public static final int TIMEOUT_DEFAULT = 5000;
+
+    /** Stations to show. */
+    public static final int LIMIT_DEFAULT = 64;
 
     /** No instance allowed. */
     private ListDemo() {
@@ -38,8 +43,8 @@ public final class ListDemo {
                 TIMEOUT_DEFAULT,
                 "https://github.com/sfuhrm/radiobrowser4j");
         radioBrowser
-                .listStations()
-                .limit(64)
+                .listStations(ListParameter.create().order(FieldName.name))
+                .limit(LIMIT_DEFAULT)
                 .forEach(s -> System.out.printf("%s: %s%n",
                         s.getName(), s.getUrl()
                         ));
