@@ -148,7 +148,7 @@ public final class Station {
      * @see #getTagsCommaSeparated()
      * */
     @JsonSetter("tags")
-    public void setTagsCommaSeparated(String commaTags) {
+    public void setTagsCommaSeparated(final String commaTags) {
         tags = Arrays.asList(commaTags.split(","));
     }
 
