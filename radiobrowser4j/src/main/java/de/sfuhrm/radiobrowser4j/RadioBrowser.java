@@ -632,7 +632,7 @@ public final class RadioBrowser {
         }
         if (sourceStation.getTags() != null) {
             targetParams.put("tags",
-                    Collections.singletonList(sourceStation.getTags()));
+                    Collections.singletonList(sourceStation.getTagsCommaSeparated()));
         }
     }
 

@@ -16,12 +16,18 @@
 package de.sfuhrm.radiobrowser4j;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Representation of a Radio Station.
@@ -50,9 +56,9 @@ public final class Station {
     @Getter @Setter
     private String favicon;
 
-    /** The comma separated tags for this station. */
-    @Getter @Setter
-    private String tags;
+    /** The tags for this station. */
+    @Getter @Setter @JsonIgnore
+    private List<String> tags;
 
     /** The country this station is located at. */
     @Getter @Setter
@@ -125,6 +131,26 @@ public final class Station {
     @JsonFormat(shape = JsonFormat.Shape.STRING,
             pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastchangetime;
+
+    /** JSON getter for the {@link #tags}.
+     * You'll probably prefer the {@link #tags} property.
+     * @return comma separated tag names.
+     * @see #setTagsCommaSeparated(String)
+     * */
+    @JsonGetter("tags")
+    public String getTagsCommaSeparated() {
+        return tags.stream().collect(Collectors.joining(","));
+    }
+
+    /** JSON setter for the {@link #tags}.
+     * You'll probably prefer the {@link #tags} property.
+     * @param commaTags comma separated tag names.
+     * @see #getTagsCommaSeparated()
+     * */
+    @JsonSetter("tags")
+    public void setTagsCommaSeparated(String commaTags) {
+        tags = Arrays.asList(commaTags.split(","));
+    }
 
     @Override
     public String toString() {
