@@ -44,7 +44,7 @@ public class PagingSpliteratorTest {
                     if (paging.getOffset() < 100) {
                         data = IntStream.range(paging.getOffset(),
                                 paging.getOffset() + paging.getLimit())
-                                .mapToObj(i -> i)
+                                .boxed()
                                 .collect(Collectors.toList());
                         if (data.size() > paging.getLimit()) {
                             throw new IllegalStateException();
