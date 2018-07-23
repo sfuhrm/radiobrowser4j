@@ -15,4 +15,4 @@ if [ ! -e ${SRCDIR} ]; then
 fi
 
 ssh ${REMOTE_USER} rm -fr ${REMOTE_TARGET}
-scp -r $SRCDIR ${REMOTE_USER}:${REMOTE_TARGET}
+scp -r ${SRCDIR} ${REMOTE_USER}:${REMOTE_TARGET}
