@@ -154,11 +154,11 @@ public class RadioBrowserTest {
 
         List<String> streamOrder = stations
                 .stream()
-                .map(s -> s.getName())
+                .map(Station::getName)
                 .collect(Collectors.toList());
 
         List<String> selfOrder = new ArrayList<>(streamOrder);
-        Collections.sort(selfOrder, String.CASE_INSENSITIVE_ORDER);
+        selfOrder.sort(String.CASE_INSENSITIVE_ORDER);
 
         assertThat(streamOrder, is(selfOrder));
     }

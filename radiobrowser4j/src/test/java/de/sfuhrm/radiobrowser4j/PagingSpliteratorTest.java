@@ -34,7 +34,7 @@ public class PagingSpliteratorTest {
 
     @Test
     public void testPagingSpliterator() {
-        PagingSpliterator<Integer> integerPagingSpliterator = new PagingSpliterator<Integer>(
+        PagingSpliterator<Integer> integerPagingSpliterator = new PagingSpliterator<>(
                 paging -> {
                     List<Integer> data;
 
@@ -51,7 +51,7 @@ public class PagingSpliteratorTest {
                     }
                     return data;
                 }
-            );
+        );
 
         List<Integer> actual = StreamSupport.stream(integerPagingSpliterator, false)
                 .collect(Collectors.toList());
