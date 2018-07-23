@@ -19,11 +19,11 @@ Gradle project.
 For maven you need this dependency:
 
 ```xml
-    <dependency>
-        <groupId>de.sfuhrm</groupId>
-        <artifactId>radiobrowser4j</artifactId>
-        <version>1.1.0</version>
-    </dependency>
+<dependency>
+    <groupId>de.sfuhrm</groupId>
+    <artifactId>radiobrowser4j</artifactId>
+    <version>1.1.0</version>
+</dependency>
 ```
 
 After adding this dependency, you can start
@@ -44,9 +44,16 @@ browser.listStations(ListParameter.create().order(FieldName.name))
 You can take a look at the [JavaDoc](http://api.sfuhrm.de/radiobrowser4j/)
 documentation to get the full concepts of the API.
 
+### More examples
+
+The library was extracted from a internet radio player and recorder program
+in Java, [radiorecorder](https://github.com/sfuhrm/radiorecorder).
+You can take a look at real-life usage patterns
+[there](https://github.com/sfuhrm/radiorecorder/blob/master/src/main/java/de/sfuhrm/radiorecorder/Main.java).
+
 ### How it is tested
 
-The API is tested using the WireMock REST testing
+The API is tested using the [WireMock](http://wiremock.org/) REST testing
 framework. Mocked web requests/responses are
 located in the test resources.
 
