@@ -5,7 +5,8 @@ RadioBrowser4j
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/def6bf015f664ed3b9cf19d93232f4bc)](https://www.codacy.com/app/sfuhrm/radiobrowser4j?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sfuhrm/radiobrowser4j&amp;utm_campaign=Badge_Grade)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
 
-A Java API for the [RadioBrowser](http://www.radio-browser.info)
+A [Java API](http://api.sfuhrm.de/radiobrowser4j/) for
+the [RadioBrowser](http://www.radio-browser.info)
 internet radio station online repository.
 
 The library is useful for applications wanting to retrieve
@@ -17,24 +18,28 @@ First step is to include the dependency in your Maven or
 Gradle project. 
 For maven you need this dependency:
 
+```xml
     <dependency>
         <groupId>de.sfuhrm</groupId>
         <artifactId>radiobrowser4j</artifactId>
         <version>1.1.0</version>
     </dependency>
+```
 
 After adding this dependency, you can start
 by creating one instance and using it
 
-    // 5000ms timeout, user agent is Demo agent/1.0
-    RadioBrowser browser = new RadioBrowser(5000, "Demo agent/1.0");
-    // print the first 64 stations in station name order
-    browser.listStations(ListParameter.create().order(FieldName.name))
-           .limit(64)
-           .forEach(s -> System.out.printf("%s: %s%n",
-                            s.getName(),
-                            s.getUrl()
-                   ));
+```java
+// 5000ms timeout, user agent is Demo agent/1.0
+RadioBrowser browser = new RadioBrowser(5000, "Demo agent/1.0");
+// print the first 64 stations in station name order
+browser.listStations(ListParameter.create().order(FieldName.name))
+    .limit(64)
+    .forEach(s -> System.out.printf("%s: %s%n",
+        s.getName(),
+        s.getUrl()
+));
+```
 
 ### How it is tested
 
