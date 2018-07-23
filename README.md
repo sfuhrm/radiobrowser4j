@@ -41,6 +41,9 @@ browser.listStations(ListParameter.create().order(FieldName.name))
 ));
 ```
 
+You can take a look at the [JavaDoc](http://api.sfuhrm.de/radiobrowser4j/)
+documentation to get the full concepts of the API.
+
 ### How it is tested
 
 The API is tested using the WireMock REST testing
