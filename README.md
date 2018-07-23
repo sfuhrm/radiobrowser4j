@@ -60,6 +60,9 @@ located in the test resources.
 
 ## Version history
 
+* v1.2.0:
+  - Minor code improvements.
+  - Updated many dependencies, for example Jersey JAX-RS.
 * v1.1.0:
   - Added stream API calls.
   - Added tags list version to Station.
