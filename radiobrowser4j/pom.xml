@@ -11,11 +11,6 @@
     <description>RadioBrowser4j is a Java API for the RadioBrowser service at http://www.radio-browser.info/webservice</description>
     <url>https://github.com/sfuhrm/radiobrowser4j</url>
     <packaging>jar</packaging>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
