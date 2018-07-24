@@ -2,3 +2,5 @@ language: java
 jdk:
   - openjdk8
 install: mvn -Dgpg.skip install clirr:check
+after_success:
+  - mvn -DrepoToken=${coveralls_token} clean test jacoco:report coveralls:report --projects=radiobrowser4j
