@@ -61,6 +61,10 @@ located in the test resources.
 
 ## Version history
 
+* v1.2.1:
+  - Made building with JDK 11 possible.
+  - JDK 10/11 building in TravisCI.
+  - Updated dependencies.
 * v1.2.0:
   - Minor code improvements.
   - Updated many dependencies, for example Jersey JAX-RS.
