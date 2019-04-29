@@ -1,6 +1,10 @@
 language: java
-jdk:
-  - openjdk8
+matrix:
+  include:
+    - jdk: openjdk8
+    - jdk: oraclejdk8
+    - jdk: openjdk10
+    - jdk: openjdk11
 install: mvn -Dgpg.skip install clirr:check
 after_success:
   - mvn -DrepoToken=${coveralls_token} clean test jacoco:report coveralls:report --projects=radiobrowser4j
