@@ -23,7 +23,7 @@ For maven you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>1.2.1</version>
+    <version>1.3.0</version>
 </dependency>
 ```
 
@@ -61,6 +61,9 @@ located in the test resources.
 
 ## Version history
 
+* v1.3.0:
+  - Use new API DNS names.
+  - Update maven plugins / dependencies.
 * v1.2.1:
   - Made building with JDK 11 possible.
   - JDK 10/11 building in TravisCI.
