@@ -55,6 +55,13 @@ public final class RadioBrowser {
     protected static final String DEFAULT_API_URL =
             "https://de1.api.radio-browser.info/";
 
+    /**
+     * @deprecated There are multiple API URLs at the moment. In the past this was a single URL.
+     * Reference for compatibility for legacy clients.
+     * */
+    @Deprecated
+    protected static final String API_URL = DEFAULT_API_URL;
+
     /** The JAX-RS web target for service access. */
     private final WebTarget webTarget;
 
