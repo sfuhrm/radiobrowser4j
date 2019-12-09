@@ -75,7 +75,7 @@ public class RadioBrowserTest {
 
         wireMockClient = new WireMock(WIREMOCK_PORT);
         if (RECORDING) {
-            wireMockClient.startStubRecording(RadioBrowser.API_URL);
+            wireMockClient.startStubRecording(RadioBrowser.DEFAULT_API_URL);
         }
 
         browser = new RadioBrowser(API_URL,5000, USER_AGENT);

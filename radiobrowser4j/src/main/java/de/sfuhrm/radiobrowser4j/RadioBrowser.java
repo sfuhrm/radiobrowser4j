@@ -51,10 +51,9 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 @Slf4j
 public final class RadioBrowser {
 
-    /** The base URL of the REST service.
-     * */
-    protected static final String API_URL =
-            "http://www.radio-browser.info/webservice/";
+    /** The base URL of the REST service. */
+    protected static final String DEFAULT_API_URL =
+            "https://de1.api.radio-browser.info/";
 
     /** The JAX-RS web target for service access. */
     private final WebTarget webTarget;
@@ -62,13 +61,14 @@ public final class RadioBrowser {
     /** The user agent name. */
     private final String userAgent;
 
-    /** Custom constructor for mocked unit testing.
+    /**
+     * Creates a new API client.
      * @param apiUrl the base URL of the API.
      * @param timeout the timeout in milliseconds for connecting
      *                and reading.
      * @param myUserAgent the user agent string to use.
      * */
-    RadioBrowser(final String apiUrl,
+    public RadioBrowser(final String apiUrl,
                          final int timeout,
                          final String myUserAgent) {
         if (timeout <= 0) {
@@ -96,7 +96,7 @@ public final class RadioBrowser {
      */
     public RadioBrowser(final int timeout,
                         final String myUserAgent) {
-        this(API_URL, timeout, myUserAgent);
+        this(DEFAULT_API_URL, timeout, myUserAgent);
     }
 
     /** Creates a builder from the given web target
@@ -157,7 +157,7 @@ public final class RadioBrowser {
 
     /** List the known countries.
      * @return a list of countries (keys) and country usages (values).
-     * @see <a href="http://www.radio-browser.info/webservice#list_countries">
+     * @see <a href="https://de1.api.radio-browser.info/#List_of_countries">
      *     API</a>
      * */
     public Map<String, Integer> listCountries() {
@@ -166,7 +166,7 @@ public final class RadioBrowser {
 
     /** List the known codecs.
      * @return a list of codecs (keys) and codec usages (values).
-     * @see <a href="http://www.radio-browser.info/webservice#list_codecs">
+     * @see <a href="https://de1.api.radio-browser.info/#List_of_codecs">
      *     API</a>
      * */
     public Map<String, Integer> listCodecs() {
@@ -175,7 +175,7 @@ public final class RadioBrowser {
 
     /** List the known languages.
      * @return a list of languages (keys) and language usages (values).
-     * @see <a href="http://www.radio-browser.info/webservice#list_languages">
+     * @see <a href="https://de1.api.radio-browser.info/#List_of_languages">
      *     API</a>
      * */
     public Map<String, Integer> listLanguages() {
@@ -184,7 +184,7 @@ public final class RadioBrowser {
 
     /** List the known tags.
      * @return a list of tags (keys) and tag usages (values).
-     * @see <a href="http://www.radio-browser.info/webservice#list_tags">
+     * @see <a href="https://de1.api.radio-browser.info/#List_of_tags">
      *     API</a>
      * */
     public Map<String, Integer> listTags() {
@@ -489,7 +489,7 @@ public final class RadioBrowser {
     /** Resolves the streaming URL for the given station.
      * @param station the station to retrieve the stream URL for.
      * @return the URL of the stream.
-     * @throws RadioBrowserException if the URL could not be retrieed
+     * @throws RadioBrowserException if the URL could not be retrieved
      */
     public URL resolveStreamUrl(final Station station) {
         Objects.requireNonNull(station, "station must be non-null");
@@ -521,8 +521,6 @@ public final class RadioBrowser {
      * Calls a state alteration method for one station.
      * @param station the station to undelete/delete from the REST service.
      * @param path the URL path of the state alteration endpoint.
-     * @see <a href="http://www.radio-browser.info/webservice#station_delete">
-     *     The API endpoint</a>
      */
     private void triggerStationState(final Station station,
                                      final String path) {
@@ -553,8 +551,6 @@ public final class RadioBrowser {
     /** Deletes a station.
      * The station is only marked as being deleted.
      * @param station the station to delete from the REST service.
-     * @see <a href="http://www.radio-browser.info/webservice#station_delete">
-     *     The API endpoint</a>
      */
     public void deleteStation(final Station station) {
         triggerStationState(station, "json/delete");
@@ -563,8 +559,6 @@ public final class RadioBrowser {
     /** Undeletes a station.
      * The station is only marked as being deleted.
      * @param station the station to delete from the REST service.
-     * @see <a href="http://www.radio-browser.info/webservice#station_delete">
-     *     The API endpoint</a>
      */
     public void undeleteStation(final Station station) {
         triggerStationState(station, "json/undelete");
@@ -578,7 +572,7 @@ public final class RadioBrowser {
      * @return the {@linkplain Station#id id} of the new station.
      * @throws RadioBrowserException if there was a problem
      * creating the station.
-     * @see <a href="http://www.radio-browser.info/webservice#add_station">
+     * @see <a href="https://de1.api.radio-browser.info/#Add_radio_station">
      *     The API endpoint</a>
      */
     public String postNewStation(final Station station) {
@@ -593,8 +587,6 @@ public final class RadioBrowser {
      * @return the {@linkplain Station#id id} of the station.
      * @throws RadioBrowserException if there was a problem
      * editing the station.
-     * @see <a href="http://www.radio-browser.info/webservice#add_station">
-     *     The API endpoint</a>
      */
     public String editStation(final Station station) {
         Objects.requireNonNull(station.getId(), "id must be non-null");
@@ -610,12 +602,9 @@ public final class RadioBrowser {
      * @return the {@linkplain Station#id id} of the new station.
      * @throws RadioBrowserException if there was a problem
      * creating the station.
-     * @see <a href="http://www.radio-browser.info/webservice#add_station">
-     *     The API endpoint</a>
      */
     private String postNewOrEditStation(final Station station,
                                         final String path) {
-        // http://www.radio-browser.info/webservice/json/add
         Objects.requireNonNull(station, "station must be non-null");
         MultivaluedMap<String, String> requestParams =
                 new MultivaluedHashMap<>();
