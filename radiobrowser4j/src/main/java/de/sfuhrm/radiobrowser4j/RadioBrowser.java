@@ -56,7 +56,8 @@ public final class RadioBrowser {
             "https://de1.api.radio-browser.info/";
 
     /**
-     * @deprecated There are multiple API URLs at the moment. In the past this was a single URL.
+     * @deprecated There are multiple API URLs at the moment.
+     * In the past this was a single URL.
      * Reference for compatibility for legacy clients.
      * */
     @Deprecated
