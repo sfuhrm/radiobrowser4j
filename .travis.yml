@@ -2,7 +2,6 @@ language: java
 matrix:
   include:
     - jdk: openjdk8
-    - jdk: oraclejdk8
     - jdk: openjdk10
     - jdk: openjdk11
 install: mvn -Dgpg.skip install clirr:check
