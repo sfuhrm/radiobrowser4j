@@ -61,13 +61,14 @@ public final class RadioBrowser {
     /** The user agent name. */
     private final String userAgent;
 
-    /** Custom constructor for mocked unit testing.
+    /**
+     * Creates a new API client.
      * @param apiUrl the base URL of the API.
      * @param timeout the timeout in milliseconds for connecting
      *                and reading.
      * @param myUserAgent the user agent string to use.
      * */
-    RadioBrowser(final String apiUrl,
+    public RadioBrowser(final String apiUrl,
                          final int timeout,
                          final String myUserAgent) {
         if (timeout <= 0) {
