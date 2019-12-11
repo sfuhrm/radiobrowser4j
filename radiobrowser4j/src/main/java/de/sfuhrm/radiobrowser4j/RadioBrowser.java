@@ -16,8 +16,11 @@
 package de.sfuhrm.radiobrowser4j;
 
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -54,6 +57,11 @@ public final class RadioBrowser {
     /** The base URL of the REST service. */
     protected static final String DEFAULT_API_URL =
             "https://de1.api.radio-browser.info/";
+
+    /** DNS address to resolve API endpoints.
+     * */
+    private static final String DNS_API_ADDRESS =
+            "all.api.radio-browser.info";
 
     /**
      * @deprecated There are multiple API URLs at the moment.
@@ -105,6 +113,43 @@ public final class RadioBrowser {
     public RadioBrowser(final int timeout,
                         final String myUserAgent) {
         this(DEFAULT_API_URL, timeout, myUserAgent);
+    }
+
+    /** Get the URLs of all API endpoints that are returned by the DNS service.
+     * */
+    List<String> apiUrls() throws UnknownHostException {
+        InetAddress[] addresses = InetAddress.getAllByName(DNS_API_ADDRESS);
+        List<String> fqdns = new ArrayList<>();
+        for (InetAddress inetAddress : addresses) {
+            fqdns.add(inetAddress.getCanonicalHostName());
+        }
+        return fqdns.stream()
+                .map(s -> String.format("https://%s/", s))
+                .collect(Collectors.toList());
+    }
+
+    /** Get the stats for a specific API endpoint.
+     * @param endpoint the API endpoint URI.
+     * @param timeout the timeout in millis.
+     * @return the stats object from the server.
+     */
+    static Stats getStats(final String endpoint, final int timeout) {
+        if (timeout <= 0) {
+            throw new IllegalArgumentException(
+                    "timeout must be > 0, but is "
+                            + timeout);
+        }
+        Client client = ClientBuilder.newBuilder()
+                .register(JacksonFeature.class)
+                .build();
+        client.property(ClientProperties.CONNECT_TIMEOUT, timeout);
+        client.property(ClientProperties.READ_TIMEOUT,    timeout);
+        WebTarget webTarget = client.target(endpoint);
+        Stats response = webTarget.path("json/stats")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get(Stats.class);
+        return response;
     }
 
     /** Creates a builder from the given web target

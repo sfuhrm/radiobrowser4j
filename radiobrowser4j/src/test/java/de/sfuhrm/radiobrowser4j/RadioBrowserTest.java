@@ -17,6 +17,7 @@ package de.sfuhrm.radiobrowser4j;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -78,7 +79,7 @@ public class RadioBrowserTest {
             wireMockClient.startStubRecording(RadioBrowser.DEFAULT_API_URL);
         }
 
-        browser = new RadioBrowser(API_URL,5000, USER_AGENT);
+        browser = new RadioBrowser(API_URL,20000, USER_AGENT);
     }
 
     @AfterClass
@@ -93,6 +94,20 @@ public class RadioBrowserTest {
         if (wireMockServer != null) {
             wireMockServer.shutdown();
         }
+    }
+
+    @Test
+    public void apiUrls() throws UnknownHostException {
+        List<String> urls = browser.apiUrls();
+        assertThat(urls.size(), is(not(0)));
+    }
+
+    @Test
+    public void getStats() {
+        Stats stats = browser.getStats(API_URL, 1000);
+        assertThat(stats, notNullValue());
+        assertThat(stats.getSupportedVersion(), notNullValue());
+        assertThat(stats.getSoftwareVersion(), notNullValue());
     }
 
     @Test
