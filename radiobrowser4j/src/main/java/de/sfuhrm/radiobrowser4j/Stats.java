@@ -15,21 +15,11 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Representation of a api endpoint statistic.
@@ -38,7 +28,6 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode(of = {"id", "name"})
 @JsonIgnoreProperties(ignoreUnknown = true)
 final class Stats {
-    // {"supported_version":1,"software_version":"0.5.0","status":"OK","stations":25539,"stations_broken":828,"tags":6533,"clicks_last_hour":1,"clicks_last_day":74,"languages":366,"countries":232}
 
     /** The supported version. */
     @Getter @Setter

@@ -116,6 +116,10 @@ public final class RadioBrowser {
     }
 
     /** Get the URLs of all API endpoints that are returned by the DNS service.
+     * @return the list of possible API endpoints as per DNS request.
+     * Not all returned API endpoints may be working.
+     * @throws UnknownHostException if there is a problem resolving the
+     * API DNS name.
      * */
     List<String> apiUrls() throws UnknownHostException {
         InetAddress[] addresses = InetAddress.getAllByName(DNS_API_ADDRESS);
