@@ -652,6 +652,31 @@ public final class RadioBrowser {
         return postNewOrEditStation(station, "json/edit/" + station.getStationuuid());
     }
 
+    /**
+     * Votes for a station.
+     * @param station The station to vote for.
+     * @throws RadioBrowserException if there was a problem
+     * voting for the station.
+     */
+    public void voteForStation(final Station station) {
+        Objects.requireNonNull(station.getStationuuid(), "id must be non-null");
+        Response response = null;
+        try {
+            response = builder(webTarget
+                    .path("json/vote/" + station.getStationuuid()))
+                    .get();
+
+            logResponseStatus(response);
+            UrlResponse urlResponse = response.readEntity(UrlResponse.class);
+
+            if (!urlResponse.isOk()) {
+                throw new RadioBrowserException(urlResponse.getMessage());
+            }
+        } finally {
+            close(response);
+        }
+    }
+
     /** Posts a new station to the server.
      * Note: This call only transmits certain fields.
      * The fields are:
