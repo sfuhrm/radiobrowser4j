@@ -287,11 +287,11 @@ public class RadioBrowserTest {
     }
 
     @Test
-    public void getStationById() {
+    public void getStationByUuid() {
         List<Station> stations = browser.listStations(FIVE);
 
         Station first = stations.get(0);
-        Optional<Station> station = browser.getStationById(first.getId());
+        Optional<Station> station = browser.getStationByUuid(first.getStationuuid());
         assertThat(station.isPresent(), is(true));
         assertThat(station.get(), is(first));
     }

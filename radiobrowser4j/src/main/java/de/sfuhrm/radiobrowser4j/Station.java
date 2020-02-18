@@ -34,12 +34,20 @@ import java.util.stream.Collectors;
  * Representation of a Radio Station.
  * @author Stephan Fuhrmann
  */
-@EqualsAndHashCode(of = {"id", "name"})
+@EqualsAndHashCode(of = {"stationuuid", "name"})
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class Station {
     /** The station id. The ID is usually numeric. */
-    @Getter @Setter
+    @Deprecated @Getter @Setter
     private String id;
+
+    /** A globally unique identifier for the change of the station information. */
+    @Getter @Setter
+    private String changeuuid;
+
+    /** A globally unique identifier for the station. */
+    @Getter @Setter
+    private String stationuuid;
 
     /** The name of the station. */
     @Getter @Setter
@@ -48,6 +56,10 @@ public final class Station {
     /** The URL of the stream. */
     @Getter @Setter
     private String url;
+
+    /** An automatically "resolved" stream URL. */
+    @Getter @Setter
+    private String urlResolved;
 
     /** The URL of the stations homepage. */
     @Getter @Setter
@@ -69,20 +81,28 @@ public final class Station {
     @Getter @Setter
     private String country;
 
+    /** Official countrycodes according to ISO 3166-1 alpha-2. */
+    @Getter @Setter
+    private String countrycode;
+
     /** The state this station is located at. */
     @Getter @Setter
     private String state;
 
-    /** The language of this station. */
-    @Getter @Setter
-    private String language;
+    /** The languages of this station as a list.
+     * The comma separated version can be obtained using
+     * {@link #getLanguage()}.
+     * @see #getLanguage()
+     */
+    @Getter @Setter @JsonIgnore
+    private List<String> languageList = new ArrayList<>();
 
     /** The votes for this station. */
     @Getter @Setter
     private String votes;
 
     /** The negative votes for this station. */
-    @Getter @Setter
+    @Deprecated @Getter @Setter
     private String negativevotes;
 
     /** The codec used for the stream. */
@@ -93,40 +113,50 @@ public final class Station {
     @Getter @Setter
     private String bitrate;
 
-    /** Dunno. */
+    /** Mark if this stream is using HLS distribution or non-HLS. */
     @Getter @Setter
     private String hls;
 
-    /** Was the last stream check ok? */
+    /** The current online/offline state of this stream. */
     @Getter @Setter
     private int lastcheckok;
 
-    /** When was the last stream check? */
+    /** The last time when any Radio-Browser server checked
+     * the online state of this stream. */
     @Getter
     @Setter
     @JsonFormat(shape = JsonFormat.Shape.STRING,
             pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastchecktime;
 
-    /** When was the last stream check ok? */
+    /** The last time when the stream was checked for
+     * the online status with a positive result. */
     @Getter
     @Setter
     @JsonFormat(shape = JsonFormat.Shape.STRING,
             pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastcheckoktime;
 
-    /** When was the last stream click? */
+    /** The last time when this server checked the online state
+     * and the metadata of this stream. */
+    @Getter
+    @Setter
+    @JsonFormat(shape = JsonFormat.Shape.STRING,
+            pattern = "yyyy-MM-dd hh:mm:ss")
+    private Date lastlocalchecktime;
+
+    /** The time of the last click recorded for this stream. */
     @Getter
     @Setter
     @JsonFormat(shape = JsonFormat.Shape.STRING,
             pattern = "yyyy-MM-dd hh:mm:ss")
     private Date clicktimestamp;
 
-    /** Number of clicks. */
+    /** Clicks within the last 24 hours. */
     @Getter @Setter
     private String clickcount;
 
-    /** Click trend. */
+    /** The difference of the click counts within the last 2 days. */
     @Getter @Setter
     private String clicktrend;
 
@@ -138,7 +168,7 @@ public final class Station {
     private Date lastchangetime;
 
     /** JSON getter for the {@link #tagList}.
-     * You'll probably prefer the {@link #tagList} property.
+     * You would probably prefer using the {@link #tagList} property.
      * @return comma separated tag names.
      * @see #setTags(String)
      * */
@@ -148,13 +178,33 @@ public final class Station {
     }
 
     /** JSON setter for the {@link #tagList}.
-     * You'll probably prefer the {@link #tagList} property.
+     * You would probably prefer using the {@link #tagList} property.
      * @param commaTags comma separated tag names.
      * @see #getTags()
      * */
     @JsonSetter("tags")
     public void setTags(final String commaTags) {
         tagList = Arrays.asList(commaTags.split(","));
+    }
+
+    /** JSON setter for {@link #languageList}.
+     * You would probably prefer using the {@link #languageList} property.
+     * @return comma separated languages.
+     * @see #setLanguage(String)
+     * */
+    @JsonGetter("language")
+    public String getLanguage() {
+        return languageList.stream().collect(Collectors.joining(","));
+    }
+
+    /** JSON setter for {@link #languageList}.
+     * You would probably prefer using the {@link #languageList} property.
+     * @param commaLanguages comma separated languages.
+     * @see #getLanguage()
+     * */
+    @JsonSetter("language")
+    public void setLanguage(final String commaLanguages) {
+        languageList = Arrays.asList(commaLanguages.split(","));
     }
 
     @Override
