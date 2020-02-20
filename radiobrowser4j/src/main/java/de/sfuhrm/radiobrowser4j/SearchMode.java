@@ -23,9 +23,6 @@ package de.sfuhrm.radiobrowser4j;
 public enum SearchMode {
     /** Search by UUID. */
     byuuid,
-    /** Search by ID. */
-    @Deprecated
-    byid,
     /** Search by name. */
     byname,
     /** Search by exact name. */

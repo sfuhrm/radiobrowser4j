@@ -29,7 +29,7 @@ import java.util.function.Function;
 @Slf4j
 class PagingSpliterator<T> extends Spliterators.AbstractSpliterator<T> {
     /** Default page size. */
-    private static final int FETCH_SIZE_DEFAULT = 32;
+    private static final int FETCH_SIZE_DEFAULT = 128;
 
     /** The current paging. */
     private Paging currentPage;

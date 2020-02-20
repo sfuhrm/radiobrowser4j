@@ -18,12 +18,11 @@ package de.sfuhrm.radiobrowser4j;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
@@ -32,6 +31,7 @@ import static org.hamcrest.CoreMatchers.*;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -55,7 +55,11 @@ public class RadioBrowserTest {
     private static WireMockServer wireMockServer;
 
     /** Paging with 5 elements. */
-    private final static Paging FIVE = Paging.at(0, 5);
+    private final static Paging FIRST_FIVE = Paging.at(0, 5);
+
+    private final static Paging SECOND_FIVE = Paging.at(5, 5);
+
+    private final static Limit FIVE = Limit.of(5);
 
     /** Name of test station to generate. */
     private final static String TEST_NAME = "Integration test for radiobrowser4j - ignore";
@@ -103,10 +107,9 @@ public class RadioBrowserTest {
         assertThat(urls.size(), is(not(0)));
     }
 
-    @Ignore // ignore for now, this code is in development
     @Test
     public void getStats() {
-        Stats stats = browser.getStats(API_URL, 1000);
+        Stats stats = browser.getStats(API_URL, 5000);
         assertThat(stats, notNullValue());
         assertThat(stats.getSupportedVersion(), notNullValue());
         assertThat(stats.getSoftwareVersion(), notNullValue());
@@ -133,7 +136,7 @@ public class RadioBrowserTest {
         Map<String, Integer> languages = browser.listLanguages();
         assertThat(languages, notNullValue());
         assertThat(languages.size(), is(not(0)));
-        assertThat(languages.containsKey("German"), is(true));
+        assertThat(languages.containsKey("german"), is(true));
     }
 
     @Test
@@ -146,9 +149,15 @@ public class RadioBrowserTest {
 
     @Test
     public void listStations() {
-        List<Station> stations = browser.listStations(FIVE);
-        assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(FIVE.getLimit()));
+        List<Station> firstStations = browser.listStations(FIRST_FIVE);
+        assertThat(firstStations, notNullValue());
+        assertThat(firstStations.size(), is(FIRST_FIVE.getLimit()));
+
+        List<Station> secondStations = browser.listStations(SECOND_FIVE);
+        assertThat(secondStations, notNullValue());
+        assertThat(secondStations.size(), is(SECOND_FIVE.getLimit()));
+
+        assertNotEquals(firstStations, secondStations);
     }
 
     @Test
@@ -159,25 +168,25 @@ public class RadioBrowserTest {
                 .collect(Collectors.toList());
         assertThat(stations, notNullValue());
         assertThat(stations, is(not(Collections.emptyList())));
-        assertThat(new HashSet<>(stations).size(), is(stations.size()));
+        assertThat(stations.size(), is(256));
     }
 
     @Test
     public void listStationsWithStreamAndOrder() {
         List<Station> stations = browser
-                .listStations(ListParameter.create().order(FieldName.name))
+                .listStations(ListParameter.create().order(FieldName.lastchecktime))
                 .limit(256)
                 .collect(Collectors.toList());
 
-        List<String> streamOrder = stations
-                .stream()
-                .map(Station::getName)
-                .collect(Collectors.toList());
+        assertThat(stations.size(), is(256));
 
-        List<String> selfOrder = new ArrayList<>(streamOrder);
-        selfOrder.sort(String.CASE_INSENSITIVE_ORDER);
-
-        assertThat(streamOrder, is(selfOrder));
+        Station last = null;
+        for (Station station : stations) {
+            if (station.getLastchecktime() != null && last != null && last.getLastchecktime() != null) {
+                assertThat("station list must contain lastchecktime in ascending order", station.getLastchecktime().getTime(), is(Matchers.greaterThanOrEqualTo(last.getLastchecktime().getTime())));
+            }
+            last = station;
+        }
     }
 
     @Test
@@ -187,7 +196,6 @@ public class RadioBrowserTest {
                 .collect(Collectors.toList());
         assertThat(stations, notNullValue());
         assertThat(stations, is(not(Collections.emptyList())));
-        assertThat(new HashSet<>(stations).size(), is(stations.size()));
     }
 
     @Test
@@ -205,6 +213,7 @@ public class RadioBrowserTest {
                 .collect(Collectors.toList());
         assertThat(stations, notNullValue());
         assertThat(stations, is(not(Collections.emptyList())));
+        assertThat(stations.size(), is(256));
     }
 
     @Test
@@ -222,7 +231,7 @@ public class RadioBrowserTest {
                 .collect(Collectors.toList());
         assertThat(stations, notNullValue());
         assertThat(stations, is(not(Collections.emptyList())));
-        assertThat(new HashSet<>(stations).size(), is(stations.size()));
+        assertThat(stations.size(), is(256));
     }
 
     @Test
@@ -240,7 +249,7 @@ public class RadioBrowserTest {
                 .collect(Collectors.toList());
         assertThat(stations, notNullValue());
         assertThat(stations, is(not(Collections.emptyList())));
-        assertThat(new HashSet<>(stations).size(), is(stations.size()));
+        assertThat(stations.size(), is(256));
     }
 
     @Test
@@ -258,14 +267,14 @@ public class RadioBrowserTest {
                 .collect(Collectors.toList());
         assertThat(stations, notNullValue());
         assertThat(stations, is(not(Collections.emptyList())));
-        assertThat(new HashSet<>(stations).size(), is(stations.size()));
+        assertThat(stations.size(), is(256));
     }
 
     @Test
     public void listLastChangedStations() {
         List<Station> stations = browser.listLastChangedStations(FIVE);
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(FIVE.getLimit()));
+        assertThat(stations.size(), is(FIRST_FIVE.getLimit()));
     }
 
     @Test
@@ -276,22 +285,15 @@ public class RadioBrowserTest {
                 .collect(Collectors.toList());
         assertThat(stations, notNullValue());
         assertThat(stations, is(not(Collections.emptyList())));
-        assertThat(new HashSet<>(stations).size(), is(stations.size()));
+        assertThat(stations.size(), is(256));
     }
 
     @Test
-    public void listDeletedStations() {
-        List<Station> stations = browser.listDeletedStations();
-        assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(not(Collections.emptyList())));
-    }
-
-    @Test
-    public void getStationByUuid() {
-        List<Station> stations = browser.listStations(FIVE);
+    public void getStationByUUID() {
+        List<Station> stations = browser.listStations(FIRST_FIVE);
 
         Station first = stations.get(0);
-        Optional<Station> station = browser.getStationByUuid(first.getStationuuid());
+        Optional<Station> station = browser.getStationByUUID(first.getStationUUID());
         assertThat(station.isPresent(), is(true));
         assertThat(station.get(), is(first));
     }
@@ -311,11 +313,12 @@ public class RadioBrowserTest {
                 .collect(Collectors.toList());
         assertThat(stations, notNullValue());
         assertThat(stations, is(not(Collections.emptyList())));
+        assertThat(stations.size(), is(256));
     }
 
     @Test
     public void listStationsByWithName() {
-        List<Station> stations = browser.listStationsBy(FIVE, SearchMode.byname, "synthradio");
+        List<Station> stations = browser.listStationsBy(FIRST_FIVE, SearchMode.byname, "synthradio");
         assertThat(stations, notNullValue());
         assertThat(stations.size(), is(1));
         assertThat(stations.get(0).getUrl(), is("http://synth-radio.ru/synthradio192.m3u"));
@@ -323,17 +326,17 @@ public class RadioBrowserTest {
 
     @Test
     public void resolveStreamUrl() throws MalformedURLException {
-        List<Station> stations = browser.listStationsBy(FIVE, SearchMode.byname, "synthradio");
-        URL response = browser.resolveStreamUrl(stations.get(0));
+        List<Station> stations = browser.listStationsBy(FIRST_FIVE, SearchMode.byname, "synthradio");
+        URL response = browser.resolveStreamUrl(stations.get(0).getStationUUID());
         assertThat(response, notNullValue());
-        assertThat(response, is(new URL("http://86.62.102.131:8005/live192")));
+        assertThat(response, is(new URL("http://195.91.220.35:8005/live192")));
     }
 
     @Test
     public void listStationsBy() {
-        List<Station> stations = browser.listStationsBy(FIVE, SearchMode.byname, "ding");
+        List<Station> stations = browser.listStationsBy(FIRST_FIVE, SearchMode.byname, "ding");
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(FIVE.getLimit()));
+        assertThat(stations.size(), is(FIRST_FIVE.getLimit()));
         assertThat(stations.get(0).getName().toLowerCase(), containsString("ding"));
     }
 
@@ -345,9 +348,10 @@ public class RadioBrowserTest {
                 .collect(Collectors.toList());
         assertThat(stations, notNullValue());
         assertThat(stations, is(not(Collections.emptyList())));
-        assertThat(new HashSet<>(stations).size(), is(stations.size()));
     }
 
+    // this is being accepted by server 0.6.11, so it is not tested anymore
+    @Ignore
     @Test(expected = RadioBrowserException.class)
     public void postNewWithFail() {
         Station station = new Station();
@@ -365,34 +369,24 @@ public class RadioBrowserTest {
         station.setHomepage("https://github.com/sfuhrm/radiobrowser4j");
         station.setName(TEST_NAME);
         station.setFavicon("https://github.com/favicon.ico");
-        String id = browser.postNewStation(station);
+        UUID id = browser.postNewStation(station);
         assertNotNull(id);
-
-        Optional<Station> stationOpt = browser.getStationById(id);
-        stationOpt.ifPresent(s -> browser.deleteStation(s));
     }
 
     @Test
-    public void editStation() {
+    public void voteStation() {
         Station station = new Station();
         station.setUrl("https://github.com/sfuhrm/radiobrowser4j");
         station.setHomepage("https://github.com/sfuhrm/radiobrowser4j");
         station.setName(TEST_NAME);
         station.setFavicon("https://github.com/favicon.ico");
-        String id = browser.postNewStation(station);
+        UUID id = browser.postNewStation(station);
         assertNotNull(id);
 
-        Optional<Station> readBack1 = browser.getStationById(id);
+        Optional<Station> before = browser.getStationByUUID(id);
+        browser.voteForStation(id);
+        Optional<Station> readBack1 = browser.getStationByUUID(id);
 
-        readBack1.ifPresent(s -> s.setName("Foo bar baz"));
-
-        // changes the name
-        browser.editStation(readBack1.get());
-
-        Optional<Station> readBack2 = browser.getStationById(id);
-
-        assertThat(readBack2.get().getName(), is("Foo bar baz"));
-
-        browser.deleteStation(readBack2.get());
+        assertThat(readBack1.get().getVotes(), is(1));
     }
 }

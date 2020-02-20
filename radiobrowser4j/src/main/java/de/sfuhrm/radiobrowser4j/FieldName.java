@@ -65,12 +65,6 @@ public enum FieldName {
      */
     votes,
     /**
-     * The station negative votes.
-     * @see Station#getNegativevotes()
-     */
-    @Deprecated
-    negativevotes,
-    /**
      * The station codec.
      * @see Station#getCodec()
      */

@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.ws.rs.core.MultivaluedMap;
 import java.util.Collections;
-import java.util.Objects;
 
 /** Parameters for list calls.
  * @author Stephan Fuhrmann

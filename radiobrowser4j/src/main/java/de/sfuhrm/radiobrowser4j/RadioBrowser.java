@@ -15,12 +15,23 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
+import com.sun.istack.NotNull;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
-import javax.ws.rs.client.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
@@ -31,8 +42,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -76,16 +87,15 @@ public final class RadioBrowser {
      *                and reading.
      * @param myUserAgent the user agent string to use.
      * */
-    public RadioBrowser(final String apiUrl,
+    public RadioBrowser(@NonNull final String apiUrl,
                          final int timeout,
-                         final String myUserAgent) {
+                         @NonNull final String myUserAgent) {
         if (timeout <= 0) {
             throw new IllegalArgumentException(
                     "timeout must be > 0, but is "
                             + timeout);
         }
-        this.userAgent = Objects.requireNonNull(myUserAgent,
-                "User agent is null");
+        this.userAgent = myUserAgent;
         Client client = ClientBuilder.newBuilder()
                 .register(JacksonFeature.class)
                 .build();
@@ -164,9 +174,8 @@ public final class RadioBrowser {
      * @param paging the source of the paging params.
      * @param requestParams the target of the paging params.
      * */
-    private static void applyPaging(final Paging paging,
+    private static void applyPaging(@NonNull final Paging paging,
                     final MultivaluedMap<String, String> requestParams) {
-        Objects.requireNonNull(paging, "Paging must be non-null");
         log.info("paging={}", paging);
         requestParams.put("limit", Collections.singletonList(
                 Integer.toString(paging.getLimit())));
@@ -175,19 +184,19 @@ public final class RadioBrowser {
     }
 
     /** Retrieve a generic list containing a value/stationcount mapping.
-     * @param subpath the API sub path to use for the call.
+     * @param subPath the API sub path to use for the call.
      * @return map of value and stationcount pairs.
      * */
     private Map<String, Integer> retrieveValueStationCountList(
-            final String subpath) {
+            final String subPath) {
         MultivaluedMap<String, String> requestParams =
                 new MultivaluedHashMap<>();
 
-        Entity entity = Entity.form(requestParams);
+        Entity<Form> entity = Entity.form(requestParams);
 
         Response response = null;
         try {
-            response = builder(webTarget.path(subpath))
+            response = builder(webTarget.path(subPath))
                     .post(entity);
 
             List<Map<String, String>> map = response.readEntity(
@@ -196,7 +205,7 @@ public final class RadioBrowser {
             checkResponseStatus(response);
             return map.stream()
                     .collect(Collectors.toMap(
-                    m -> m.get("value"),
+                    m -> m.get("name"),
                     m -> Integer.parseInt(m.get("stationcount"))));
         } finally {
             close(response);
@@ -239,6 +248,7 @@ public final class RadioBrowser {
         return retrieveValueStationCountList("json/tags");
     }
 
+
     /** Get a list of all stations on a certain API path.
      * @param paging the offset and limit of the page to retrieve.
      * @param path the path to retrieve, for example "json/stations".
@@ -246,9 +256,10 @@ public final class RadioBrowser {
      * @return the partial list of the stations. Can be empty for exceeding the
      * possible stations.
      */
-    private List<Station> listStationsPath(final Optional<Paging> paging,
-                                           final String path,
-                                           final ListParameter...listParam) {
+    private List<Station> listStationsPathWithPaging(
+            final Optional<Paging> paging,
+            final String path,
+            final ListParameter...listParam) {
         MultivaluedMap<String, String> requestParams =
                 new MultivaluedHashMap<>();
 
@@ -268,15 +279,48 @@ public final class RadioBrowser {
         }
     }
 
+    /** Get a list of all stations on a certain API path.
+     * @param limit the limit of the page to retrieve.
+     * @param path the path to retrieve, for example "json/stations".
+     * @param listParam the optional listing parameters.
+     * @return the partial list of the stations. Can be empty for exceeding the
+     * possible stations.
+     */
+    private List<Station> listStationsPathWithLimit(
+                                final Optional<Limit> limit,
+                                final String path,
+                                final ListParameter...listParam) {
+        MultivaluedMap<String, String> requestParams =
+                new MultivaluedHashMap<>();
+
+        Arrays.stream(listParam).forEach(lp -> lp.applyTo(requestParams));
+        Entity entity = Entity.form(requestParams);
+        Response response = null;
+        try {
+            WebTarget target = webTarget.path(path);
+            if (limit.isPresent()) {
+                target = target.path(Integer.toString(limit.get().getLimit()));
+            }
+            response = builder(target)
+                    .post(entity);
+            checkResponseStatus(response);
+
+            return response.readEntity(new GenericType<List<Station>>() {
+            });
+        } finally {
+            close(response);
+        }
+    }
+
     /** Get a list of all stations. Will return a single batch.
      * @param paging the offset and limit of the page to retrieve.
      * @param listParam the optional listing parameters.
      * @return the partial list of the stations. Can be empty for exceeding the
      * possible stations.
      */
-    public List<Station> listStations(final Paging paging,
+    public List<Station> listStations(@NotNull final Paging paging,
                                       final ListParameter...listParam) {
-        return listStationsPath(Optional.of(paging),
+        return listStationsPathWithPaging(Optional.of(paging),
                 "json/stations",
                 listParam);
     }
@@ -294,12 +338,12 @@ public final class RadioBrowser {
     }
 
     /** Get a list of all broken stations. Will return a single batch.
-     * @param paging the offset and limit of the page to retrieve.
+     * @param limit the limit of the page to retrieve.
      * @return the partial list of the broken stations. Can be empty
      * for exceeding the possible stations.
      */
-    public List<Station> listBrokenStations(final Paging paging) {
-        return listStationsPath(Optional.of(paging),
+    public List<Station> listBrokenStations(@NotNull final Limit limit) {
+        return listStationsPathWithLimit(Optional.of(limit),
                 "json/stations/broken"
                 );
     }
@@ -310,19 +354,19 @@ public final class RadioBrowser {
     public Stream<Station> listBrokenStations() {
         return StreamSupport.stream(
                 new PagingSpliterator<>(
-                        p -> listStationsPath(Optional.of(p),
+                        p -> listStationsPathWithPaging(Optional.of(p),
                                 "json/stations/broken")),
                 false);
     }
 
     /** Get a list of all improvable stations. Will return a single batch.
-     * @param paging the offset and limit of the page to retrieve.
+     * @param limit the limit of the page to retrieve.
      * @return the partial list of the improvable stations.
      * Can be empty for exceeding the
      * possible stations.
      */
-    public List<Station> listImprovableStations(final Paging paging) {
-        return listStationsPath(Optional.of(paging),
+    public List<Station> listImprovableStations(@NotNull final Limit limit) {
+        return listStationsPathWithLimit(Optional.of(limit),
                 "json/stations/improvable");
     }
 
@@ -332,19 +376,19 @@ public final class RadioBrowser {
     public Stream<Station> listImprovableStations() {
         return StreamSupport.stream(
                 new PagingSpliterator<>(
-                        p -> listStationsPath(Optional.of(p),
+                        p -> listStationsPathWithPaging(Optional.of(p),
                                 "json/stations/improvable")),
                 false);
     }
 
     /** Get a list of the top click stations. Will return a single batch.
-     * @param paging the offset and limit of the page to retrieve.
+     * @param limit the limit of the page to retrieve.
      * @return the partial list of the top click stations.
      * Can be empty for exceeding the
      * possible stations.
      */
-    public List<Station> listTopClickStations(final Paging paging) {
-        return listStationsPath(Optional.of(paging),
+    public List<Station> listTopClickStations(@NotNull final Limit limit) {
+        return listStationsPathWithLimit(Optional.of(limit),
                 "json/stations/topclick");
     }
 
@@ -354,19 +398,19 @@ public final class RadioBrowser {
     public Stream<Station> listTopClickStations() {
         return StreamSupport.stream(
                 new PagingSpliterator<>(
-                        p -> listStationsPath(Optional.of(p),
+                        p -> listStationsPathWithPaging(Optional.of(p),
                                 "json/stations/topclick")),
                 false);
     }
 
     /** Get a list of the top vote stations. Will return a single batch.
-     * @param paging the offset and limit of the page to retrieve.
+     * @param limit the limit of the page to retrieve.
      * @return the partial list of the top vote stations.
      * Can be empty for exceeding the
      * possible stations.
      */
-    public List<Station> listTopVoteStations(final Paging paging) {
-        return listStationsPath(Optional.of(paging),
+    public List<Station> listTopVoteStations(@NotNull final Limit limit) {
+        return listStationsPathWithLimit(Optional.of(limit),
                 "json/stations/topvote");
     }
 
@@ -376,19 +420,19 @@ public final class RadioBrowser {
     public Stream<Station> listTopVoteStations() {
         return StreamSupport.stream(
                 new PagingSpliterator<>(
-                        p -> listStationsPath(Optional.of(p),
+                        p -> listStationsPathWithPaging(Optional.of(p),
                                 "json/stations/topvote")),
                 false);
     }
 
     /** Get a list of the last clicked stations. Will return a single batch.
-     * @param paging the offset and limit of the page to retrieve.
+     * @param limit the limit of the page to retrieve.
      * @return the partial list of the last clicked stations.
      * Can be empty for exceeding the
      * possible stations.
      */
-    public List<Station> listLastClickStations(final Paging paging) {
-        return listStationsPath(Optional.of(paging),
+    public List<Station> listLastClickStations(@NotNull final Limit limit) {
+        return listStationsPathWithLimit(Optional.of(limit),
                 "json/stations/lastclick");
     }
 
@@ -398,19 +442,19 @@ public final class RadioBrowser {
     public Stream<Station> listLastClickStations() {
         return StreamSupport.stream(
                 new PagingSpliterator<>(
-                        p -> listStationsPath(Optional.of(p),
+                        p -> listStationsPathWithPaging(Optional.of(p),
                                 "json/stations/lastclick")),
                 false);
     }
 
     /** Get a list of the last changed stations. Will return a single batch.
-     * @param paging the offset and limit of the page to retrieve.
+     * @param limit the limit of the page to retrieve.
      * @return the partial list of the last clicked stations.
      * Can be empty for exceeding the
      * possible stations.
      */
-    public List<Station> listLastChangedStations(final Paging paging) {
-        return listStationsPath(Optional.of(paging),
+    public List<Station> listLastChangedStations(@NotNull final Limit limit) {
+        return listStationsPathWithLimit(Optional.of(limit),
                 "json/stations/lastchange");
     }
 
@@ -420,44 +464,22 @@ public final class RadioBrowser {
     public Stream<Station> listLastChangedStations() {
         return StreamSupport.stream(
                 new PagingSpliterator<>(
-                        p -> listStationsPath(Optional.of(p),
+                        p -> listStationsPathWithPaging(Optional.of(p),
                                 "json/stations/lastchange")),
                 false);
-    }
-
-    /** Get a list of the deleted stations. Will return a single batch.
-     * @return the partial list of the deleted stations.
-     * Can be empty for exceeding the
-     * possible stations.
-     */
-    public List<Station> listDeletedStations() {
-        return listStationsPath(Optional.empty(),
-                "json/stations/deleted");
-    }
-
-    /** Get a station referenced by the ID.
-     * @param id the id of the station to retrieve.
-     * @return an optional containing either the station or nothing.
-     * Nothing is returned if the API didn't find the station by the
-     * given ID:
-     */
-    @Deprecated
-    public Optional<Station> getStationById(final String id) {
-        return getStationByUuid(id);
     }
 
     /** Get a station referenced by its UUID.
      * @param uuid the UUID of the station to retrieve.
      * @return an optional containing either the station or nothing.
      * Nothing is returned if the API didn't find the station by the
-     * given ID:
+     * given ID.
      */
-    public Optional<Station> getStationByUuid(final String uuid) {
-        Objects.requireNonNull(uuid, "id must be non-null");
+    public Optional<Station> getStationByUUID(@NonNull final UUID uuid) {
         List<Station> stationList = listStationsBy(
                 Paging.at(0, 1),
                 SearchMode.byuuid,
-                uuid);
+                uuid.toString());
         if (stationList.isEmpty()) {
             return Optional.empty();
         } else {
@@ -474,15 +496,10 @@ public final class RadioBrowser {
      * @return the partial list of the stations. Can be empty for exceeding the
      * number of matching stations.
      */
-    public List<Station> listStationsBy(final Paging paging,
-                                        final SearchMode searchMode,
-                                        final String searchTerm,
+    public List<Station> listStationsBy(@NotNull final Paging paging,
+                                        @NonNull final SearchMode searchMode,
+                                        @NonNull final String searchTerm,
                                         final ListParameter...listParam) {
-        Objects.requireNonNull(searchMode,
-                "searchMode must be non-null");
-        Objects.requireNonNull(searchTerm,
-                "searchTerm must be non-null");
-
         MultivaluedMap<String, String> requestParams =
                 new MultivaluedHashMap<>();
         applyPaging(paging, requestParams);
@@ -510,13 +527,10 @@ public final class RadioBrowser {
      * @param listParam the optional listing parameters.
      * @return the full stream of matching stations.
      */
-    public Stream<Station> listStationsBy(final SearchMode searchMode,
-                                        final String searchTerm,
-                                        final ListParameter...listParam) {
-        Objects.requireNonNull(searchMode,
-                "searchMode must be non-null");
-        Objects.requireNonNull(searchTerm,
-                "searchTerm must be non-null");
+    public Stream<Station> listStationsBy(
+            @NonNull final SearchMode searchMode,
+            @NonNull final String searchTerm,
+            final ListParameter...listParam) {
 
         Function<Paging, List<Station>> fetcher = p -> {
             MultivaluedMap<String, String> requestParams =
@@ -546,17 +560,15 @@ public final class RadioBrowser {
     }
 
     /** Resolves the streaming URL for the given station.
-     * @param station the station to retrieve the stream URL for.
+     * @param stationUUID the station UUID to retrieve the stream URL for.
      * @return the URL of the stream.
      * @throws RadioBrowserException if the URL could not be retrieved
      */
-    public URL resolveStreamUrl(final Station station) {
-        Objects.requireNonNull(station, "station must be non-null");
-
+    public URL resolveStreamUrl(@NonNull final UUID stationUUID) {
         Response response = null;
         try {
             response = builder(webTarget.path("v2/json/url")
-                    .path(station.getStationuuid()))
+                    .path(stationUUID.toString()))
                     .get();
 
             checkResponseStatus(response);
@@ -576,94 +588,32 @@ public final class RadioBrowser {
         }
     }
 
-    /**
-     * Calls a state alteration method for one station.
-     * @param station the station to undelete/delete from the REST service.
-     * @param path the URL path of the state alteration endpoint.
-     */
-    private void triggerStationState(final Station station,
-                                     final String path) {
-        Objects.requireNonNull(station, "station must be non-null");
-        MultivaluedMap<String, String> requestParams =
-                new MultivaluedHashMap<>();
-
-        Entity entity = Entity.form(requestParams);
-
-        Response response = null;
-
-        try {
-            response = builder(webTarget
-                        .path(path)
-                        .path(station.getStationuuid()))
-                    .post(entity);
-            logResponseStatus(response);
-            UrlResponse urlResponse = response.readEntity(
-                    UrlResponse.class);
-            if (!urlResponse.isOk()) {
-                throw new RadioBrowserException(urlResponse.getMessage());
-            }
-        } finally {
-            close(response);
-        }
-    }
-
-    /** Deletes a station.
-     * The station is only marked as being deleted.
-     * @param station the station to delete from the REST service.
-     */
-    public void deleteStation(final Station station) {
-        triggerStationState(station, "json/delete");
-    }
-
-    /** Undeletes a station.
-     * The station is only marked as being deleted.
-     * @param station the station to delete from the REST service.
-     */
-    public void undeleteStation(final Station station) {
-        triggerStationState(station, "json/undelete");
-    }
-
     /** Posts a new station to the server.
      * Note: This call only transmits certain fields.
      * The fields are:
      * name, url, homepage, favicon, country, state, language and tags.
      * @param station the station to add to the REST service.
-     * @return the {@linkplain Station#getStationuuid() id} of the new station.
+     * @return the {@linkplain Station#getStationUUID()} id} of the new station.
      * @throws RadioBrowserException if there was a problem
      * creating the station.
      * @see <a href="https://de1.api.radio-browser.info/#Add_radio_station">
      *     The API endpoint</a>
      */
-    public String postNewStation(final Station station) {
+    public UUID postNewStation(@NotNull final Station station) {
         return postNewOrEditStation(station, "json/add");
-    }
-
-    /** Edits an existing station on the server.
-     * Note: This call only transmits certain fields.
-     * The fields are:
-     * name, url, homepage, favicon, country, state, language and tags.
-     * @param station the station to edit with the REST service.
-     * @return the {@linkplain Station#getStationuuid() id} of the station.
-     * @throws RadioBrowserException if there was a problem
-     * editing the station.
-     */
-    public String editStation(final Station station) {
-        Objects.requireNonNull(station.getStationuuid(), "id must be non-null");
-        return postNewOrEditStation(station, "json/edit/" + station.getStationuuid());
     }
 
     /**
      * Votes for a station.
-     * @param station The station to vote for.
+     * @param stationUUID The uuid of the station to vote for.
      * @throws RadioBrowserException if there was a problem
      * voting for the station.
      */
-    public void voteForStation(final Station station) {
-        Objects.requireNonNull(station.getStationuuid(), "id must be non-null");
+    public void voteForStation(@NonNull final UUID stationUUID) {
         Response response = null;
         try {
             response = builder(webTarget
-                    .path("json/vote/" + station.getStationuuid()))
+                    .path("json/vote/").path(stationUUID.toString()))
                     .get();
 
             logResponseStatus(response);
@@ -683,17 +633,16 @@ public final class RadioBrowser {
      * name, url, homepage, favicon, country, state, language and tags.
      * @param station the station to add to the REST service.
      * @param path the path of the new / edit call.
-     * @return the {@linkplain Station#getStationuuid() id} of the new station.
+     * @return the {@linkplain Station#getStationUUID()} id} of the new station.
      * @throws RadioBrowserException if there was a problem
      * creating the station.
      */
-    private String postNewOrEditStation(final Station station,
+    private UUID postNewOrEditStation(@NonNull final Station station,
                                         final String path) {
-        Objects.requireNonNull(station, "station must be non-null");
         MultivaluedMap<String, String> requestParams =
                 new MultivaluedHashMap<>();
         transferToMultivaluedMap(station, requestParams);
-        Entity entity = Entity.form(requestParams);
+        Entity<Form> entity = Entity.form(requestParams);
 
         Response response = null;
         try {
@@ -713,7 +662,7 @@ public final class RadioBrowser {
                 throw new RadioBrowserException(urlResponse.getMessage());
             }
 
-            return urlResponse.getId();
+            return urlResponse.getUuid();
         } finally {
             close(response);
         }

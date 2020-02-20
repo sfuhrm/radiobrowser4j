@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -37,17 +39,16 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode(of = {"stationuuid", "name"})
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class Station {
-    /** The station id. The ID is usually numeric. */
-    @Deprecated @Getter @Setter
-    private String id;
-
-    /** A globally unique identifier for the change of the station information. */
+    /** A globally unique identifier for the change
+     * of the station information. */
     @Getter @Setter
-    private String changeuuid;
+    @JsonProperty("changeuuid")
+    private UUID changeUUID;
 
     /** A globally unique identifier for the station. */
     @Getter @Setter
-    private String stationuuid;
+    @JsonProperty("stationuuid")
+    private UUID stationUUID;
 
     /** The name of the station. */
     @Getter @Setter
@@ -59,6 +60,7 @@ public final class Station {
 
     /** An automatically "resolved" stream URL. */
     @Getter @Setter
+    @JsonProperty("url_resolved")
     private String urlResolved;
 
     /** The URL of the stations homepage. */
@@ -81,9 +83,10 @@ public final class Station {
     @Getter @Setter
     private String country;
 
-    /** Official countrycodes according to ISO 3166-1 alpha-2. */
+    /** Official country codes according to ISO 3166-1 alpha-2. */
     @Getter @Setter
-    private String countrycode;
+    @JsonProperty("countrycode")
+    private String countryCode;
 
     /** The state this station is located at. */
     @Getter @Setter
@@ -99,11 +102,7 @@ public final class Station {
 
     /** The votes for this station. */
     @Getter @Setter
-    private String votes;
-
-    /** The negative votes for this station. */
-    @Deprecated @Getter @Setter
-    private String negativevotes;
+    private Integer votes;
 
     /** The codec used for the stream. */
     @Getter @Setter
@@ -111,7 +110,7 @@ public final class Station {
 
     /** The bitrate used for the stream. */
     @Getter @Setter
-    private String bitrate;
+    private Integer bitrate;
 
     /** Mark if this stream is using HLS distribution or non-HLS. */
     @Getter @Setter
@@ -119,7 +118,7 @@ public final class Station {
 
     /** The current online/offline state of this stream. */
     @Getter @Setter
-    private int lastcheckok;
+    private Integer lastcheckok;
 
     /** The last time when any Radio-Browser server checked
      * the online state of this stream. */
@@ -154,11 +153,11 @@ public final class Station {
 
     /** Clicks within the last 24 hours. */
     @Getter @Setter
-    private String clickcount;
+    private Integer clickcount;
 
     /** The difference of the click counts within the last 2 days. */
     @Getter @Setter
-    private String clicktrend;
+    private Integer clicktrend;
 
     /** Timestamp of the last change of the stations data. */
     @Getter

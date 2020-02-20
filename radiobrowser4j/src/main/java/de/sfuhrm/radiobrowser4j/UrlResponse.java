@@ -18,6 +18,8 @@ package de.sfuhrm.radiobrowser4j;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 
+import java.util.UUID;
+
 
 /**
  * API response from the radio browser API.
@@ -33,9 +35,9 @@ class UrlResponse {
     @Getter
     private String message;
 
-    /** The id of the referenced entity. */
+    /** The uuid of the referenced entity. */
     @Getter
-    private String id;
+    private UUID uuid;
 
     /** The name of the referenced entity. */
     @Getter
