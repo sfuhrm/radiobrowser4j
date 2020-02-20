@@ -16,6 +16,7 @@
 package de.sfuhrm.radiobrowser4j;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,9 +55,8 @@ public final class ListParameter {
      * @param fieldName the field name to order by.
      * @return {@code this} instance.
      * */
-    public ListParameter order(final FieldName fieldName) {
-        this.order = Objects.requireNonNull(fieldName,
-                "field name must be non-null");
+    public ListParameter order(@NonNull final FieldName fieldName) {
+        this.order = fieldName;
         return this;
     }
 
