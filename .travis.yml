@@ -2,10 +2,10 @@ language: java
 matrix:
   include:
 # Java 8
-    - jdk: oraclejdk8
+#    - jdk: oraclejdk8
 # Java 9
-    - jdk: oraclejdk9
-      env: JDK_RELEASE='Oracle JDK 9'
+    - env: JDK_RELEASE='Oracle JDK 9'
+      install: wget https://github.com/sormuras/bach/raw/master/install-jdk.sh && . ./install-jdk.sh -f 9 -l GPL
 # Java 11
     - env: JDK_RELEASE='Oracle JDK 11'
       install: wget https://github.com/sormuras/bach/raw/master/install-jdk.sh && . ./install-jdk.sh -f 11 -l GPL
