@@ -7,8 +7,11 @@
   </Appenders>
 
   <Loggers>
-    <Root level="DEBUG">
+    <Root level="WARN">
       <AppenderRef ref="console" />
     </Root>
+    <Logger name="de.sfuhrm.radiobrowser4j" level="debug">
+      <AppenderRef ref="Console"/>
+    </Logger>
   </Loggers>
 </Configuration>
