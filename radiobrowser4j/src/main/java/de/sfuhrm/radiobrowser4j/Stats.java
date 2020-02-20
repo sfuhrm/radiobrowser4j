@@ -25,7 +25,6 @@ import lombok.Setter;
  * Representation of a api endpoint statistic.
  * @author Stephan Fuhrmann
  */
-@EqualsAndHashCode(of = {"id", "name"})
 @JsonIgnoreProperties(ignoreUnknown = true)
 final class Stats {
 
@@ -34,7 +33,7 @@ final class Stats {
     @JsonProperty("supported_version")
     private Integer supportedVersion;
 
-    /** The software version. */
+    /** The version of the API. */
     @Getter @Setter
     @JsonProperty("software_version")
     private String softwareVersion;
@@ -43,4 +42,36 @@ final class Stats {
     @Getter @Setter
     @JsonProperty("status")
     private String status;
+
+    /** The number of stations stored on the server. */
+    @Getter @Setter
+    private Integer stations;
+
+    /** The number of broken stations. */
+    @Getter @Setter
+    @JsonProperty("stations_broken")
+    private Integer stationsBroken;
+
+    /** The number of tags. */
+    @Getter @Setter
+    private Integer tags;
+
+    /** The number of clicks in the last hour. */
+    @Getter @Setter
+    @JsonProperty("clicks_last_hour")
+    private Integer clicksLastHour;
+
+    /** The number of clicks in the last 24 hours. */
+    @Getter @Setter
+    @JsonProperty("clicks_last_day")
+    private Integer clicksLastDay;
+
+    /** The number of languages. */
+    @Getter @Setter
+    private Integer languages;
+
+    /** The number of countries. */
+    @Getter @Setter
+    private Integer countries;
+
 }

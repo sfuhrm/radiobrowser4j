@@ -21,87 +21,88 @@ package de.sfuhrm.radiobrowser4j;
 public enum FieldName {
     /**
      * The station name.
-     * @see Station#name
+     * @see Station#getName()
      */
     name,
     /**
      * The station url.
-     * @see Station#url
+     * @see Station#getUrl()
      */
     url,
     /**
      * The station homepage.
-     * @see Station#homepage
+     * @see Station#getHomepage()
      */
     homepage,
     /**
      * The station favicon.
-     * @see Station#favicon
+     * @see Station#getFavicon()
      */
     favicon,
     /**
      * The station tags.
-     * @see Station#tagList
+     * @see Station#getTagList()
      */
     tags,
     /**
      * The station country.
-     * @see Station#country
+     * @see Station#getCountry()
      */
     country,
     /**
      * The station state.
-     * @see Station#state
+     * @see Station#getState()
      */
     state,
     /**
      * The station language.
-     * @see Station#language
+     * @see Station#getLanguage()
      */
     language,
     /**
      * The station votes.
-     * @see Station#votes
+     * @see Station#getVotes()
      */
     votes,
     /**
      * The station negative votes.
-     * @see Station#negativevotes
+     * @see Station#getNegativevotes()
      */
+    @Deprecated
     negativevotes,
     /**
      * The station codec.
-     * @see Station#codec
+     * @see Station#getCodec()
      */
     codec,
     /**
      * The station bitrate.
-     * @see Station#bitrate
+     * @see Station#getBitrate()
      */
     bitrate,
     /**
      * Whether last check was ok.
-     * @see Station#lastcheckok
+     * @see Station#getLastcheckok()
      */
     lastcheckok,
     /**
      * Last check time.
-     * @see Station#lastchecktime
+     * @see Station#getLastchecktime()
      */
     lastchecktime,
     /**
      * The click time stamp.
-     * @see Station#clicktimestamp
+     * @see Station#getClicktimestamp()
      */
     clicktimestamp,
     /**
      * The station click count.
-     * @see Station#clickcount
+     * @see Station#getClickcount()
      */
     clickcount,
     /**
      * The station click trend.
-     * @see Station#clicktrend
+     * @see Station#getClicktrend()
      */
     clicktrend
 }

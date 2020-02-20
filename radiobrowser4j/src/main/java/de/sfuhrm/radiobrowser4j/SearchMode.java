@@ -21,7 +21,10 @@ package de.sfuhrm.radiobrowser4j;
  * @author Stephan Fuhrmann
  * */
 public enum SearchMode {
+    /** Search by UUID. */
+    byuuid,
     /** Search by ID. */
+    @Deprecated
     byid,
     /** Search by name. */
     byname,
@@ -35,6 +38,8 @@ public enum SearchMode {
     bycountry,
     /** Search by exact country. */
     bycountryexact,
+    /** Search by ISO 3166-1 alpha-2 country code. */
+    bycountrycodeexact,
     /** Search by state. */
     bystate,
     /** Search by exact state. */

@@ -15,6 +15,12 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
+import lombok.extern.slf4j.Slf4j;
+import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.jackson.JacksonFeature;
+
+import javax.ws.rs.client.*;
+import javax.ws.rs.core.*;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
@@ -31,20 +37,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-
-import lombok.extern.slf4j.Slf4j;
-import org.glassfish.jersey.client.ClientProperties;
-import org.glassfish.jersey.jackson.JacksonFeature;
 
 /** API facade for the RadioBrowser.
  * You usually create a new {@linkplain #RadioBrowser(int, String) instance}
@@ -101,7 +93,6 @@ public final class RadioBrowser {
         client.property(ClientProperties.READ_TIMEOUT,    timeout);
         webTarget = client.target(apiUrl);
     }
-
 
     /**
      * Creates a new API client.
@@ -450,12 +441,23 @@ public final class RadioBrowser {
      * Nothing is returned if the API didn't find the station by the
      * given ID:
      */
+    @Deprecated
     public Optional<Station> getStationById(final String id) {
-        Objects.requireNonNull(id, "id must be non-null");
+        return getStationByUuid(id);
+    }
+
+    /** Get a station referenced by its UUID.
+     * @param uuid the UUID of the station to retrieve.
+     * @return an optional containing either the station or nothing.
+     * Nothing is returned if the API didn't find the station by the
+     * given ID:
+     */
+    public Optional<Station> getStationByUuid(final String uuid) {
+        Objects.requireNonNull(uuid, "id must be non-null");
         List<Station> stationList = listStationsBy(
                 Paging.at(0, 1),
-                SearchMode.byid,
-                        id);
+                SearchMode.byuuid,
+                uuid);
         if (stationList.isEmpty()) {
             return Optional.empty();
         } else {
@@ -554,7 +556,7 @@ public final class RadioBrowser {
         Response response = null;
         try {
             response = builder(webTarget.path("v2/json/url")
-                    .path(station.getId()))
+                    .path(station.getStationuuid()))
                     .get();
 
             checkResponseStatus(response);
@@ -592,7 +594,7 @@ public final class RadioBrowser {
         try {
             response = builder(webTarget
                         .path(path)
-                        .path(station.getId()))
+                        .path(station.getStationuuid()))
                     .post(entity);
             logResponseStatus(response);
             UrlResponse urlResponse = response.readEntity(
@@ -626,7 +628,7 @@ public final class RadioBrowser {
      * The fields are:
      * name, url, homepage, favicon, country, state, language and tags.
      * @param station the station to add to the REST service.
-     * @return the {@linkplain Station#id id} of the new station.
+     * @return the {@linkplain Station#getStationuuid() id} of the new station.
      * @throws RadioBrowserException if there was a problem
      * creating the station.
      * @see <a href="https://de1.api.radio-browser.info/#Add_radio_station">
@@ -641,13 +643,38 @@ public final class RadioBrowser {
      * The fields are:
      * name, url, homepage, favicon, country, state, language and tags.
      * @param station the station to edit with the REST service.
-     * @return the {@linkplain Station#id id} of the station.
+     * @return the {@linkplain Station#getStationuuid() id} of the station.
      * @throws RadioBrowserException if there was a problem
      * editing the station.
      */
     public String editStation(final Station station) {
-        Objects.requireNonNull(station.getId(), "id must be non-null");
-        return postNewOrEditStation(station, "json/edit/" + station.getId());
+        Objects.requireNonNull(station.getStationuuid(), "id must be non-null");
+        return postNewOrEditStation(station, "json/edit/" + station.getStationuuid());
+    }
+
+    /**
+     * Votes for a station.
+     * @param station The station to vote for.
+     * @throws RadioBrowserException if there was a problem
+     * voting for the station.
+     */
+    public void voteForStation(final Station station) {
+        Objects.requireNonNull(station.getStationuuid(), "id must be non-null");
+        Response response = null;
+        try {
+            response = builder(webTarget
+                    .path("json/vote/" + station.getStationuuid()))
+                    .get();
+
+            logResponseStatus(response);
+            UrlResponse urlResponse = response.readEntity(UrlResponse.class);
+
+            if (!urlResponse.isOk()) {
+                throw new RadioBrowserException(urlResponse.getMessage());
+            }
+        } finally {
+            close(response);
+        }
     }
 
     /** Posts a new station to the server.
@@ -656,7 +683,7 @@ public final class RadioBrowser {
      * name, url, homepage, favicon, country, state, language and tags.
      * @param station the station to add to the REST service.
      * @param path the path of the new / edit call.
-     * @return the {@linkplain Station#id id} of the new station.
+     * @return the {@linkplain Station#getStationuuid() id} of the new station.
      * @throws RadioBrowserException if there was a problem
      * creating the station.
      */
