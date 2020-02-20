@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG" name="SnmpMan">
+  <Appenders>
+    <Console name="console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%p: %m%n%throwable{1}" />
+    </Console>
+  </Appenders>
+
+  <Loggers>
+    <Root level="DEBUG">
+      <AppenderRef ref="console" />
+    </Root>
+  </Loggers>
+</Configuration>
