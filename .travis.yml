@@ -4,6 +4,7 @@ matrix:
     - jdk: openjdk8
     - jdk: openjdk10
     - jdk: openjdk11
-install: mvn -Dgpg.skip install clirr:check
+#install: mvn -Dgpg.skip install clirr:check
+install: mvn -Dgpg.skip install
 after_success:
   - mvn -DrepoToken=${coveralls_token} clean test jacoco:report coveralls:report --projects=radiobrowser4j
