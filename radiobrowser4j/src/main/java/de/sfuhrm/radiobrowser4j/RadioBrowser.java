@@ -15,7 +15,6 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
-import com.sun.istack.NotNull;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.glassfish.jersey.client.ClientProperties;
@@ -318,7 +317,7 @@ public final class RadioBrowser {
      * @return the partial list of the stations. Can be empty for exceeding the
      * possible stations.
      */
-    public List<Station> listStations(@NotNull final Paging paging,
+    public List<Station> listStations(@NonNull final Paging paging,
                                       final ListParameter...listParam) {
         return listStationsPathWithPaging(Optional.of(paging),
                 "json/stations",
@@ -342,7 +341,7 @@ public final class RadioBrowser {
      * @return the partial list of the broken stations. Can be empty
      * for exceeding the possible stations.
      */
-    public List<Station> listBrokenStations(@NotNull final Limit limit) {
+    public List<Station> listBrokenStations(@NonNull final Limit limit) {
         return listStationsPathWithLimit(Optional.of(limit),
                 "json/stations/broken"
                 );
@@ -365,7 +364,7 @@ public final class RadioBrowser {
      * Can be empty for exceeding the
      * possible stations.
      */
-    public List<Station> listImprovableStations(@NotNull final Limit limit) {
+    public List<Station> listImprovableStations(@NonNull final Limit limit) {
         return listStationsPathWithLimit(Optional.of(limit),
                 "json/stations/improvable");
     }
@@ -387,7 +386,7 @@ public final class RadioBrowser {
      * Can be empty for exceeding the
      * possible stations.
      */
-    public List<Station> listTopClickStations(@NotNull final Limit limit) {
+    public List<Station> listTopClickStations(@NonNull final Limit limit) {
         return listStationsPathWithLimit(Optional.of(limit),
                 "json/stations/topclick");
     }
@@ -409,7 +408,7 @@ public final class RadioBrowser {
      * Can be empty for exceeding the
      * possible stations.
      */
-    public List<Station> listTopVoteStations(@NotNull final Limit limit) {
+    public List<Station> listTopVoteStations(@NonNull final Limit limit) {
         return listStationsPathWithLimit(Optional.of(limit),
                 "json/stations/topvote");
     }
@@ -431,7 +430,7 @@ public final class RadioBrowser {
      * Can be empty for exceeding the
      * possible stations.
      */
-    public List<Station> listLastClickStations(@NotNull final Limit limit) {
+    public List<Station> listLastClickStations(@NonNull final Limit limit) {
         return listStationsPathWithLimit(Optional.of(limit),
                 "json/stations/lastclick");
     }
@@ -453,7 +452,7 @@ public final class RadioBrowser {
      * Can be empty for exceeding the
      * possible stations.
      */
-    public List<Station> listLastChangedStations(@NotNull final Limit limit) {
+    public List<Station> listLastChangedStations(@NonNull final Limit limit) {
         return listStationsPathWithLimit(Optional.of(limit),
                 "json/stations/lastchange");
     }
@@ -496,7 +495,7 @@ public final class RadioBrowser {
      * @return the partial list of the stations. Can be empty for exceeding the
      * number of matching stations.
      */
-    public List<Station> listStationsBy(@NotNull final Paging paging,
+    public List<Station> listStationsBy(@NonNull final Paging paging,
                                         @NonNull final SearchMode searchMode,
                                         @NonNull final String searchTerm,
                                         final ListParameter...listParam) {
@@ -599,7 +598,7 @@ public final class RadioBrowser {
      * @see <a href="https://de1.api.radio-browser.info/#Add_radio_station">
      *     The API endpoint</a>
      */
-    public UUID postNewStation(@NotNull final Station station) {
+    public UUID postNewStation(@NonNull final Station station) {
         return postNewOrEditStation(station, "json/add");
     }
 
