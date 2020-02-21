@@ -102,20 +102,6 @@ public class RadioBrowserTest {
     }
 
     @Test
-    public void apiUrls() throws UnknownHostException {
-        List<String> urls = browser.apiUrls();
-        assertThat(urls.size(), is(not(0)));
-    }
-
-    @Test
-    public void getStats() {
-        Stats stats = browser.getStats(API_URL, 5000);
-        assertThat(stats, notNullValue());
-        assertThat(stats.getSupportedVersion(), notNullValue());
-        assertThat(stats.getSoftwareVersion(), notNullValue());
-    }
-
-    @Test
     public void listCountries() {
         Map<String, Integer> countries = browser.listCountries();
         assertThat(countries, notNullValue());
