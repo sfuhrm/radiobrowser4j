@@ -149,11 +149,10 @@ public final class RadioBrowser {
         client.property(ClientProperties.CONNECT_TIMEOUT, timeout);
         client.property(ClientProperties.READ_TIMEOUT,    timeout);
         WebTarget webTarget = client.target(endpoint);
-        Stats response = webTarget.path("json/stats")
+        return webTarget.path("json/stats")
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .get(Stats.class);
-        return response;
     }
 
     /** Creates a builder from the given web target

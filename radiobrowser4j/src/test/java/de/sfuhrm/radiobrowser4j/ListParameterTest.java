@@ -36,6 +36,8 @@ public class ListParameterTest {
     @Test
     public void create() {
         ListParameter listParameter = ListParameter.create();
+
+        assertThat(listParameter, is(not(nullValue())));
     }
 
     @Test
