@@ -30,7 +30,7 @@ public final class Limit {
 
     /** The total number of elements to process. */
     @Getter
-    private final int limit;
+    private final int size;
 
     /** Creates a new paging. This method is private.
      * @param myLimit the limit to use.
@@ -42,7 +42,7 @@ public final class Limit {
             throw new IllegalArgumentException(
                     "Limit is " + myLimit + ", but must be > 0");
         }
-        this.limit = myLimit;
+        this.size = myLimit;
     }
 
     /** Creates a new limit with the given number of entries.

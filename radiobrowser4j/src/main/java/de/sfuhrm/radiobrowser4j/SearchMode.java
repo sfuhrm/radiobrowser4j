@@ -22,31 +22,31 @@ package de.sfuhrm.radiobrowser4j;
  * */
 public enum SearchMode {
     /** Search by UUID. */
-    byuuid,
+    BYUUID,
     /** Search by name. */
-    byname,
+    BYNAME,
     /** Search by exact name. */
-    bynameexact,
+    BYNAMEEXACT,
     /** Search by codec. */
-    bycodec,
+    BYCODEC,
     /** Search by exact codec. */
-    bycodecexact,
+    BYCODECEXACT,
     /** Search by country. */
-    bycountry,
+    BYCOUNTRY,
     /** Search by exact country. */
-    bycountryexact,
+    BYCOUNTRYEXACT,
     /** Search by ISO 3166-1 alpha-2 country code. */
-    bycountrycodeexact,
+    BYCOUNTRYCODEEXACT,
     /** Search by state. */
-    bystate,
+    BYSTATE,
     /** Search by exact state. */
-    bystateexact,
+    BYSTATEEXACT,
     /** Search by language. */
-    bylanguage,
+    BYLANGUAGE,
     /** Search by exact language. */
-    bylanguageexact,
+    BYLANGUAGEEXACT,
     /** Search by tag. */
-    bytag,
+    BYTAG,
     /** Search by exact tag. */
-    bytagexact
+    BYTAGEXACT
 }

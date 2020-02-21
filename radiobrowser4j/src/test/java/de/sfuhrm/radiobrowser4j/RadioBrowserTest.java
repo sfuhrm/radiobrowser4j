@@ -202,7 +202,7 @@ public class RadioBrowserTest {
     public void listBrokenStations() {
         List<Station> stations = browser.listBrokenStations(FIVE);
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(FIVE.getLimit()));
+        assertThat(stations.size(), is(FIVE.getSize()));
     }
 
     @Test
@@ -220,7 +220,7 @@ public class RadioBrowserTest {
     public void listTopClickStations() {
         List<Station> stations = browser.listTopClickStations(FIVE);
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(FIVE.getLimit()));
+        assertThat(stations.size(), is(FIVE.getSize()));
     }
 
     @Test
@@ -238,7 +238,7 @@ public class RadioBrowserTest {
     public void listTopVoteStations() {
         List<Station> stations = browser.listTopVoteStations(FIVE);
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(FIVE.getLimit()));
+        assertThat(stations.size(), is(FIVE.getSize()));
     }
 
     @Test
@@ -256,7 +256,7 @@ public class RadioBrowserTest {
     public void listLastClickStations() {
         List<Station> stations = browser.listLastClickStations(FIVE);
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(FIVE.getLimit()));
+        assertThat(stations.size(), is(FIVE.getSize()));
     }
 
     @Test
@@ -302,7 +302,7 @@ public class RadioBrowserTest {
     public void listImprovableStations() {
         List<Station> stations = browser.listImprovableStations(FIVE);
         assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(FIVE.getLimit()));
+        assertThat(stations.size(), is(FIVE.getSize()));
     }
 
     @Test
@@ -318,7 +318,7 @@ public class RadioBrowserTest {
 
     @Test
     public void listStationsByWithName() {
-        List<Station> stations = browser.listStationsBy(FIRST_FIVE, SearchMode.byname, "synthradio");
+        List<Station> stations = browser.listStationsBy(FIRST_FIVE, SearchMode.BYNAME, "synthradio");
         assertThat(stations, notNullValue());
         assertThat(stations.size(), is(1));
         assertThat(stations.get(0).getUrl(), is("http://synth-radio.ru/synthradio192.m3u"));
@@ -326,7 +326,7 @@ public class RadioBrowserTest {
 
     @Test
     public void resolveStreamUrl() throws MalformedURLException {
-        List<Station> stations = browser.listStationsBy(FIRST_FIVE, SearchMode.byname, "synthradio");
+        List<Station> stations = browser.listStationsBy(FIRST_FIVE, SearchMode.BYNAME, "synthradio");
         URL response = browser.resolveStreamUrl(stations.get(0).getStationUUID());
         assertThat(response, notNullValue());
         assertThat(response, is(new URL("http://195.91.220.35:8005/live192")));
@@ -334,7 +334,7 @@ public class RadioBrowserTest {
 
     @Test
     public void listStationsBy() {
-        List<Station> stations = browser.listStationsBy(FIRST_FIVE, SearchMode.byname, "ding");
+        List<Station> stations = browser.listStationsBy(FIRST_FIVE, SearchMode.BYNAME, "ding");
         assertThat(stations, notNullValue());
         assertThat(stations.size(), is(FIRST_FIVE.getLimit()));
         assertThat(stations.get(0).getName().toLowerCase(), containsString("ding"));
@@ -343,7 +343,7 @@ public class RadioBrowserTest {
     @Test
     public void listStationsByWithStream() {
         List<Station> stations = browser
-                .listStationsBy(SearchMode.byname, "pop")
+                .listStationsBy(SearchMode.BYNAME, "pop")
                 .limit(256)
                 .collect(Collectors.toList());
         assertThat(stations, notNullValue());

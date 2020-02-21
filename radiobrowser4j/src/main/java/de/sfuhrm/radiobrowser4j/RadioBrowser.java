@@ -298,7 +298,7 @@ public final class RadioBrowser {
         try {
             WebTarget target = webTarget.path(path);
             if (limit.isPresent()) {
-                target = target.path(Integer.toString(limit.get().getLimit()));
+                target = target.path(Integer.toString(limit.get().getSize()));
             }
             response = builder(target)
                     .post(entity);
@@ -477,7 +477,7 @@ public final class RadioBrowser {
     public Optional<Station> getStationByUUID(@NonNull final UUID uuid) {
         List<Station> stationList = listStationsBy(
                 Paging.at(0, 1),
-                SearchMode.byuuid,
+                SearchMode.BYUUID,
                 uuid.toString());
         if (stationList.isEmpty()) {
             return Optional.empty();
@@ -509,7 +509,7 @@ public final class RadioBrowser {
         try {
             response = builder(webTarget
                        .path("json/stations")
-                       .path(searchMode.name())
+                       .path(searchMode.name().toLowerCase())
                        .path(searchTerm))
                     .post(entity);
             checkResponseStatus(response);
@@ -542,7 +542,7 @@ public final class RadioBrowser {
             try {
                 response = builder(webTarget
                         .path("json/stations")
-                        .path(searchMode.name())
+                        .path(searchMode.name().toLowerCase())
                         .path(searchTerm))
                         .post(entity);
                 checkResponseStatus(response);
