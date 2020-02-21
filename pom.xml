@@ -3,14 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.sfuhrm</groupId>
   <artifactId>radiobrowser4j-parent</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>2.0.0</version>
   <name>RadioBrowser4j Parent</name>
   <description>RadioBrowser4J Parent POM</description>
   <url>https://github.com/sfuhrm/radiobrowser4j</url>
   <scm>
     <url>https://github.com/sfuhrm/radiobrowser4j</url>
     <connection>scm:git:https://github.com/sfuhrm/radiobrowser4j.git</connection>
-    <tag>HEAD</tag>
+    <tag>v2.0.0</tag>
   </scm>
   <licenses>
     <license>
