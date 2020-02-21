@@ -15,6 +15,7 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
+import org.hamcrest.collection.IsArrayWithSize;
 import org.junit.Test;
 
 import javax.ws.rs.core.MultivaluedHashMap;
@@ -23,8 +24,8 @@ import javax.ws.rs.core.MultivaluedMap;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 /**
  * Test for the ListParameter class.
@@ -43,13 +44,13 @@ public class ListParameterTest {
         MultivaluedMap multivaluedMap = new MultivaluedHashMap();
         listParameter.applyTo(multivaluedMap);
 
-        assertThat(multivaluedMap.keySet().toArray(), is(emptyArray()));
+        assertThat(multivaluedMap.keySet().toArray(), is(IsArrayWithSize.emptyArray()));
     }
 
     @Test
     public void applyToWithOrderSet() {
         ListParameter listParameter = ListParameter.create();
-        listParameter.order(FieldName.bitrate);
+        listParameter.order(FieldName.BITRATE);
         MultivaluedMap multivaluedMap = new MultivaluedHashMap();
         listParameter.applyTo(multivaluedMap);
 
@@ -71,7 +72,7 @@ public class ListParameterTest {
     @Test
     public void applyToWithOrderAndReverseSet() {
         ListParameter listParameter = ListParameter.create();
-        listParameter.order(FieldName.codec);
+        listParameter.order(FieldName.CODEC);
         listParameter.reverseOrder(true);
         MultivaluedMap multivaluedMap = new MultivaluedHashMap();
         listParameter.applyTo(multivaluedMap);

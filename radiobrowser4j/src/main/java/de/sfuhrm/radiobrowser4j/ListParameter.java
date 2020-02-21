@@ -76,7 +76,7 @@ public final class ListParameter {
         log.info("list={}", this);
         if (getOrder() != null) {
             requestParams.put("order",
-                    Collections.singletonList(getOrder().name()));
+                    Collections.singletonList(getOrder().name().toLowerCase()));
         }
         if (getReverseOrder() != null) {
             requestParams.put("reverse", Collections.singletonList(

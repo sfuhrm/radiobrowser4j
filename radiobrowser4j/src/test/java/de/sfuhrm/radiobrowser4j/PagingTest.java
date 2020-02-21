@@ -17,10 +17,8 @@ package de.sfuhrm.radiobrowser4j;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.*;
 
 /**
  * Test for the Paging class.

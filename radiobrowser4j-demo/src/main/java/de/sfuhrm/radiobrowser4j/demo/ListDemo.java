@@ -43,7 +43,7 @@ public final class ListDemo {
                 TIMEOUT_DEFAULT,
                 "https://github.com/sfuhrm/radiobrowser4j");
         radioBrowser
-                .listStations(ListParameter.create().order(FieldName.name))
+                .listStations(ListParameter.create().order(FieldName.NAME))
                 .limit(LIMIT_DEFAULT)
                 .forEach(s -> System.out.printf("%s: %s%n",
                         s.getName(), s.getUrl()

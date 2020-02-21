@@ -25,7 +25,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
@@ -157,7 +157,7 @@ public class RadioBrowserTest {
         assertThat(secondStations, notNullValue());
         assertThat(secondStations.size(), is(SECOND_FIVE.getLimit()));
 
-        assertNotEquals(firstStations, secondStations);
+        assertThat(firstStations, is(not(secondStations)));
     }
 
     @Test
@@ -174,7 +174,7 @@ public class RadioBrowserTest {
     @Test
     public void listStationsWithStreamAndOrder() {
         List<Station> stations = browser
-                .listStations(ListParameter.create().order(FieldName.lastchecktime))
+                .listStations(ListParameter.create().order(FieldName.LASTCHECKTIME))
                 .limit(256)
                 .collect(Collectors.toList());
 
@@ -370,7 +370,7 @@ public class RadioBrowserTest {
         station.setName(TEST_NAME);
         station.setFavicon("https://github.com/favicon.ico");
         UUID id = browser.postNewStation(station);
-        assertNotNull(id);
+        assertThat(id, is(not(nullValue())));
     }
 
     @Test
@@ -381,7 +381,7 @@ public class RadioBrowserTest {
         station.setName(TEST_NAME);
         station.setFavicon("https://github.com/favicon.ico");
         UUID id = browser.postNewStation(station);
-        assertNotNull(id);
+        assertThat(id, is(not(nullValue())));
 
         Optional<Station> before = browser.getStationByUUID(id);
         browser.voteForStation(id);

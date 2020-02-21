@@ -23,80 +23,80 @@ public enum FieldName {
      * The station name.
      * @see Station#getName()
      */
-    name,
+    NAME,
     /**
      * The station url.
      * @see Station#getUrl()
      */
-    url,
+    URL,
     /**
      * The station homepage.
      * @see Station#getHomepage()
      */
-    homepage,
+    HOMEPAGE,
     /**
      * The station favicon.
      * @see Station#getFavicon()
      */
-    favicon,
+    FAVICON,
     /**
      * The station tags.
      * @see Station#getTagList()
      */
-    tags,
+    TAGS,
     /**
      * The station country.
      * @see Station#getCountry()
      */
-    country,
+    COUNTRY,
     /**
      * The station state.
      * @see Station#getState()
      */
-    state,
+    STATE,
     /**
      * The station language.
      * @see Station#getLanguage()
      */
-    language,
+    LANGUAGE,
     /**
      * The station votes.
      * @see Station#getVotes()
      */
-    votes,
+    VOTES,
     /**
      * The station codec.
      * @see Station#getCodec()
      */
-    codec,
+    CODEC,
     /**
      * The station bitrate.
      * @see Station#getBitrate()
      */
-    bitrate,
+    BITRATE,
     /**
      * Whether last check was ok.
      * @see Station#getLastcheckok()
      */
-    lastcheckok,
+    LASTCHECKOK,
     /**
      * Last check time.
      * @see Station#getLastchecktime()
      */
-    lastchecktime,
+    LASTCHECKTIME,
     /**
      * The click time stamp.
      * @see Station#getClicktimestamp()
      */
-    clicktimestamp,
+    CLICKTIMESTAMP,
     /**
      * The station click count.
      * @see Station#getClickcount()
      */
-    clickcount,
+    CLICKCOUNT,
     /**
      * The station click trend.
      * @see Station#getClicktrend()
      */
-    clicktrend
+    CLICKTREND
 }
