@@ -19,12 +19,6 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
   <developers>
     <developer>
       <id>stephan</id>
@@ -142,11 +136,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
-        <version>2.5.3</version>
+        <version>3.0.0-M1</version>
         <configuration>
-          <tagNameFormat>v@{project.version}</tagNameFormat>
           <autoVersionSubmodules>true</autoVersionSubmodules>
-          <releaseProfiles>releases</releaseProfiles>
+          <releaseProfiles>release</releaseProfiles>
         </configuration>
       </plugin>
       <plugin>
