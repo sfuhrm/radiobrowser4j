@@ -66,7 +66,7 @@
             <artifactId>maven-gpg-plugin</artifactId>
             <version>1.6</version>
             <configuration>
-              <keyname>3EAD41F1</keyname>
+              <keyname>0AC5A45E91FA93DA25380017B0D87B063EAD41F1</keyname>
             </configuration>
             <executions>
               <execution>
