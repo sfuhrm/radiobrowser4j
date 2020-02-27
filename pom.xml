@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>de.sfuhrm</groupId>
   <artifactId>radiobrowser4j-parent</artifactId>
   <version>2.0.2-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
   <name>RadioBrowser4j Parent</name>
   <description>RadioBrowser4J Parent POM</description>
   <url>https://github.com/sfuhrm/radiobrowser4j</url>
-  <scm>
-    <url>https://github.com/sfuhrm/radiobrowser4j</url>
-    <connection>scm:git:https://github.com/sfuhrm/radiobrowser4j.git</connection>
-    <tag>HEAD</tag>
-  </scm>
   <licenses>
     <license>
       <name>Apache License, 2.0</name>
@@ -19,6 +17,7 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
   <developers>
     <developer>
       <id>stephan</id>
@@ -26,63 +25,32 @@
       <email>s@sfuhrm.de</email>
     </developer>
   </developers>
-  <packaging>pom</packaging>
+
+  <modules>
+    <module>radiobrowser4j</module>
+    <module>radiobrowser4j-demo</module>
+  </modules>
+
+  <scm>
+    <url>https://github.com/sfuhrm/radiobrowser4j</url>
+    <connection>scm:git:https://github.com/sfuhrm/radiobrowser4j.git</connection>
+    <tag>HEAD</tag>
+  </scm>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <jmockit.version>1.49</jmockit.version>
   </properties>
-  <profiles>
-    <profile>
-      <id>release</id>
-      <distributionManagement>
-        <snapshotRepository>
-          <id>ossrh</id>
-          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-      </distributionManagement>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.8</version>
-            <extensions>true</extensions>
-            <configuration>
-              <serverId>ossrh</serverId>
-              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
-            </configuration>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.6</version>
-            <configuration>
-              <keyname>0AC5A45E91FA93DA25380017B0D87B063EAD41F1</keyname>
-            </configuration>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
+
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.0.0-M3</version>
-          <configuration>
+        <configuration>
             <argLine>-javaagent:"${settings.localRepository}"/org/jmockit/jmockit/${jmockit.version}/jmockit-${jmockit.version}.jar</argLine>
           </configuration>
       </plugin>
@@ -221,6 +189,7 @@
       </plugin>
     </plugins>
   </build>
+
   <reporting>
     <plugins>
       <plugin>
@@ -240,8 +209,48 @@
       </plugin>
     </plugins>
   </reporting>
-  <modules>
-    <module>radiobrowser4j</module>
-    <module>radiobrowser4j-demo</module>
-  </modules>
+
+  <profiles>
+    <profile>
+      <id>release</id>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+      </distributionManagement>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.8</version>
+            <extensions>true</extensions>
+            <configuration>
+              <serverId>ossrh</serverId>
+              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <configuration>
+              <keyname>0AC5A45E91FA93DA25380017B0D87B063EAD41F1</keyname>
+            </configuration>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
