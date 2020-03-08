@@ -61,6 +61,11 @@ located in the test resources.
 
 ## Version history
 
+* v2.0.2:
+  - Minor code improvements.
+  - Updated dependencies.
+* v2.0.0:
+  - Support new radiobrowser API.
 * v1.3.0:
   - Use new API DNS names.
   - Update maven plugins / dependencies.
