@@ -207,7 +207,7 @@ public final class RadioBrowser {
 
         paging.ifPresent(p -> applyPaging(p, requestParams));
         Arrays.stream(listParam).forEach(lp -> lp.applyTo(requestParams));
-        Entity entity = Entity.form(requestParams);
+        Entity<Form> entity = Entity.form(requestParams);
         Response response = null;
         try {
             response = builder(webTarget.path(path))
@@ -236,7 +236,7 @@ public final class RadioBrowser {
                 new MultivaluedHashMap<>();
 
         Arrays.stream(listParam).forEach(lp -> lp.applyTo(requestParams));
-        Entity entity = Entity.form(requestParams);
+        Entity<Form> entity = Entity.form(requestParams);
         Response response = null;
         try {
             WebTarget target = webTarget.path(path);
@@ -446,7 +446,7 @@ public final class RadioBrowser {
                 new MultivaluedHashMap<>();
         applyPaging(paging, requestParams);
         Arrays.stream(listParam).forEach(l -> l.applyTo(requestParams));
-        Entity entity = Entity.form(requestParams);
+        Entity<Form> entity = Entity.form(requestParams);
         Response response = null;
 
         try {
@@ -479,7 +479,7 @@ public final class RadioBrowser {
                     new MultivaluedHashMap<>();
             applyPaging(p, requestParams);
             Arrays.stream(listParam).forEach(l -> l.applyTo(requestParams));
-            Entity entity = Entity.form(requestParams);
+            Entity<Form> entity = Entity.form(requestParams);
             Response response = null;
 
             try {
@@ -638,15 +638,13 @@ public final class RadioBrowser {
             targetParams.put("state",
                     Collections.singletonList(sourceStation.getState()));
         }
-        if (sourceStation.getLanguage() != null) {
-            targetParams.put("language",
-                    Collections.singletonList(sourceStation.getLanguage()));
-        }
-        if (sourceStation.getTags() != null) {
-            targetParams.put("tagList",
-                    Collections.singletonList(
-                            sourceStation.getTags()));
-        }
+        sourceStation.getLanguage();
+        targetParams.put("language",
+                Collections.singletonList(sourceStation.getLanguage()));
+        sourceStation.getTags();
+        targetParams.put("tagList",
+                Collections.singletonList(
+                        sourceStation.getTags()));
     }
 
 

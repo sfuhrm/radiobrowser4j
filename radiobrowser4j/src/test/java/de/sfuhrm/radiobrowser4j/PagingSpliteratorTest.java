@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Test for the spliterator.
@@ -57,7 +57,7 @@ public class PagingSpliteratorTest {
                 .collect(Collectors.toList());
 
         List<Integer> expected = IntStream.range(0, 128)
-                .mapToObj(i -> i)
+                .boxed()
                 .collect(Collectors.toList());
 
         assertThat(actual, is(expected));

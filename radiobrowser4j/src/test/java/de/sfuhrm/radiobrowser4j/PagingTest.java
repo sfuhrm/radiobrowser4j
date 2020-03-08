@@ -35,12 +35,12 @@ public class PagingTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void atWithZeroLimit() {
-        Paging paging = Paging.at(0, 0);
+        Paging.at(0, 0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void atWithNegativeOffset() {
-        Paging paging = Paging.at(-1, 1);
+        Paging.at(-1, 1);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class PagingTest {
         Paging pagingFirst = Paging.at(0, 64);
         Paging next = pagingFirst.next();
 
-        assertThat(next.getOffset(), is(0 + 64));
+        assertThat(next.getOffset(), is(64));
         assertThat(next.getLimit(), is(64));
     }
 

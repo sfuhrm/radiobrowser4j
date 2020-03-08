@@ -15,7 +15,6 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
-import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,13 +23,10 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -65,32 +61,32 @@ public class EndpointDiscoveryTest {
         inetAddresses[0] = inetAddressMock;
 
         new Expectations() {{
-            inetAddressMock.getAllByName(EndpointDiscovery.DNS_API_ADDRESS); result = inetAddresses;
+            InetAddress.getAllByName(EndpointDiscovery.DNS_API_ADDRESS); result = inetAddresses;
             inetAddressMock.getCanonicalHostName(); result = "127.0.0.1";
         }};
 
         List<String> urls = endpointDiscovery.apiUrls();
 
-        assertThat(urls, is(Arrays.asList("https://127.0.0.1/")));
+        assertThat(urls, is(Collections.singletonList("https://127.0.0.1/")));
 
         new Verifications() {{
-            inetAddressMock.getAllByName(EndpointDiscovery.DNS_API_ADDRESS); times = 1;
+            InetAddress.getAllByName(EndpointDiscovery.DNS_API_ADDRESS); times = 1;
         }};
     }
 
     @Test
     public void discoverApiUrls(@Mocked Client clientMock,
                                 @Mocked ClientBuilder clientBuilderMock,
-                                @Mocked WebTarget webTargetMock) throws IOException {
+                                @Mocked WebTarget webTargetMock) {
         new Expectations() {{
-            clientBuilderMock.newBuilder(); result = clientBuilderMock;
+            ClientBuilder.newBuilder(); result = clientBuilderMock;
             clientBuilderMock.build(); result = clientMock;
             clientMock.target("https://127.0.0.1/"); result = webTargetMock;
         }};
 
-        List<EndpointDiscovery.DiscoveryResult> results = endpointDiscovery.discoverApiUrls(Arrays.asList("https://127.0.0.1/"));
+        List<EndpointDiscovery.DiscoveryResult> results = endpointDiscovery.discoverApiUrls(Collections.singletonList("https://127.0.0.1/"));
         assertThat(results.size(), is(1));
-        assertThat(results.get(0).getDuration(), is(Matchers.greaterThan(0l)));
+        assertThat(results.get(0).getDuration(), is(Matchers.greaterThan(0L)));
 
         new Verifications() {{
             clientMock.target("https://127.0.0.1/"); times = 1;
@@ -103,10 +99,10 @@ public class EndpointDiscoveryTest {
                          @Mocked WebTarget webTargetMock,
                          @Mocked InetAddress inetAddressMock) throws IOException {
         new Expectations() {{
-            clientBuilderMock.newBuilder(); result = clientBuilderMock;
+            ClientBuilder.newBuilder(); result = clientBuilderMock;
             clientBuilderMock.build(); result = clientMock;
             clientMock.target("https://127.0.0.1/"); result = webTargetMock;
-            inetAddressMock.getAllByName(EndpointDiscovery.DNS_API_ADDRESS); result = new InetAddress[] {inetAddressMock};
+            InetAddress.getAllByName(EndpointDiscovery.DNS_API_ADDRESS); result = new InetAddress[] {inetAddressMock};
             inetAddressMock.getCanonicalHostName(); result = "127.0.0.1";
         }};
 
@@ -122,7 +118,7 @@ public class EndpointDiscoveryTest {
         Stats myStats = new Stats();
 
         new Expectations() {{
-            clientBuilderMock.newBuilder(); result = clientBuilderMock;
+            ClientBuilder.newBuilder(); result = clientBuilderMock;
             clientBuilderMock.build(); result = clientMock;
             clientMock.target(RadioBrowser.DEFAULT_API_URL); result = webTargetMock;
             invocationBuilderMock.get(Stats.class); result = myStats;

@@ -30,13 +30,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * Representation of a Radio Station.
  * @author Stephan Fuhrmann
  */
-@EqualsAndHashCode(of = {"stationuuid", "name"})
+@EqualsAndHashCode(of = {"stationUUID", "name"})
 @JsonIgnoreProperties(ignoreUnknown = true)
 public final class Station {
     /** A globally unique identifier for the change
@@ -173,7 +172,7 @@ public final class Station {
      * */
     @JsonGetter("tags")
     public String getTags() {
-        return tagList.stream().collect(Collectors.joining(","));
+        return String.join(",", tagList);
     }
 
     /** JSON setter for the {@link #tagList}.
@@ -193,7 +192,7 @@ public final class Station {
      * */
     @JsonGetter("language")
     public String getLanguage() {
-        return languageList.stream().collect(Collectors.joining(","));
+        return String.join(",", languageList);
     }
 
     /** JSON setter for {@link #languageList}.
