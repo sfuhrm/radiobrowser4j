@@ -66,6 +66,7 @@ located in the test resources.
   - Updated dependencies.
 * v2.0.0:
   - Support new radiobrowser API.
+  - Clients will have to do minor changes to calling the library.
 * v1.3.0:
   - Use new API DNS names.
   - Update maven plugins / dependencies.
@@ -85,7 +86,7 @@ located in the test resources.
 
 ## License
 
-Copyright 2017-2018 Stephan Fuhrmann
+Copyright 2017-2020 Stephan Fuhrmann
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
