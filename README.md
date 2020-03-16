@@ -5,6 +5,7 @@ RadioBrowser4j
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/def6bf015f664ed3b9cf19d93232f4bc)](https://www.codacy.com/app/sfuhrm/radiobrowser4j?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sfuhrm/radiobrowser4j&amp;utm_campaign=Badge_Grade)
 [![Coverage Status](https://coveralls.io/repos/github/sfuhrm/radiobrowser4j/badge.svg?branch=master)](https://coveralls.io/github/sfuhrm/radiobrowser4j?branch=master)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
+[![ReleaseDate](https://img.shields.io/github/release-date/sfuhrm/radiobrowser4j)](https://github.com/sfuhrm/radiobrowser4j/releases)
 
 A [Java API](http://api.sfuhrm.de/radiobrowser4j/) for
 the [RadioBrowser](http://www.radio-browser.info)
