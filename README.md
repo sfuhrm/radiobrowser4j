@@ -6,6 +6,7 @@ RadioBrowser4j
 [![Coverage Status](https://coveralls.io/repos/github/sfuhrm/radiobrowser4j/badge.svg?branch=master)](https://coveralls.io/github/sfuhrm/radiobrowser4j?branch=master)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
 [![ReleaseDate](https://img.shields.io/github/release-date/sfuhrm/radiobrowser4j)](https://github.com/sfuhrm/radiobrowser4j/releases)
+[![javadoc](https://javadoc.io/badge2/de.sfuhrm/radiobrowser4j/javadoc.svg)](https://javadoc.io/doc/de.sfuhrm/radiobrowser4j)
 
 A [Java API](http://api.sfuhrm.de/radiobrowser4j/) for
 the [RadioBrowser](http://www.radio-browser.info)
@@ -43,7 +44,7 @@ browser.listStations(ListParameter.create().order(FieldName.name))
 ));
 ```
 
-You can take a look at the [JavaDoc](http://api.sfuhrm.de/radiobrowser4j/)
+You can take a look at the [![javadoc](https://javadoc.io/badge2/de.sfuhrm/radiobrowser4j/javadoc.svg)](https://javadoc.io/doc/de.sfuhrm/radiobrowser4j)
 documentation to get the full concepts of the API.
 
 ### More examples
