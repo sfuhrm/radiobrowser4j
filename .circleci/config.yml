@@ -6,7 +6,7 @@ shared: &shared
         key: maven-{{ checksum "pom.xml" }}
     - run:
         name: Maven Get Dependencies
-        command: mvn dependency:go-offline
+        command: mvn dependency:go-offline --fail-never
     - save_cache:
         paths:
           - ~/.m2
