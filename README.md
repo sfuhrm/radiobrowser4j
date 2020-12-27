@@ -1,7 +1,7 @@
 RadioBrowser4j 
 ===================
 [![Circle CI Status](https://img.shields.io/circleci/build/github/sfuhrm/radiobrowser4j?style=plastic)](https://app.circleci.com/pipelines/github/sfuhrm/radiobrowser4j)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/radiobrowser4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/radiobrowser4j) 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/radiobrowser4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/radiobrowser4j)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/def6bf015f664ed3b9cf19d93232f4bc)](https://www.codacy.com/app/sfuhrm/radiobrowser4j?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sfuhrm/radiobrowser4j&amp;utm_campaign=Badge_Grade)
 [![Coverage Status](https://coveralls.io/repos/github/sfuhrm/radiobrowser4j/badge.svg?branch=master)](https://coveralls.io/github/sfuhrm/radiobrowser4j?branch=master)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
@@ -18,7 +18,7 @@ internet radio station URLs, streams and meta information.
 ## How to use
 
 First step is to include the dependency in your Maven or
-Gradle project. 
+Gradle project.
 For maven you need this dependency:
 
 ```xml
