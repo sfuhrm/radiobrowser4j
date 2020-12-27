@@ -23,8 +23,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build and test
+          name: Maven Build and test
           command: mvn clean package
       - run:
-          name: Upload coverage information
+          name: Maven Install
+          command: mvn install
+      - run:
+          name: Maven Upload coverage information
           command: mvn -DrepoToken=${coveralls_token} clean test jacoco:report coveralls:report --projects=radiobrowser4j
