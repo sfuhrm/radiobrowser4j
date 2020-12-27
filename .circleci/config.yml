@@ -22,7 +22,9 @@ jobs:
 
     steps:
       - checkout
-      # run tests!
-      - run: mvn clean package
-      # upload to coveralls
-      - run: mvn -DrepoToken=${coveralls_token} clean test jacoco:report coveralls:report --projects=radiobrowser4j
+      - run:
+          name: Build and test
+          command: mvn clean package
+      - run:
+          name: Upload coverage information
+          command: mvn -DrepoToken=${coveralls_token} clean test jacoco:report coveralls:report --projects=radiobrowser4j
