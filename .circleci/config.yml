@@ -1,30 +1,36 @@
-#
-# Check https://circleci.com/docs/2.0/language-java/ for more details
-#
 version: 2
+shared: &shared
+  steps:
+    - checkout
+    - restore_cache:
+        key: maven-{{ checksum "pom.xml" }}
+    - run:
+        name: Maven Get Dependencies
+        command: mvn dependency:go-offline
+    - save_cache:
+        paths:
+          - ~/.m2
+        key: maven-{{ checksum "pom.xml" }}
+    - run:
+        name: Maven Build and test
+        command: mvn clean package
+    - run:
+        name: Maven Install
+        command: mvn install
+
 jobs:
-  build:
+  jdk8:
     docker:
-      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
+    <<: *shared
+  jdk11:
+    docker:
       - image: circleci/openjdk:11-jdk
+    <<: *shared
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
-    working_directory: ~/repo
-
-    environment:
-      # Customize the JVM maximum heap limit
-      JVM_OPTS: -Xmx3200m
-      TERM: dumb
-
-    steps:
-      - checkout
-      - run:
-          name: Maven Build and test
-          command: mvn clean package
-      - run:
-          name: Maven Install
-          command: mvn install
+workflows:
+  version: 2
+  work:
+    jobs:
+      - jdk8
+      - jdk11
