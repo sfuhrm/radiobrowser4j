@@ -25,7 +25,7 @@ For maven you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>2.0.3</version>
+    <version>2.0.4</version>
 </dependency>
 ```
 
@@ -63,6 +63,8 @@ located in the test resources.
 
 ## Version history
 
+* v2.0.4:
+  - Updated dependencies.
 * v2.0.3:
   - Updated dependencies.
 * v2.0.2:
