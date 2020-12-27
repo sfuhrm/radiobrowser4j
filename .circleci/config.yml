@@ -1,5 +1,9 @@
 version: 2
 shared: &shared
+  working_directory: ~/repo
+  environment:
+    JVM_OPTS: -Xmx1g
+    TERM: dumb
   steps:
     - checkout
     - restore_cache:
