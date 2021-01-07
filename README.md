@@ -16,6 +16,8 @@ internet radio station URLs, streams and meta information.
 
 ## How to use
 
+### JDK
+
 First step is to include the dependency in your Maven or
 Gradle project.
 For maven you need this dependency:
@@ -24,7 +26,7 @@ For maven you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>2.0.4</version>
+    <version>2.0.5</version>
 </dependency>
 ```
 
@@ -46,6 +48,38 @@ browser.listStations(ListParameter.create().order(FieldName.name))
 You can take a look at the [![javadoc](https://javadoc.io/badge2/de.sfuhrm/radiobrowser4j/javadoc.svg)](https://javadoc.io/doc/de.sfuhrm/radiobrowser4j)
 documentation to get the full concepts of the API.
 
+### Android
+
+Some adjustments (packagingOptions) are necessary to the packaging options of your app build.gradle:
+
+```
+...
+
+android {
+...
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/NOTICE.md'
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/NOTICE.markdown'
+        exclude 'META-INF/ASL2.0'
+        exclude("META-INF/*.kotlin_module")
+    }
+}
+
+dependencies {
+...
+
+    implementation 'de.sfuhrm:radiobrowser4j:2.0.5';
+}
+```
+
 ### More examples
 
 The library was extracted from a internet radio player and recorder program
@@ -62,6 +96,8 @@ located in the test resources.
 
 ## Version history
 
+* v2.0.5:
+  - Android support!
 * v2.0.4:
   - Updated dependencies.
 * v2.0.3:
