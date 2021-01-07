@@ -58,18 +58,9 @@ Some adjustments are necessary to the packaging of your app build.gradle:
 android {
 ...
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/notice.txt'
         exclude 'META-INF/NOTICE.md'
         exclude 'META-INF/LICENSE.md'
         exclude 'META-INF/NOTICE.markdown'
-        exclude 'META-INF/ASL2.0'
-        exclude("META-INF/*.kotlin_module")
     }
 }
 
