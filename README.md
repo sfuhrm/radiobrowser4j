@@ -50,7 +50,7 @@ documentation to get the full concepts of the API.
 
 ### Android
 
-Some adjustments (packagingOptions) are necessary to the packaging options of your app build.gradle:
+Some adjustments are necessary to the packaging of your app build.gradle:
 
 ```
 ...
