@@ -45,7 +45,7 @@ browser.listStations(ListParameter.create().order(FieldName.name))
 ));
 ```
 
-You can take a look at the [![javadoc](https://javadoc.io/badge2/de.sfuhrm/radiobrowser4j/javadoc.svg)](https://javadoc.io/doc/de.sfuhrm/radiobrowser4j)
+You can take a look at the [javadoc](https://javadoc.io/doc/de.sfuhrm/radiobrowser4j)
 documentation to get the full concepts of the API.
 
 ### Android
