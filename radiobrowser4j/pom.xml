@@ -20,23 +20,23 @@
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-client</artifactId>
-      <version>2.33</version>
+      <version>3.0.1</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
       <artifactId>jersey-media-json-jackson</artifactId>
-      <version>2.33</version>
+      <version>3.0.1</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.inject</groupId>
       <artifactId>jersey-hk2</artifactId>
-      <version>2.33</version>
+      <version>3.0.1</version>
     </dependency>
     <!-- this is needed by jersey-media-json-jackson if on JDK11+, because JAXB is missing -->
     <dependency>
       <groupId>org.glassfish.jaxb</groupId>
       <artifactId>jaxb-runtime</artifactId>
-      <version>2.3.2</version>
+      <version>3.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
