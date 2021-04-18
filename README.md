@@ -87,6 +87,9 @@ located in the test resources.
 
 ## Version history
 
+* v2.1.0:
+  - Switch Jersey JAX-RS 2.3.3 -> 3.0.1.
+  - Updated lombok/junit/log4j2 dependencies.
 * v2.0.5:
   - Android support!
 * v2.0.4:
