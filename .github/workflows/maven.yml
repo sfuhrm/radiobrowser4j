@@ -23,5 +23,5 @@ jobs:
       run: mvn -B package --file pom.xml
     - uses: actions/upload-artifact@v2
       with:
-        name: core-${{ matrix.java }}
+        name: jdk-${{ matrix.java }}
         path: ./radiobrowser4j/target/radiobrowser4j-*.jar
