@@ -26,7 +26,7 @@ For maven you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>2.0.5</version>
+    <version>2.1.0</version>
 </dependency>
 ```
 
@@ -67,7 +67,7 @@ android {
 dependencies {
 ...
 
-    implementation 'de.sfuhrm:radiobrowser4j:2.0.5';
+    implementation 'de.sfuhrm:radiobrowser4j:2.1.0';
 }
 ```
 
