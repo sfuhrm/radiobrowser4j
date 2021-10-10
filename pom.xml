@@ -33,7 +33,7 @@
 
   <scm>
     <url>https://github.com/sfuhrm/radiobrowser4j</url>
-    <connection>scm:git:https://github.com/sfuhrm/radiobrowser4j.git</connection>
+    <connection>scm:git:git@github.com:sfuhrm/radiobrowser4j.git</connection>
     <tag>HEAD</tag>
   </scm>
 
