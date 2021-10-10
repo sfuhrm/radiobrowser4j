@@ -16,6 +16,8 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: 11
+    - name: Maven install
+      run: mvn install
     - name: Run maven dependency check
       run: mvn org.owasp:dependency-check-maven:check
     - uses: actions/upload-artifact@v2
