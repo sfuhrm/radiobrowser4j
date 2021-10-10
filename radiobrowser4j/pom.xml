@@ -20,28 +20,28 @@
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-client</artifactId>
-      <version>3.0.1</version>
+      <version>3.0.3</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
       <artifactId>jersey-media-json-jackson</artifactId>
-      <version>3.0.1</version>
+      <version>3.0.3</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.inject</groupId>
       <artifactId>jersey-hk2</artifactId>
-      <version>3.0.1</version>
+      <version>3.0.3</version>
     </dependency>
     <!-- this is needed by jersey-media-json-jackson if on JDK11+, because JAXB is missing -->
     <dependency>
       <groupId>org.glassfish.jaxb</groupId>
       <artifactId>jaxb-runtime</artifactId>
-      <version>3.0.0</version>
+      <version>3.0.2</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.30</version>
+      <version>1.7.32</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
@@ -52,12 +52,12 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-ext</artifactId>
-      <version>1.7.30</version>
+      <version>1.7.32</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.20</version>
+      <version>1.18.22</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -83,6 +83,13 @@
       <artifactId>wiremock</artifactId>
       <version>2.27.2</version>
       <scope>test</scope>
+      <exclusions>
+        <!-- conflicts with the jackson core version from the project. -->
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-core</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
 </project>
