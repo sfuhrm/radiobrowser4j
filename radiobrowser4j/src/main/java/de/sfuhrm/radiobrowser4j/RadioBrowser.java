@@ -84,8 +84,10 @@ public final class RadioBrowser {
      * @param myUserAgent the user agent string to use.
      * @param proxyUri optional URI of the proxy server, or {@code null}
      *                 if no proxy is required.
-     * @param proxyUser optional user name to authenticate with if using a proxy.
-     * @param proxyPassword optional password to authenticate with if using a proxy
+     * @param proxyUser optional user name to authenticate
+     *                  with if using a proxy.
+     * @param proxyPassword optional password to authenticate
+     *                      with if using a proxy
      * */
     public RadioBrowser(@NonNull final String apiUrl,
                          final int timeout,
@@ -107,10 +109,12 @@ public final class RadioBrowser {
         if (proxyUri != null) {
             client.property(ClientProperties.PROXY_URI,   proxyUri);
             if (proxyUser != null) {
-                client.property(ClientProperties.PROXY_USERNAME,   proxyUser);
+                client.property(ClientProperties.PROXY_USERNAME,
+                        proxyUser);
             }
             if (proxyPassword != null) {
-                client.property(ClientProperties.PROXY_PASSWORD,   proxyPassword);
+                client.property(ClientProperties.PROXY_PASSWORD,
+                        proxyPassword);
             }
         }
         webTarget = client.target(apiUrl);
