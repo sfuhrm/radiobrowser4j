@@ -71,8 +71,28 @@ public final class RadioBrowser {
      * @param myUserAgent the user agent string to use.
      * */
     public RadioBrowser(@NonNull final String apiUrl,
+                        final int timeout,
+                        @NonNull final String myUserAgent) {
+        this(apiUrl, timeout, myUserAgent, null, null, null);
+    }
+
+    /**
+     * Creates a new API client.
+     * @param apiUrl the base URL of the API.
+     * @param timeout the timeout in milliseconds for connecting
+     *                and reading.
+     * @param myUserAgent the user agent string to use.
+     * @param proxyUri optional URI of the proxy server, or {@code null}
+     *                 if no proxy is required.
+     * @param proxyUser optional user name to authenticate with if using a proxy.
+     * @param proxyPassword optional password to authenticate with if using a proxy
+     * */
+    public RadioBrowser(@NonNull final String apiUrl,
                          final int timeout,
-                         @NonNull final String myUserAgent) {
+                         @NonNull final String myUserAgent,
+                        final String proxyUri,
+                        final String proxyUser,
+                        final String proxyPassword) {
         if (timeout <= 0) {
             throw new IllegalArgumentException(
                     "timeout must be > 0, but is "
@@ -84,6 +104,15 @@ public final class RadioBrowser {
                 .build();
         client.property(ClientProperties.CONNECT_TIMEOUT, timeout);
         client.property(ClientProperties.READ_TIMEOUT,    timeout);
+        if (proxyUri != null) {
+            client.property(ClientProperties.PROXY_URI,   proxyUri);
+            if (proxyUser != null) {
+                client.property(ClientProperties.PROXY_USERNAME,   proxyUser);
+            }
+            if (proxyPassword != null) {
+                client.property(ClientProperties.PROXY_PASSWORD,   proxyPassword);
+            }
+        }
         webTarget = client.target(apiUrl);
     }
 
