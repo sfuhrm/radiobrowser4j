@@ -86,6 +86,10 @@ located in the test resources.
 
 ## Version history
 
+* v2.2.1:
+  - Update log4j2 test dependency.
+* v2.2.0:
+  - Update multiple dependencies.
 * v2.1.0:
   - Switch Jersey JAX-RS 2.3.3 -> 3.0.1.
   - Updated lombok/junit/log4j2 dependencies.
