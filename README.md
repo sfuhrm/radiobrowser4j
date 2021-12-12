@@ -15,7 +15,7 @@ internet radio station URLs, streams and meta information.
 
 ## How to use
 
-### JDK
+### Maven for JDK targets
 
 First step is to include the dependency in your Maven or
 Gradle project.
@@ -47,7 +47,7 @@ browser.listStations(ListParameter.create().order(FieldName.name))
 You can take a look at the [javadoc](https://javadoc.io/doc/de.sfuhrm/radiobrowser4j)
 documentation to get the full concepts of the API.
 
-### Android
+### Gradle for Android targets
 
 Some adjustments are necessary to the packaging of your app build.gradle:
 
@@ -66,7 +66,7 @@ android {
 dependencies {
 ...
 
-    implementation 'de.sfuhrm:radiobrowser4j:2.1.0';
+    implementation 'de.sfuhrm:radiobrowser4j:2.2.1';
 }
 ```
 
