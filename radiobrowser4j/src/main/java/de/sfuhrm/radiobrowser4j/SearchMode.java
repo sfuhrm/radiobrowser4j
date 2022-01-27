@@ -48,5 +48,7 @@ public enum SearchMode {
     /** Search by tag. */
     BYTAG,
     /** Search by exact tag. */
-    BYTAGEXACT
+    BYTAGEXACT,
+    /** Advanced search by chosen {@link SearchParameter}. */
+    SEARCH
 }
