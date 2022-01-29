@@ -25,7 +25,7 @@ For maven you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>2.2.1</version>
+    <version>2.2.2</version>
 </dependency>
 ```
 
@@ -66,7 +66,7 @@ android {
 dependencies {
 ...
 
-    implementation 'de.sfuhrm:radiobrowser4j:2.2.1';
+    implementation 'de.sfuhrm:radiobrowser4j:2.2.2';
 }
 ```
 
@@ -86,6 +86,8 @@ located in the test resources.
 
 ## Version history
 
+* v2.2.2:
+  - Support for HTTP proxy usage.
 * v2.2.1:
   - Update log4j2 test dependency.
 * v2.2.0:
