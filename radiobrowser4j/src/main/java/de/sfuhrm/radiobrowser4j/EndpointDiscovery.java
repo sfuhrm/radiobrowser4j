@@ -3,11 +3,8 @@ package de.sfuhrm.radiobrowser4j;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
-import org.glassfish.jersey.client.ClientProperties;
-import org.glassfish.jersey.jackson.JacksonFeature;
 
 import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import java.io.IOException;
@@ -40,11 +37,38 @@ public class EndpointDiscovery {
     /** The user agent to use for discovery. */
     private final String userAgent;
 
+    /** The optional proxy URI. */
+    private final String proxyUri;
+
+    /** The optional proxy user. */
+    private final String proxyUser;
+
+    /** The optional proxy password. */
+    private final String proxyPassword;
+
     /** Constructs a new instance.
      * @param myUserAgent the user agent String to use while discovery.
      * */
     public EndpointDiscovery(@NonNull final String myUserAgent) {
+        this(myUserAgent, null, null, null);
+    }
+
+    /** Constructs a new instance.
+     * @param myUserAgent the user agent String to use while discovery.
+     * @param myProxyUri the optional URI of a HTTP proxy to use.
+     * @param myProxyUser  the optional username to
+     *                     authenticate with to access the proxy.
+     * @param myProxyPassword the optional password
+     *                        to authenticate with to access the proxy.
+     * */
+    public EndpointDiscovery(@NonNull final String myUserAgent,
+                             final String myProxyUri,
+                             final String myProxyUser,
+                             final String myProxyPassword) {
         this.userAgent = myUserAgent;
+        this.proxyUri = myProxyUri;
+        this.proxyUser = myProxyUser;
+        this.proxyPassword = myProxyPassword;
     }
 
     /** Get the URLs of all API endpoints that are returned by the DNS service.
@@ -137,11 +161,11 @@ public class EndpointDiscovery {
                     "timeout must be > 0, but is "
                             + timeout);
         }
-        Client client = ClientBuilder.newBuilder()
-                .register(JacksonFeature.class)
-                .build();
-        client.property(ClientProperties.CONNECT_TIMEOUT, timeout);
-        client.property(ClientProperties.READ_TIMEOUT,    timeout);
+
+        Client client = RadioBrowser.newClient(timeout,
+                proxyUri,
+                proxyUser,
+                proxyPassword);
         WebTarget webTarget = client.target(endpoint);
         return webTarget.path("json/stats")
                 .request(MediaType.APPLICATION_JSON_TYPE)

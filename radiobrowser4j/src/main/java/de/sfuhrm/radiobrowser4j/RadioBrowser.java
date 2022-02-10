@@ -112,13 +112,28 @@ public final class RadioBrowser {
                             + timeout);
         }
         this.userAgent = myUserAgent;
+        Client client = newClient(timeout, proxyUri, proxyUser, proxyPassword);
+        webTarget = client.target(apiUrl);
+    }
+
+    /** Create a new JAX-RS client.
+     * @param timeout connect / read timeout in milliseconds.
+     * @param proxyUri optional proxy URI.
+     * @param proxyUser optional proxy user.
+     * @param proxyPassword optional proxy password.
+     * @return the client instance that has been created.
+     *  */
+    static Client newClient(final int timeout,
+                            final String proxyUri,
+                            final String proxyUser,
+                            final String proxyPassword) {
         Client client = ClientBuilder.newBuilder()
                 .register(JacksonFeature.class)
                 .build();
         client.property(ClientProperties.CONNECT_TIMEOUT, timeout);
-        client.property(ClientProperties.READ_TIMEOUT,    timeout);
+        client.property(ClientProperties.READ_TIMEOUT, timeout);
         if (proxyUri != null) {
-            client.property(ClientProperties.PROXY_URI,   proxyUri);
+            client.property(ClientProperties.PROXY_URI, proxyUri);
             if (proxyUser != null) {
                 client.property(ClientProperties.PROXY_USERNAME,
                         proxyUser);
@@ -128,7 +143,7 @@ public final class RadioBrowser {
                         proxyPassword);
             }
         }
-        webTarget = client.target(apiUrl);
+        return client;
     }
 
     /**
