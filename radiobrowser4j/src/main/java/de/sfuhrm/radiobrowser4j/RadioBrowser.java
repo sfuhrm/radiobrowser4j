@@ -66,9 +66,15 @@ public final class RadioBrowser {
     /**
      * Creates a new API client.
      * @param apiUrl the base URL of the API.
+     *               Can be determined by
+     *               {@linkplain  EndpointDiscovery#discover()}
+     *               or set to {@linkplain #DEFAULT_API_URL}.
      * @param timeout the timeout in milliseconds for connecting
      *                and reading.
      * @param myUserAgent the user agent string to use.
+     *                    Please use a user agent string that somehow
+     *                    points to your github project, home page,
+     *                    or what ever.
      * */
     public RadioBrowser(@NonNull final String apiUrl,
                         final int timeout,
@@ -78,10 +84,15 @@ public final class RadioBrowser {
 
     /**
      * Creates a new API client.
-     * @param apiUrl the base URL of the API.
+     * @param apiUrl the base URL of the API. Can be determined
+     *               by {@linkplain  EndpointDiscovery#discover()}
+     *               or set to {@linkplain #DEFAULT_API_URL}.
      * @param timeout the timeout in milliseconds for connecting
      *                and reading.
      * @param myUserAgent the user agent string to use.
+     *                    Please use a user agent string that somehow
+     *                    points to your github project,
+     *                    home page, or what ever.
      * @param proxyUri optional URI of the proxy server, or {@code null}
      *                 if no proxy is required.
      * @param proxyUser optional username to authenticate
@@ -125,7 +136,9 @@ public final class RadioBrowser {
      * @param timeout the timeout for connect and read requests in milliseconds.
      *                Must be greater than zero.
      * @param myUserAgent the user agent String for your user agent.
-     *                  Must be something to point to you.
+     *                    Please use a user agent string that somehow
+     *                    points to your github project,
+     *                    home page, or what ever.
      */
     public RadioBrowser(final int timeout,
                         final String myUserAgent) {
