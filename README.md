@@ -19,7 +19,7 @@ internet radio station URLs, streams and meta information.
 
 First step is to include the dependency in your Maven or
 Gradle project.
-For maven you need this dependency:
+For Maven, you need this dependency:
 
 ```xml
 <dependency>
@@ -72,7 +72,7 @@ dependencies {
 
 ### More examples
 
-The library was extracted from a internet radio player and recorder program
+The library was extracted from an internet radio player and recorder program
 in Java, [radiorecorder](https://github.com/sfuhrm/radiorecorder).
 You can take a look at real-life usage patterns
 [there](https://github.com/sfuhrm/radiorecorder/blob/master/src/main/java/de/sfuhrm/radiorecorder/Main.java).

@@ -62,11 +62,11 @@ public final class Station {
     @JsonProperty("url_resolved")
     private String urlResolved;
 
-    /** The URL of the stations homepage. */
+    /** The URL of the stations' homepage. */
     @Getter @Setter
     private String homepage;
 
-    /** The URL of the stations favicon. */
+    /** The URL of the stations' favicon. */
     @Getter @Setter
     private String favicon;
 
@@ -158,7 +158,7 @@ public final class Station {
     @Getter @Setter
     private Integer clicktrend;
 
-    /** Timestamp of the last change of the stations data. */
+    /** Timestamp of the last change of the stations' data. */
     @Getter
     @Setter
     @JsonFormat(shape = JsonFormat.Shape.STRING,

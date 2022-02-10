@@ -21,7 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Representation of a api endpoint statistic.
+ * Representation of an api endpoint statistic.
  * @author Stephan Fuhrmann
  */
 @JsonIgnoreProperties(ignoreUnknown = true)

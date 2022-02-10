@@ -69,7 +69,7 @@ public final class ListParameter {
     }
 
     /**
-     * Transfer this list parameter the the passed multi valued map.
+     * Transfer this list parameter to the passed multi-valued-map.
      * @param requestParams the target of the list params.
      * */
     void applyTo(final MultivaluedMap<String, String> requestParams) {

@@ -84,7 +84,7 @@ public final class RadioBrowser {
      * @param myUserAgent the user agent string to use.
      * @param proxyUri optional URI of the proxy server, or {@code null}
      *                 if no proxy is required.
-     * @param proxyUser optional user name to authenticate
+     * @param proxyUser optional username to authenticate
      *                  with if using a proxy.
      * @param proxyPassword optional password to authenticate
      *                      with if using a proxy
@@ -136,7 +136,7 @@ public final class RadioBrowser {
      * applying the standard request and accept
      * types.
      * @param in the web target to create a builder from.
-     * @return a invocation builder that is built from the web target.
+     * @return an invocation builder that is built from the web target.
      * */
     private Invocation.Builder builder(final WebTarget in) {
         return in.request(MediaType.APPLICATION_JSON_TYPE)
@@ -145,7 +145,7 @@ public final class RadioBrowser {
     }
 
     /**
-     * Transfer the paging parameters the the passed multi valued map.
+     * Transfer the paging parameters to the passed multi-valued-map.
      * @param paging the source of the paging params.
      * @param requestParams the target of the paging params.
      * */
@@ -301,9 +301,9 @@ public final class RadioBrowser {
     }
 
     /** Get a list of all stations. Will return all
-     * stations in a stream..
+     * stations in a stream.
      * @param listParam the optional listing parameters.
-     * @return the full stream of stations..
+     * @return the full stream of stations.
      */
     public Stream<Station> listStations(final ListParameter...listParam) {
         return StreamSupport.stream(
@@ -568,7 +568,7 @@ public final class RadioBrowser {
      * The fields are:
      * name, url, homepage, favicon, country, state, language and tags.
      * @param station the station to add to the REST service.
-     * @return the {@linkplain Station#getStationUUID()} id} of the new station.
+     * @return the {@linkplain Station#getStationUUID() id} of the new station.
      * @throws RadioBrowserException if there was a problem
      * creating the station.
      * @see <a href="https://de1.api.radio-browser.info/#Add_radio_station">
@@ -608,7 +608,7 @@ public final class RadioBrowser {
      * name, url, homepage, favicon, country, state, language and tags.
      * @param station the station to add to the REST service.
      * @param path the path of the new / edit call.
-     * @return the {@linkplain Station#getStationUUID()} id} of the new station.
+     * @return the {@linkplain Station#getStationUUID() id} of the new station.
      * @throws RadioBrowserException if there was a problem
      * creating the station.
      */
@@ -645,7 +645,7 @@ public final class RadioBrowser {
 
     /** Transfers all parameters for a new station to the given target params.
      * @param sourceStation the station to get fields from.
-     * @param targetParams the target multi valued map to write the
+     * @param targetParams the target multi-valued-map to write the
      *                     request params to.
      * */
     private static void transferToMultivaluedMap(final Station sourceStation,

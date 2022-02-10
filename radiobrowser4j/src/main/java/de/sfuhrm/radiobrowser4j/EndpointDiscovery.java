@@ -74,7 +74,7 @@ public class EndpointDiscovery {
     static class DiscoveryResult {
         /** The endpoint address for this result. */
         private String endpoint;
-        /** The connect and retrieval duration in milliseconds. */
+        /** The connection and retrieval duration in milliseconds. */
         private long duration;
         /** The stats read from the endpoint. */
         private Stats stats;
