@@ -7,12 +7,11 @@ on:
     branches: [ master ]
 
 env:
-  SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
-  SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+  SECRETS: ${{ secrets }}
 
 jobs:
   deploy-to-sonatype-oss:
     uses: sfuhrm/github_workflows/.github/workflows/maven-deploy-snapshot-sonatype-oss.yml@main
     with:
-      sonatype_user: $SONATYPE_USER
-      sonatype_password: $SONATYPE_PASSWORD
+      sonatype_user: ${{ SECRETS.SONATYPE_USER }}
+      sonatype_password: ${{ SECRETS.SONATYPE_PASSWORD }}
