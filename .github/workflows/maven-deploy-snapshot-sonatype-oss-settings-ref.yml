@@ -14,5 +14,5 @@ jobs:
   deploy-to-sonatype-oss:
     uses: sfuhrm/github_workflows/.github/workflows/maven-deploy-snapshot-sonatype-oss.yml@main
     with:
-      sonatype_user: ${{ env.SONATYPE_USER }}
-      sonatype_password: ${{ env.SONATYPE_PASSWORD }}
+      sonatype_user: $SONATYPE_USER
+      sonatype_password: $SONATYPE_PASSWORD
