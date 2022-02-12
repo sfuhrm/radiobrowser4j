@@ -1,0 +1,14 @@
+name: Deploy Snapshot SonaType OSS
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  deploy-to-sonatype-oss:
+    uses: sfuhrm/github_workflows/.github/workflows/maven-deploy-snapshot-sonatype-oss.yml@main
+    with:
+      sonatype_user: ${{ secrets.SONATYPE_USER }}
+      sonatype_password: ${{ secrets.SONATYPE_PASSWORD }}
