@@ -162,7 +162,7 @@ public class EndpointDiscovery {
                             + timeout);
         }
 
-        Client client = RadioBrowser.newClient(timeout,
+        Client client = RestClientBuilder.newClient(timeout,
                 proxyUri,
                 proxyUser,
                 proxyPassword);
