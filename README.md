@@ -47,29 +47,6 @@ browser.listStations(ListParameter.create().order(FieldName.name))
 You can take a look at the [javadoc](https://javadoc.io/doc/de.sfuhrm/radiobrowser4j)
 documentation to get the full concepts of the API.
 
-### Gradle for Android targets
-
-Some adjustments are necessary to the packaging of your app build.gradle:
-
-```
-...
-
-android {
-...
-    packagingOptions {
-        exclude 'META-INF/NOTICE.md'
-        exclude 'META-INF/LICENSE.md'
-        exclude 'META-INF/NOTICE.markdown'
-    }
-}
-
-dependencies {
-...
-
-    implementation 'de.sfuhrm:radiobrowser4j:2.2.3';
-}
-```
-
 ### More examples
 
 The library was extracted from an internet radio player and recorder program
