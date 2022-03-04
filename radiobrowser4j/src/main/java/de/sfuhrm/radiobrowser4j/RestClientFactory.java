@@ -7,10 +7,10 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 
 /** Delegate for creating a new JAX-RS client.
  * */
-final class RestClientBuilder {
+final class RestClientFactory {
 
     /** No instance allowed. */
-    private RestClientBuilder() {
+    private RestClientFactory() {
     }
 
     /** Create a new JAX-RS client.

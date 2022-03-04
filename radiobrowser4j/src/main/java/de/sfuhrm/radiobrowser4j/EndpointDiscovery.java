@@ -162,7 +162,7 @@ public class EndpointDiscovery {
                             + timeout);
         }
 
-        Client client = RestClientBuilder.newClient(timeout,
+        Client client = RestClientFactory.newClient(timeout,
                 proxyUri,
                 proxyUser,
                 proxyPassword);

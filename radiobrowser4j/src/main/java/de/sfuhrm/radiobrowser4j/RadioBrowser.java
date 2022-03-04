@@ -109,7 +109,7 @@ public final class RadioBrowser {
                             + timeout);
         }
         this.userAgent = myUserAgent;
-        Client client = RestClientBuilder.newClient(
+        Client client = RestClientFactory.newClient(
                 timeout,
                 proxyUri,
                 proxyUser,
