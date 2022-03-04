@@ -2,8 +2,9 @@ package de.sfuhrm.radiobrowser4j;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
-import org.glassfish.jersey.client.ClientProperties;
-import org.glassfish.jersey.jackson.JacksonFeature;
+import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
+
+import java.util.concurrent.TimeUnit;
 
 /** Delegate for creating a new JAX-RS client.
  * */
@@ -24,22 +25,18 @@ final class RestClientFactory {
                             final String proxyUri,
                             final String proxyUser,
                             final String proxyPassword) {
-        Client client = ClientBuilder.newBuilder()
-                .register(JacksonFeature.class)
-                .build();
-        client.property(ClientProperties.CONNECT_TIMEOUT, timeout);
-        client.property(ClientProperties.READ_TIMEOUT, timeout);
+        ClientBuilder clientBuilder = ClientBuilder.newBuilder()
+                .readTimeout(timeout, TimeUnit.MILLISECONDS)
+                .connectTimeout(timeout, TimeUnit.MILLISECONDS);
+
         if (proxyUri != null) {
-            client.property(ClientProperties.PROXY_URI, proxyUri);
-            if (proxyUser != null) {
-                client.property(ClientProperties.PROXY_USERNAME,
-                        proxyUser);
-            }
-            if (proxyPassword != null) {
-                client.property(ClientProperties.PROXY_PASSWORD,
-                        proxyPassword);
+            if (clientBuilder instanceof ResteasyClientBuilder) {
+                clientBuilder =
+                        ((ResteasyClientBuilder) clientBuilder)
+                                .defaultProxy(proxyUri);
             }
         }
-        return client;
+
+        return clientBuilder.build();
     }
 }
