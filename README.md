@@ -25,7 +25,7 @@ For Maven, you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>2.2.3</version>
+    <version>2.2.5</version>
 </dependency>
 ```
 
@@ -66,7 +66,7 @@ android {
 dependencies {
 ...
 
-    implementation 'de.sfuhrm:radiobrowser4j:2.2.3';
+    implementation 'de.sfuhrm:radiobrowser4j:2.2.5';
 }
 ```
 
@@ -93,12 +93,16 @@ located in the test resources.
 
 ## Version history
 
+* v2.2.5:
+  - Update slf4j dependency to 2.0.7.
+  - Update lombok dependency to 1.8.26.
+  - Update log4j dependency to 2.20.0.
 * v2.2.4:
   - Introduce RestClientFactory to deal at one place with Proxy config.
   - Update Jersey dependency to 3.0.8.
   - Update lombok dependency to 1.8.24.
   - Update log4j dependency to 2.19.0.
-  - Update slf4j dependency to 2.0.3.  
+  - Update slf4j dependency to 2.0.3.
 * v2.2.3:
   - Add proxy support for EndpointDiscovery also.
   - Update Jersey dependency to 3.0.4.
