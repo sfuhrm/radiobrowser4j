@@ -93,6 +93,12 @@ located in the test resources.
 
 ## Version history
 
+* v2.2.4:
+  - Introduce RestClientFactory to deal at one place with Proxy config.
+  - Update Jersey dependency to 3.0.8.
+  - Update lombok dependency to 1.8.24.
+  - Update log4j dependency to 2.19.0.
+  - Update slf4j dependency to 2.0.3.  
 * v2.2.3:
   - Add proxy support for EndpointDiscovery also.
   - Update Jersey dependency to 3.0.4.
