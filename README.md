@@ -49,33 +49,17 @@ documentation to get the full concepts of the API.
 
 ### Gradle for Android targets
 
-Some adjustments are necessary to the packaging of your app build.gradle:
+Some adjustments are necessary. Please see this 
+[summary](https://github.com/sfuhrm/radiobrowser4j/issues/14#issuecomment-1627784662) for details.
 
-```
-...
-
-android {
-...
-    packagingOptions {
-        exclude 'META-INF/NOTICE.md'
-        exclude 'META-INF/LICENSE.md'
-        exclude 'META-INF/NOTICE.markdown'
-    }
-}
-
-dependencies {
-...
-
-    implementation 'de.sfuhrm:radiobrowser4j:2.2.5';
-}
-```
-
+(unveriied start)
 Add the following statements to the Proguard config
 if you are obfuscating your build:
 
 ```
 -keep class org.glassfish.hk2.utilities.** { *; } -keep class org.glassfish.jersey.** { *; } -keep class org.jvnet.hk2.internal.** { *; } -keep class de.sfuhrm.radiobrowser4j.** { *; }
 ```
+(unverified end)
 
 ### More examples
 
