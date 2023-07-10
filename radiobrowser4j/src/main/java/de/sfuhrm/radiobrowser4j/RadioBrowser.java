@@ -179,8 +179,9 @@ public final class RadioBrowser {
             checkResponseStatus(response);
             return map.stream()
                     .collect(Collectors.toMap(
-                    m -> m.get("name"),
-                    m -> Integer.parseInt(m.get("stationcount"))));
+                        m -> m.get("name"),
+                        m -> Integer.parseInt(m.get("stationcount")),
+                            (a,b) -> a));
         } finally {
             close(response);
         }
