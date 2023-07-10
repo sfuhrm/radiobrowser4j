@@ -181,7 +181,7 @@ public final class RadioBrowser {
                     .collect(Collectors.toMap(
                         m -> m.get("name"),
                         m -> Integer.parseInt(m.get("stationcount")),
-                            (a,b) -> a));
+                            (a, b) -> a));
         } finally {
             close(response);
         }
