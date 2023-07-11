@@ -25,7 +25,7 @@ For Maven, you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>2.2.5</version>
+    <version>2.3.1</version>
 </dependency>
 ```
 
@@ -71,6 +71,9 @@ located in the test resources.
 
 ## Version history
 
+* v2.3.1:
+  - Bugfix when dealing with duplicate data  (fixes #15)
+  - Add special info for  [Android setup](ANDROID.md)
 * v2.2.5:
   - Update slf4j dependency to 2.0.7.
   - Update lombok dependency to 1.8.26.
