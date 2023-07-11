@@ -15,6 +15,7 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
+import jakarta.ws.rs.core.HttpHeaders;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
@@ -140,7 +141,8 @@ public final class RadioBrowser {
     private Invocation.Builder builder(final WebTarget in) {
         return in.request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("User-Agent", userAgent);
+                .header(HttpHeaders.USER_AGENT, userAgent)
+                .header(HttpHeaders.ACCEPT_ENCODING, "gzip");
     }
 
     /**

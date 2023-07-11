@@ -4,6 +4,7 @@ import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.message.GZipEncoder;
 
 /** Delegate for creating a new JAX-RS client.
  * */
@@ -26,6 +27,7 @@ final class RestClientFactory {
                             final String proxyPassword) {
         Client client = ClientBuilder.newBuilder()
                 .register(JacksonFeature.class)
+                .register(GZipEncoder.class)
                 .build();
         client.property(ClientProperties.CONNECT_TIMEOUT, timeout);
         client.property(ClientProperties.READ_TIMEOUT, timeout);
