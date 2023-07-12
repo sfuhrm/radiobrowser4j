@@ -25,7 +25,7 @@ For Maven, you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>2.3.1</version>
+    <version>2.4.0</version>
 </dependency>
 ```
 
@@ -71,6 +71,8 @@ located in the test resources.
 
 ## Version history
 
+* v2.4.0
+  - Default to GZIP encoding if supported by the server (#27).
 * v2.3.1:
   - Bugfix when dealing with duplicate data  (fixes #15)
   - Add special info for  [Android setup](ANDROID.md)
