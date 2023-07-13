@@ -15,9 +15,9 @@ jobs:
       DEBIAN_FRONTEND: noninteractive
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up JDK 8
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         distribution: 'adopt'
         java-version: 8
@@ -27,15 +27,15 @@ jobs:
       run: echo "::set-output name=version::$(mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout)"
       id: version
       shell: bash
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: radiobrowser4j-${{ steps.version.outputs.version }}.jar
         path: radiobrowser4j/target/radiobrowser4j-${{ steps.version.outputs.version }}.jar
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: radiobrowser4j-${{ steps.version.outputs.version }}-javadoc.jar
         path: radiobrowser4j/target/radiobrowser4j-${{ steps.version.outputs.version }}-javadoc.jar
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: radiobrowser4j-${{ steps.version.outputs.version }}-sources.jar
         path: radiobrowser4j/target/radiobrowser4j-${{ steps.version.outputs.version }}-sources.jar
