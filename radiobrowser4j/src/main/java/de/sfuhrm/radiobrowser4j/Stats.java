@@ -25,7 +25,7 @@ import lombok.Setter;
  * @author Stephan Fuhrmann
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-final class Stats {
+public final class Stats {
 
     /** The supported version. */
     @Getter @Setter

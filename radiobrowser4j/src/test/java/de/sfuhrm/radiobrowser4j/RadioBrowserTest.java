@@ -374,4 +374,10 @@ public class RadioBrowserTest {
 
         assertThat(readBack1.get().getVotes(), is(1));
     }
+
+    @Test
+    public void getServerStats() {
+        Stats stats = browser.getServerStats();
+        assertThat(stats, is(not(nullValue())));
+    }
 }

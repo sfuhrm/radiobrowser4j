@@ -610,6 +610,18 @@ public final class RadioBrowser {
         }
     }
 
+    /** Get the server statistics.
+     * @return the statistics for the configured server
+     * endpoint.
+     * */
+    public Stats getServerStats() {
+        Response response = builder(webTarget
+                .path("json/stats")
+        ).get();
+        checkResponseStatus(response);
+        return response.readEntity(Stats.class);
+    }
+
     /** Posts a new station to the server.
      * Note: This call only transmits certain fields.
      * The fields are:
