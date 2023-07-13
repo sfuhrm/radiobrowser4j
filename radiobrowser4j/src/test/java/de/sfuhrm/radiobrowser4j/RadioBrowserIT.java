@@ -87,4 +87,12 @@ public class RadioBrowserIT {
         assertThat(stats.getStations(), Matchers.greaterThan(1));
         assertThat(stats.getTags(), Matchers.greaterThan(1));
     }
+
+    @Test
+    public void testAdvancedSearch() throws IOException {
+        AdvancedSearch advancedSearch = AdvancedSearch.builder()
+                .country("Mexico").build();
+        Stream<Station> stream = radioBrowser.listStationsWithAdvancedSearch(advancedSearch);
+        assertThat((int) stream.count(), Matchers.greaterThan(1));
+    }
 }

@@ -28,7 +28,7 @@ import java.util.Collections;
  * */
 @Slf4j
 @ToString
-public final class ListParameter {
+public final class ListParameter extends ParameterProvider {
     /** The field name to sort by. */
     @Getter
     private FieldName order;
@@ -72,7 +72,7 @@ public final class ListParameter {
      * Transfer this list parameter to the passed multi-valued-map.
      * @param requestParams the target of the list params.
      * */
-    void applyTo(final MultivaluedMap<String, String> requestParams) {
+    protected void apply(final MultivaluedMap<String, String> requestParams) {
         log.info("list={}", this);
         if (getOrder() != null) {
             requestParams.put("order",

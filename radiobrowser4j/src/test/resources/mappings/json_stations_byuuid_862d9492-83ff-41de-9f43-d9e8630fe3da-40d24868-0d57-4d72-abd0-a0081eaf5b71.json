@@ -1,0 +1,28 @@
+{
+  "id" : "40d24868-0d57-4d72-abd0-a0081eaf5b71",
+  "name" : "json_stations_byuuid_862d9492-83ff-41de-9f43-d9e8630fe3da",
+  "request" : {
+    "url" : "/json/stations/byuuid/862d9492-83ff-41de-9f43-d9e8630fe3da",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=1",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"changeuuid\":\"3dcaf024-67ee-4197-99fd-3581f44de754\",\"stationuuid\":\"862d9492-83ff-41de-9f43-d9e8630fe3da\",\"serveruuid\":null,\"name\":\"Integration test for radiobrowser4j - ignore\",\"url\":\"https://github.com/sfuhrm/radiobrowser4j\",\"url_resolved\":\"\",\"homepage\":\"https://github.com/sfuhrm/radiobrowser4j\",\"favicon\":\"https://github.com/favicon.ico\",\"tags\":\"\",\"country\":\"Germany\",\"countrycode\":\"DE\",\"iso_3166_2\":null,\"state\":\"\",\"language\":\"\",\"languagecodes\":\"\",\"votes\":0,\"lastchangetime\":\"2023-07-13 20:07:53\",\"lastchangetime_iso8601\":\"2023-07-13T20:07:53Z\",\"codec\":\"\",\"bitrate\":0,\"hls\":0,\"lastcheckok\":1,\"lastchecktime\":\"\",\"lastchecktime_iso8601\":null,\"lastcheckoktime\":\"\",\"lastcheckoktime_iso8601\":null,\"lastlocalchecktime\":\"\",\"lastlocalchecktime_iso8601\":null,\"clicktimestamp\":\"\",\"clicktimestamp_iso8601\":null,\"clickcount\":0,\"clicktrend\":0,\"ssl_error\":0,\"geo_lat\":null,\"geo_long\":null,\"has_extended_info\":false}]",
+    "headers" : {
+      "Date" : "Thu, 13 Jul 2023 20:07:53 GMT",
+      "Server" : "tiny-http (Rust)",
+      "Content-Type" : "application/json",
+      "Vary" : "Accept-Encoding",
+      "Keep-Alive" : "timeout=5, max=89"
+    }
+  },
+  "uuid" : "40d24868-0d57-4d72-abd0-a0081eaf5b71",
+  "persistent" : true,
+  "scenarioName" : "scenario-3-json-stations-byuuid-862d9492-83ff-41de-9f43-d9e8630fe3da",
+  "requiredScenarioState" : "scenario-3-json-stations-byuuid-862d9492-83ff-41de-9f43-d9e8630fe3da-2",
+  "insertionIndex" : 12
+}

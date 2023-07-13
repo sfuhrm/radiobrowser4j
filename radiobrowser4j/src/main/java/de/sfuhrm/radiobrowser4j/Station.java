@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import jakarta.ws.rs.core.MultivaluedMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,7 +38,7 @@ import java.util.UUID;
  */
 @EqualsAndHashCode(of = {"stationUUID", "name"})
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class Station {
+public final class Station extends ParameterProvider {
     /** A globally unique identifier for the change
      * of the station information. */
     @Getter @Setter
@@ -165,6 +166,26 @@ public final class Station {
             pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastchangetime;
 
+    /** Geo latitude of the station. */
+    @Getter
+    @Setter
+    @JsonProperty("geo_lat")
+    private Double geoLatitude;
+
+    /** Geo longitude of the station. */
+    @Getter
+    @Setter
+    @JsonProperty("geo_long")
+    private Double geoLongitude;
+
+    /** Is true, if the stream owner does
+     * provide extended information as HTTP headers
+     * which override the information in the database. */
+    @Getter
+    @Setter
+    @JsonProperty("has_extended_info")
+    private Boolean hasExtendedInfo;
+
     /** JSON getter for the {@link #tagList}.
      * You would probably prefer using the {@link #tagList} property.
      * @return comma separated tag names.
@@ -208,5 +229,42 @@ public final class Station {
     @Override
     public String toString() {
         return "Station{" + "name=" + name + ", url=" + url + '}';
+    }
+
+    @Override
+    protected void apply(final MultivaluedMap<String, String> requestParams) {
+        requestParams.putSingle("name",
+                getName());
+        requestParams.putSingle("url",
+                getUrl());
+        if (getHomepage() != null) {
+            requestParams.putSingle("homepage",
+                    getHomepage());
+        }
+        if (getFavicon() != null) {
+            requestParams.putSingle("favicon",
+                    getFavicon());
+        }
+        if (getCountryCode() != null) {
+            requestParams.putSingle("countrycode",
+                    getCountryCode());
+        }
+        if (getState() != null) {
+            requestParams.putSingle("state",
+                    getState());
+        }
+        if (getLanguage() != null) {
+            requestParams.putSingle("language",
+                    getLanguage());
+        }
+        if (getTagList() != null) {
+            requestParams.putSingle("tagList", getTags());
+        }
+        if (getGeoLatitude() != null) {
+            requestParams.putSingle("geo_lat", getGeoLatitude().toString());
+        }
+        if (getGeoLongitude() != null) {
+            requestParams.putSingle("geo_long", getGeoLongitude().toString());
+        }
     }
 }

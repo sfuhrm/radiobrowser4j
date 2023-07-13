@@ -32,6 +32,7 @@ import jakarta.ws.rs.core.Response;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -54,7 +55,7 @@ public final class RadioBrowser {
     /** The base URL of the REST service. */
     @Deprecated
     protected static final String DEFAULT_API_URL =
-            "https://de1.api.radio-browser.info/";
+            "https://at1.api.radio-browser.info/";
 
     /** The JAX-RS web target for service access. */
     private final WebTarget webTarget;
@@ -151,20 +152,6 @@ public final class RadioBrowser {
                 .header(HttpHeaders.ACCEPT_ENCODING, "gzip");
     }
 
-    /**
-     * Transfer the paging parameters to the passed multi-valued-map.
-     * @param paging the source of the paging params.
-     * @param requestParams the target of the paging params.
-     * */
-    private static void applyPaging(@NonNull final Paging paging,
-                    final MultivaluedMap<String, String> requestParams) {
-        log.info("paging={}", paging);
-        requestParams.put("limit", Collections.singletonList(
-                Integer.toString(paging.getLimit())));
-        requestParams.put("offset", Collections.singletonList(
-                Integer.toString(paging.getOffset())));
-    }
-
     /** Retrieve a generic list containing a value/stationcount mapping.
      * @param subPath the API sub path to use for the call.
      * @return map of value and stationcount pairs.
@@ -246,8 +233,8 @@ public final class RadioBrowser {
         MultivaluedMap<String, String> requestParams =
                 new MultivaluedHashMap<>();
 
-        paging.ifPresent(p -> applyPaging(p, requestParams));
-        Arrays.stream(listParam).forEach(lp -> lp.applyTo(requestParams));
+        paging.ifPresent(p -> p.apply(requestParams));
+        Arrays.stream(listParam).forEach(lp -> lp.apply(requestParams));
         Entity<Form> entity = Entity.form(requestParams);
         Response response = null;
         try {
@@ -276,7 +263,7 @@ public final class RadioBrowser {
         MultivaluedMap<String, String> requestParams =
                 new MultivaluedHashMap<>();
 
-        Arrays.stream(listParam).forEach(lp -> lp.applyTo(requestParams));
+        Arrays.stream(listParam).forEach(lp -> lp.apply(requestParams));
         Entity<Form> entity = Entity.form(requestParams);
         Response response = null;
         try {
@@ -344,24 +331,22 @@ public final class RadioBrowser {
 
     /** Get a list of all improvable stations. Will return a single batch.
      * @param limit the limit of the page to retrieve.
-     * @return the partial list of the improvable stations.
-     * Can be empty for exceeding the
-     * possible stations.
+     * @return an empty list of improvable stations as a placeholder
+     * for the removed API endpoint.
+     * @deprecated This API endpoint has been removed.
      */
     public List<Station> listImprovableStations(@NonNull final Limit limit) {
-        return listStationsPathWithLimit(Optional.of(limit),
-                "json/stations/improvable");
+        return Collections.emptyList();
     }
 
     /** Get a list of all broken stations as one continuous stream.
-     * @return the continuous stream of all improvable stations.
+     * @return an empty stream of improvable stations as a placeholder
+     * for the removed API endpoint.
+     * @deprecated This API endpoint has been removed.
      */
+    @Deprecated
     public Stream<Station> listImprovableStations() {
-        return StreamSupport.stream(
-                new PagingSpliterator<>(
-                        p -> listStationsPathWithPaging(Optional.of(p),
-                                "json/stations/improvable")),
-                false);
+        return new ArrayList<Station>().stream();
     }
 
     /** Get a list of the top click stations. Will return a single batch.
@@ -485,8 +470,8 @@ public final class RadioBrowser {
                                         final ListParameter...listParam) {
         MultivaluedMap<String, String> requestParams =
                 new MultivaluedHashMap<>();
-        applyPaging(paging, requestParams);
-        Arrays.stream(listParam).forEach(l -> l.applyTo(requestParams));
+        paging.apply(requestParams);
+        Arrays.stream(listParam).forEach(l -> l.apply(requestParams));
         Entity<Form> entity = Entity.form(requestParams);
         Response response = null;
 
@@ -518,8 +503,8 @@ public final class RadioBrowser {
         Function<Paging, List<Station>> fetcher = p -> {
             MultivaluedMap<String, String> requestParams =
                     new MultivaluedHashMap<>();
-            applyPaging(p, requestParams);
-            Arrays.stream(listParam).forEach(l -> l.applyTo(requestParams));
+            p.apply(requestParams);
+            Arrays.stream(listParam).forEach(l -> l.apply(requestParams));
             Entity<Form> entity = Entity.form(requestParams);
             Response response = null;
 
@@ -550,7 +535,7 @@ public final class RadioBrowser {
     public URL resolveStreamUrl(@NonNull final UUID stationUUID) {
         Response response = null;
         try {
-            response = builder(webTarget.path("v2/json/url")
+            response = builder(webTarget.path("json/url")
                     .path(stationUUID.toString()))
                     .get();
 
@@ -576,7 +561,7 @@ public final class RadioBrowser {
      * The fields are:
      * name, url, homepage, favicon, country, state, language and tags.
      * @param station the station to add to the REST service.
-     * @return the {@linkplain Station#getStationUUID() id} of the new station.
+     * @return the uuid of the new station.
      * @throws RadioBrowserException if there was a problem
      * creating the station.
      * @see <a href="https://de1.api.radio-browser.info/#Add_radio_station">
@@ -622,6 +607,42 @@ public final class RadioBrowser {
         return response.readEntity(Stats.class);
     }
 
+    /** Get a stream of stations matching a certain search criteria.
+     * @param advancedSearch the advanced search query object.
+     *          A builder can be created by calling
+     *          {@code AdvancedSearch.builder()},
+     *          and then when you are finished
+     *          {@code AdvancedSearch.AdvancedSearchBuilder.build()}.
+     * @return the full stream of matching stations.
+     */
+    public Stream<Station> listStationsWithAdvancedSearch(
+            @NonNull final AdvancedSearch advancedSearch) {
+
+        Function<Paging, List<Station>> fetcher = p -> {
+            MultivaluedMap<String, String> requestParams =
+                    new MultivaluedHashMap<>();
+            p.apply(requestParams);
+            advancedSearch.apply(requestParams);
+            Entity<Form> entity = Entity.form(requestParams);
+            Response response = null;
+
+            try {
+                response = builder(webTarget
+                        .path("/json/stations/search")).post(entity);
+                checkResponseStatus(response);
+                return response.readEntity(new GenericType<List<Station>>() {
+                });
+            } finally {
+                close(response);
+            }
+        };
+
+        return StreamSupport.stream(
+                new PagingSpliterator<>(
+                        fetcher), false);
+    }
+
+
     /** Posts a new station to the server.
      * Note: This call only transmits certain fields.
      * The fields are:
@@ -636,7 +657,7 @@ public final class RadioBrowser {
                                         final String path) {
         MultivaluedMap<String, String> requestParams =
                 new MultivaluedHashMap<>();
-        transferToMultivaluedMap(station, requestParams);
+        station.apply(requestParams);
         Entity<Form> entity = Entity.form(requestParams);
 
         Response response = null;
@@ -662,44 +683,6 @@ public final class RadioBrowser {
             close(response);
         }
     }
-
-    /** Transfers all parameters for a new station to the given target params.
-     * @param sourceStation the station to get fields from.
-     * @param targetParams the target multi-valued-map to write the
-     *                     request params to.
-     * */
-    private static void transferToMultivaluedMap(final Station sourceStation,
-                     final MultivaluedMap<String, String> targetParams) {
-        targetParams.put("name",
-                Collections.singletonList(sourceStation.getName()));
-        targetParams.put("url",
-                Collections.singletonList(sourceStation.getUrl()));
-
-        if (sourceStation.getHomepage() != null) {
-            targetParams.put("homepage",
-                    Collections.singletonList(sourceStation.getHomepage()));
-        }
-        if (sourceStation.getFavicon() != null) {
-            targetParams.put("favicon",
-                    Collections.singletonList(sourceStation.getFavicon()));
-        }
-        if (sourceStation.getCountry() != null) {
-            targetParams.put("country",
-                    Collections.singletonList(sourceStation.getCountry()));
-        }
-        if (sourceStation.getState() != null) {
-            targetParams.put("state",
-                    Collections.singletonList(sourceStation.getState()));
-        }
-        sourceStation.getLanguage();
-        targetParams.put("language",
-                Collections.singletonList(sourceStation.getLanguage()));
-        sourceStation.getTags();
-        targetParams.put("tagList",
-                Collections.singletonList(
-                        sourceStation.getTags()));
-    }
-
 
     /** Log the response.
      * @param response the response to log the status

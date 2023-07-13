@@ -1,0 +1,25 @@
+{
+  "id" : "47766eaa-4185-4b4e-9989-4ae956da2d67",
+  "name" : "json_stations",
+  "request" : {
+    "url" : "/json/stations",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=39552&limit=128",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[]",
+    "headers" : {
+      "Date" : "Thu, 13 Jul 2023 20:09:02 GMT",
+      "Server" : "tiny-http (Rust)",
+      "Content-Type" : "application/json",
+      "Keep-Alive" : "timeout=5, max=80"
+    }
+  },
+  "uuid" : "47766eaa-4185-4b4e-9989-4ae956da2d67",
+  "persistent" : true,
+  "insertionIndex" : 324
+}

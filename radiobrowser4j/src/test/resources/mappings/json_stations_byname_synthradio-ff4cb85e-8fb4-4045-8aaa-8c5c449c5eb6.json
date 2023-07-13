@@ -1,0 +1,29 @@
+{
+  "id" : "ff4cb85e-8fb4-4045-8aaa-8c5c449c5eb6",
+  "name" : "json_stations_byname_synthradio",
+  "request" : {
+    "url" : "/json/stations/byname/synthradio",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=5",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"changeuuid\":\"23465d72-e8db-4290-aaa8-46a7b89aadb9\",\"stationuuid\":\"96394377-0601-11e8-ae97-52543be04c81\",\"serveruuid\":null,\"name\":\"Synthradio\",\"url\":\"http://synth-radio.ru/synthradio192.m3u\",\"url_resolved\":\"http://77.51.212.205:8005/live192\",\"homepage\":\"http://synth-radio.ru/\",\"favicon\":\"\",\"tags\":\"new wave,synth,synthesizer,synthwave\",\"country\":\"The Russian Federation\",\"countrycode\":\"RU\",\"iso_3166_2\":null,\"state\":\"\",\"language\":\"english\",\"languagecodes\":\"\",\"votes\":1096,\"lastchangetime\":\"2022-04-18 19:09:36\",\"lastchangetime_iso8601\":\"2022-04-18T19:09:36Z\",\"codec\":\"MP3\",\"bitrate\":192,\"hls\":0,\"lastcheckok\":1,\"lastchecktime\":\"2023-07-13 16:05:52\",\"lastchecktime_iso8601\":\"2023-07-13T16:05:52Z\",\"lastcheckoktime\":\"2023-07-13 16:05:52\",\"lastcheckoktime_iso8601\":\"2023-07-13T16:05:52Z\",\"lastlocalchecktime\":\"\",\"lastlocalchecktime_iso8601\":null,\"clicktimestamp\":\"2023-07-13 18:58:27\",\"clicktimestamp_iso8601\":\"2023-07-13T18:58:27Z\",\"clickcount\":45,\"clicktrend\":1,\"ssl_error\":0,\"geo_lat\":null,\"geo_long\":null,\"has_extended_info\":false}]",
+    "headers" : {
+      "Date" : "Thu, 13 Jul 2023 20:07:53 GMT",
+      "Server" : "tiny-http (Rust)",
+      "Content-Type" : "application/json",
+      "Vary" : "Accept-Encoding",
+      "Keep-Alive" : "timeout=5, max=87"
+    }
+  },
+  "uuid" : "ff4cb85e-8fb4-4045-8aaa-8c5c449c5eb6",
+  "persistent" : true,
+  "scenarioName" : "scenario-4-json-stations-byname-synthradio",
+  "requiredScenarioState" : "Started",
+  "newScenarioState" : "scenario-4-json-stations-byname-synthradio-2",
+  "insertionIndex" : 14
+}

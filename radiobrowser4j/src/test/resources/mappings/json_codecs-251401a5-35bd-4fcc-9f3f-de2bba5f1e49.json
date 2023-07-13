@@ -1,0 +1,22 @@
+{
+  "id" : "251401a5-35bd-4fcc-9f3f-de2bba5f1e49",
+  "name" : "json_codecs",
+  "request" : {
+    "url" : "/json/codecs",
+    "method" : "POST"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"name\":\"AAC\",\"stationcount\":3919},{\"name\":\"AAC+\",\"stationcount\":7024},{\"name\":\"AAC+,H.264\",\"stationcount\":4},{\"name\":\"AAC,H.264\",\"stationcount\":82},{\"name\":\"FLAC\",\"stationcount\":1},{\"name\":\"FLV\",\"stationcount\":13},{\"name\":\"MP3\",\"stationcount\":26314},{\"name\":\"MP3,H.264\",\"stationcount\":14},{\"name\":\"OGG\",\"stationcount\":402},{\"name\":\"UNKNOWN\",\"stationcount\":1627},{\"name\":\"UNKNOWN,H.264\",\"stationcount\":2}]",
+    "headers" : {
+      "Date" : "Thu, 13 Jul 2023 20:09:02 GMT",
+      "Server" : "tiny-http (Rust)",
+      "Content-Type" : "application/json",
+      "Vary" : "Accept-Encoding",
+      "Keep-Alive" : "timeout=5, max=75"
+    }
+  },
+  "uuid" : "251401a5-35bd-4fcc-9f3f-de2bba5f1e49",
+  "persistent" : true,
+  "insertionIndex" : 329
+}

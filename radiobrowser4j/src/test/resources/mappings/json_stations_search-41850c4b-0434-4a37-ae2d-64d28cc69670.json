@@ -1,0 +1,25 @@
+{
+  "id" : "41850c4b-0434-4a37-ae2d-64d28cc69670",
+  "name" : "json_stations_search",
+  "request" : {
+    "url" : "/json/stations/search",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "country=Germany&offset=128&limit=128&state=Hamburg",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[]",
+    "headers" : {
+      "Date" : "Thu, 13 Jul 2023 20:09:03 GMT",
+      "Server" : "tiny-http (Rust)",
+      "Content-Type" : "application/json",
+      "Keep-Alive" : "timeout=5, max=66"
+    }
+  },
+  "uuid" : "41850c4b-0434-4a37-ae2d-64d28cc69670",
+  "persistent" : true,
+  "insertionIndex" : 338
+}

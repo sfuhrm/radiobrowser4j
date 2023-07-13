@@ -22,7 +22,7 @@ import lombok.ToString;
 /** Immutable limit configuration.
  * The limit is used to limit the size of a sub list that can be retrieved.
  * @see Paging
- * @author Stephan fuhrmann
+ * @author Stephan Fuhrmann
  * */
 @ToString
 @EqualsAndHashCode

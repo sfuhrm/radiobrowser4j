@@ -45,7 +45,7 @@ public class ListParameterTest {
     public void applyToWithNothingSet() {
         ListParameter listParameter = ListParameter.create();
         MultivaluedMap<String,String> multivaluedMap = new MultivaluedHashMap<>();
-        listParameter.applyTo(multivaluedMap);
+        listParameter.apply(multivaluedMap);
 
         assertThat(multivaluedMap.keySet().toArray(), is(IsArrayWithSize.emptyArray()));
     }
@@ -55,7 +55,7 @@ public class ListParameterTest {
         ListParameter listParameter = ListParameter.create();
         listParameter.order(FieldName.BITRATE);
         MultivaluedMap<String,String> multivaluedMap = new MultivaluedHashMap<>();
-        listParameter.applyTo(multivaluedMap);
+        listParameter.apply(multivaluedMap);
 
         assertThat(multivaluedMap.keySet(),     is(new HashSet<>(Collections.singletonList("order"))));
         assertThat(multivaluedMap.get("order"),  is(Collections.singletonList("bitrate")));
@@ -66,7 +66,7 @@ public class ListParameterTest {
         ListParameter listParameter = ListParameter.create();
         listParameter.reverseOrder(true);
         MultivaluedMap<String,String> multivaluedMap = new MultivaluedHashMap<>();
-        listParameter.applyTo(multivaluedMap);
+        listParameter.apply(multivaluedMap);
 
         assertThat(multivaluedMap.keySet(),     is(new HashSet<>(Collections.singletonList("reverse"))));
         assertThat(multivaluedMap.get("reverse"),  is(Collections.singletonList("true")));
@@ -78,7 +78,7 @@ public class ListParameterTest {
         listParameter.order(FieldName.CODEC);
         listParameter.reverseOrder(true);
         MultivaluedMap<String,String> multivaluedMap = new MultivaluedHashMap<>();
-        listParameter.applyTo(multivaluedMap);
+        listParameter.apply(multivaluedMap);
 
         assertThat(multivaluedMap.keySet(),     is(new HashSet<>(Arrays.asList("reverse", "order"))));
         assertThat(multivaluedMap.get("reverse"),  is(Collections.singletonList("true")));

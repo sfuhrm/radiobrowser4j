@@ -15,20 +15,25 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
+import jakarta.ws.rs.core.MultivaluedMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.Collections;
 
 /** Immutable paging configuration.
  * The paging is used to address a sub list that can be retrieved in
  * one logical page. This enables the client to itereate through a
  * long list without needing to store the whole result in memory.
  * @see Limit
- * @author Stephan fuhrmann
+ * @author Stephan Fuhrmann
  * */
 @ToString
 @EqualsAndHashCode
-public final class Paging {
+@Slf4j
+public final class Paging extends ParameterProvider {
     /** A default start page with offset 0 and limit 64.
      * */
     public static final Paging DEFAULT_START = new Paging(0, 64);
@@ -88,5 +93,14 @@ public final class Paging {
      * */
     public Paging next() {
         return new Paging(offset + limit, limit);
+    }
+
+    @Override
+    protected void apply(final MultivaluedMap<String, String> requestParams) {
+        log.info("paging={}", this);
+        requestParams.put("limit", Collections.singletonList(
+                Integer.toString(getLimit())));
+        requestParams.put("offset", Collections.singletonList(
+                Integer.toString(getOffset())));
     }
 }

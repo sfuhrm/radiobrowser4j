@@ -21,82 +21,66 @@ package de.sfuhrm.radiobrowser4j;
 public enum FieldName {
     /**
      * The station name.
-     * @see Station#getName()
      */
     NAME,
     /**
      * The station url.
-     * @see Station#getUrl()
      */
     URL,
     /**
      * The station homepage.
-     * @see Station#getHomepage()
      */
     HOMEPAGE,
     /**
      * The station favicon.
-     * @see Station#getFavicon()
      */
     FAVICON,
     /**
      * The station tags.
-     * @see Station#getTagList()
      */
     TAGS,
     /**
      * The station country.
-     * @see Station#getCountry()
      */
     COUNTRY,
     /**
      * The station state.
-     * @see Station#getState()
      */
     STATE,
     /**
      * The station language.
-     * @see Station#getLanguage()
      */
     LANGUAGE,
     /**
      * The station votes.
-     * @see Station#getVotes()
      */
     VOTES,
     /**
      * The station codec.
-     * @see Station#getCodec()
      */
     CODEC,
     /**
      * The station bitrate.
-     * @see Station#getBitrate()
      */
     BITRATE,
     /**
      * Whether last check was ok.
-     * @see Station#getLastcheckok()
      */
     LASTCHECKOK,
     /**
      * Last check time.
-     * @see Station#getLastchecktime()
      */
     LASTCHECKTIME,
     /**
      * The click time stamp.
-     * @see Station#getClicktimestamp()
      */
     CLICKTIMESTAMP,
     /**
      * The station click count.
-     * @see Station#getClickcount()
      */
     CLICKCOUNT,
     /**
      * The station click trend.
-     * @see Station#getClicktrend()
      */
     CLICKTREND
 }

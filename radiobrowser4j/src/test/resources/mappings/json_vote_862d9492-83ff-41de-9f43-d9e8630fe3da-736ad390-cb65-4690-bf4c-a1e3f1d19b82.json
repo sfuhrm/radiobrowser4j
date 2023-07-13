@@ -1,0 +1,24 @@
+{
+  "id" : "736ad390-cb65-4690-bf4c-a1e3f1d19b82",
+  "name" : "json_vote_862d9492-83ff-41de-9f43-d9e8630fe3da",
+  "request" : {
+    "url" : "/json/vote/862d9492-83ff-41de-9f43-d9e8630fe3da",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"ok\":true,\"message\":\"voted for station successfully\"}",
+    "headers" : {
+      "Date" : "Thu, 13 Jul 2023 20:07:53 GMT",
+      "Server" : "tiny-http (Rust)",
+      "Content-Type" : "application/json",
+      "Cache-Control" : "no-cache, no-store, must-revalidate",
+      "Expires" : "0",
+      "Pragma" : "no-cache",
+      "Keep-Alive" : "timeout=5, max=90"
+    }
+  },
+  "uuid" : "736ad390-cb65-4690-bf4c-a1e3f1d19b82",
+  "persistent" : true,
+  "insertionIndex" : 11
+}

@@ -1,0 +1,31 @@
+{
+  "id" : "d973542e-548b-41c2-9ddf-b335ab84cee7",
+  "name" : "json_add",
+  "request" : {
+    "url" : "/json/add",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "tagList=&favicon=https%3A%2F%2Fgithub.com%2Ffavicon.ico&countrycode=DE&name=Integration+test+for+radiobrowser4j+-+ignore&language=&url=https%3A%2F%2Fgithub.com%2Fsfuhrm%2Fradiobrowser4j&homepage=https%3A%2F%2Fgithub.com%2Fsfuhrm%2Fradiobrowser4j",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"ok\":true,\"message\":\"added station successfully\",\"uuid\":\"862d9492-83ff-41de-9f43-d9e8630fe3da\"}",
+    "headers" : {
+      "Date" : "Thu, 13 Jul 2023 20:07:53 GMT",
+      "Server" : "tiny-http (Rust)",
+      "Content-Type" : "application/json",
+      "Cache-Control" : "no-cache, no-store, must-revalidate",
+      "Expires" : "0",
+      "Pragma" : "no-cache",
+      "Vary" : "Accept-Encoding",
+      "Keep-Alive" : "timeout=5, max=92"
+    }
+  },
+  "uuid" : "d973542e-548b-41c2-9ddf-b335ab84cee7",
+  "persistent" : true,
+  "scenarioName" : "scenario-2-json-add",
+  "requiredScenarioState" : "scenario-2-json-add-2",
+  "insertionIndex" : 9
+}

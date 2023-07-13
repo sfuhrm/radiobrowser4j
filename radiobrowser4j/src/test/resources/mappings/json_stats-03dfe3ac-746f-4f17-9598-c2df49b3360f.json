@@ -1,0 +1,22 @@
+{
+  "id" : "03dfe3ac-746f-4f17-9598-c2df49b3360f",
+  "name" : "json_stats",
+  "request" : {
+    "url" : "/json/stats",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"supported_version\":1,\"software_version\":\"0.7.24\",\"status\":\"OK\",\"stations\":39094,\"stations_broken\":365,\"tags\":9445,\"clicks_last_hour\":4086,\"clicks_last_day\":109250,\"languages\":393,\"countries\":210}",
+    "headers" : {
+      "Date" : "Thu, 13 Jul 2023 20:07:53 GMT",
+      "Server" : "tiny-http (Rust)",
+      "Content-Type" : "application/json",
+      "Vary" : "Accept-Encoding",
+      "Keep-Alive" : "timeout=5, max=88"
+    }
+  },
+  "uuid" : "03dfe3ac-746f-4f17-9598-c2df49b3360f",
+  "persistent" : true,
+  "insertionIndex" : 13
+}

@@ -1,0 +1,25 @@
+{
+  "id" : "1ac1fd89-42a6-4f33-9d02-5da0b88ab664",
+  "name" : "json_url_96394377-0601-11e8-ae97-52543be04c81",
+  "request" : {
+    "url" : "/json/url/96394377-0601-11e8-ae97-52543be04c81",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"ok\":true,\"message\":\"retrieved station url\",\"stationuuid\":\"96394377-0601-11e8-ae97-52543be04c81\",\"name\":\"Synthradio\",\"url\":\"http://77.51.212.205:8005/live192\"}",
+    "headers" : {
+      "Date" : "Thu, 13 Jul 2023 20:09:04 GMT",
+      "Server" : "tiny-http (Rust)",
+      "Content-Type" : "application/json",
+      "Cache-Control" : "no-cache, no-store, must-revalidate",
+      "Expires" : "0",
+      "Pragma" : "no-cache",
+      "Vary" : "Accept-Encoding",
+      "Keep-Alive" : "timeout=5, max=55"
+    }
+  },
+  "uuid" : "1ac1fd89-42a6-4f33-9d02-5da0b88ab664",
+  "persistent" : true,
+  "insertionIndex" : 349
+}

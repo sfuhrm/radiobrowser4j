@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 /**
  * Discovers the radio browser API endpoint that suits the application.
+ * @author Stephan Fuhrmann
  */
 @Slf4j
 public class EndpointDiscovery {
