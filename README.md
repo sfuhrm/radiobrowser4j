@@ -25,7 +25,7 @@ For Maven, you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>2.4.0</version>
+    <version>2.5.0</version>
 </dependency>
 ```
 
@@ -71,6 +71,16 @@ located in the test resources.
 
 ## Version history
 
+* v2.5.0
+  - Added new call listStationsWithAdvancedSearch for creating more complex queries to the API.
+  - Added Station geoLatitude and geoLongitude.
+  - Added the getServerStats call.
+  - Fix: Mapping of now necessary CountryCode was broken.
+  - Fix: Deprecation of the RadioBrowser.DEFAULT_API_URL and the related constructor. The cluster concept of radiobrowser is to rely on DNS roundrobin and probing. The German RadioBrowser.DEFAULT_API_URL returned HTTP 503 today which sucks.
+  - Fix: "Improvable stations" are gone in the REST API, they are now deprecated and return empty lists/streams.
+  - Refactored code to use a common ParameterProvider for mapping parameters to Maps.
+  - Re-created offline wiremock tests
+  - Integration test or real-world tests with real radiobrowser API
 * v2.4.0
   - Default to GZIP encoding if supported by the server (#27).
 * v2.3.1:
