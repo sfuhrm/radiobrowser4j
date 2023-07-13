@@ -52,6 +52,7 @@ import java.util.stream.StreamSupport;
 public final class RadioBrowser {
 
     /** The base URL of the REST service. */
+    @Deprecated
     protected static final String DEFAULT_API_URL =
             "https://de1.api.radio-browser.info/";
 
@@ -62,7 +63,7 @@ public final class RadioBrowser {
     private final String userAgent;
 
     /**
-     * Creates a new API client.
+     * Creates a new API client using a specific api endpoint.
      * @param apiUrl the base URL of the API.
      *               Can be determined by
      *               {@linkplain  EndpointDiscovery#discover()}
@@ -81,7 +82,7 @@ public final class RadioBrowser {
     }
 
     /**
-     * Creates a new API client.
+     * Creates a new API client using a proxy.
      * @param apiUrl the base URL of the API. Can be determined
      *               by {@linkplain  EndpointDiscovery#discover()}
      *               or set to {@linkplain #DEFAULT_API_URL}.
@@ -119,14 +120,19 @@ public final class RadioBrowser {
     }
 
     /**
-     * Creates a new API client.
+     * Creates a new API client using the default endpoint.
      * @param timeout the timeout for connect and read requests in milliseconds.
      *                Must be greater than zero.
      * @param myUserAgent the user agent String for your user agent.
      *                    Please use a user agent string that somehow
      *                    points to your github project,
      *                    home page, or what ever.
+     * @deprecated This method is deprecated since it can use an
+     * obsolete endpoint. Using the endpoint discovery
+     * and passing the result to one of the other
+     * constructors is recommended.
      */
+    @Deprecated
     public RadioBrowser(final int timeout,
                         final String myUserAgent) {
         this(DEFAULT_API_URL, timeout, myUserAgent);
