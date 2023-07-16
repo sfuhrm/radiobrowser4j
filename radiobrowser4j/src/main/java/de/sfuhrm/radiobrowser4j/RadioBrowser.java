@@ -163,11 +163,8 @@ public final class RadioBrowser {
 
         Entity<Form> entity = Entity.form(requestParams);
 
-        Response response = null;
-        try {
-            response = builder(webTarget.path(subPath))
-                    .post(entity);
-
+        try (Response response = builder(webTarget.path(subPath))
+                    .post(entity)) {
             List<Map<String, String>> map = response.readEntity(
                     new GenericType<List<Map<String, String>>>() {
             });
@@ -177,8 +174,6 @@ public final class RadioBrowser {
                         m -> m.get("name"),
                         m -> Integer.parseInt(m.get("stationcount")),
                             (a, b) -> a));
-        } finally {
-            close(response);
         }
     }
 
@@ -236,16 +231,12 @@ public final class RadioBrowser {
         paging.ifPresent(p -> p.apply(requestParams));
         Arrays.stream(listParam).forEach(lp -> lp.apply(requestParams));
         Entity<Form> entity = Entity.form(requestParams);
-        Response response = null;
-        try {
-            response = builder(webTarget.path(path))
-                    .post(entity);
+        try (Response response = builder(webTarget.path(path))
+                .post(entity)) {
             checkResponseStatus(response);
 
             return response.readEntity(new GenericType<List<Station>>() {
             });
-        } finally {
-            close(response);
         }
     }
 
@@ -265,20 +256,16 @@ public final class RadioBrowser {
 
         Arrays.stream(listParam).forEach(lp -> lp.apply(requestParams));
         Entity<Form> entity = Entity.form(requestParams);
-        Response response = null;
-        try {
-            WebTarget target = webTarget.path(path);
-            if (limit.isPresent()) {
-                target = target.path(Integer.toString(limit.get().getSize()));
-            }
-            response = builder(target)
-                    .post(entity);
+        WebTarget target = webTarget.path(path);
+        if (limit.isPresent()) {
+            target = target.path(Integer.toString(limit.get().getSize()));
+        }
+        try (Response response = builder(target)
+                .post(entity)) {
             checkResponseStatus(response);
 
             return response.readEntity(new GenericType<List<Station>>() {
             });
-        } finally {
-            close(response);
         }
     }
 
@@ -473,19 +460,15 @@ public final class RadioBrowser {
         paging.apply(requestParams);
         Arrays.stream(listParam).forEach(l -> l.apply(requestParams));
         Entity<Form> entity = Entity.form(requestParams);
-        Response response = null;
 
-        try {
-            response = builder(webTarget
-                       .path("json/stations")
-                       .path(searchMode.name().toLowerCase())
-                       .path(searchTerm))
-                    .post(entity);
+        try (Response response = builder(webTarget
+                .path("json/stations")
+                .path(searchMode.name().toLowerCase())
+                .path(searchTerm))
+                .post(entity)) {
             checkResponseStatus(response);
             return response.readEntity(new GenericType<List<Station>>() {
             });
-        } finally {
-            close(response);
         }
     }
 
@@ -506,19 +489,16 @@ public final class RadioBrowser {
             p.apply(requestParams);
             Arrays.stream(listParam).forEach(l -> l.apply(requestParams));
             Entity<Form> entity = Entity.form(requestParams);
-            Response response = null;
 
-            try {
-                response = builder(webTarget
-                        .path("json/stations")
-                        .path(searchMode.name().toLowerCase())
-                        .path(searchTerm))
-                        .post(entity);
+            try (Response response = builder(webTarget
+                    .path("json/stations")
+                    .path(searchMode.name().toLowerCase())
+                    .path(searchTerm))
+                    .post(entity)) {
+
                 checkResponseStatus(response);
                 return response.readEntity(new GenericType<List<Station>>() {
                 });
-            } finally {
-                close(response);
             }
         };
 
@@ -533,12 +513,9 @@ public final class RadioBrowser {
      * @throws RadioBrowserException if the URL could not be retrieved
      */
     public URL resolveStreamUrl(@NonNull final UUID stationUUID) {
-        Response response = null;
-        try {
-            response = builder(webTarget.path("json/url")
-                    .path(stationUUID.toString()))
-                    .get();
-
+        try (Response response = builder(webTarget.path("json/url")
+                .path(stationUUID.toString()))
+                .get()) {
             checkResponseStatus(response);
             log.debug("URI is {}", webTarget.getUri());
             try {
@@ -551,8 +528,6 @@ public final class RadioBrowser {
             } catch (MalformedURLException e) {
                 throw new RadioBrowserException(e);
             }
-        } finally {
-            close(response);
         }
     }
 
@@ -578,11 +553,9 @@ public final class RadioBrowser {
      * voting for the station.
      */
     public void voteForStation(@NonNull final UUID stationUUID) {
-        Response response = null;
-        try {
-            response = builder(webTarget
-                    .path("json/vote/").path(stationUUID.toString()))
-                    .get();
+        try (Response response = builder(webTarget
+                .path("json/vote/").path(stationUUID.toString()))
+                .get()) {
 
             logResponseStatus(response);
             UrlResponse urlResponse = response.readEntity(UrlResponse.class);
@@ -590,8 +563,6 @@ public final class RadioBrowser {
             if (!urlResponse.isOk()) {
                 throw new RadioBrowserException(urlResponse.getMessage());
             }
-        } finally {
-            close(response);
         }
     }
 
@@ -624,16 +595,14 @@ public final class RadioBrowser {
             p.apply(requestParams);
             advancedSearch.apply(requestParams);
             Entity<Form> entity = Entity.form(requestParams);
-            Response response = null;
 
-            try {
-                response = builder(webTarget
-                        .path("/json/stations/search")).post(entity);
+            try (Response response = builder(webTarget
+                    .path("/json/stations/search"))
+                    .post(entity);) {
+
                 checkResponseStatus(response);
                 return response.readEntity(new GenericType<List<Station>>() {
                 });
-            } finally {
-                close(response);
             }
         };
 
@@ -660,11 +629,9 @@ public final class RadioBrowser {
         station.apply(requestParams);
         Entity<Form> entity = Entity.form(requestParams);
 
-        Response response = null;
-        try {
-            response = builder(webTarget
-                    .path(path))
-                    .post(entity);
+        try (Response response = builder(webTarget
+                .path(path))
+                .post(entity)) {
 
             logResponseStatus(response);
             UrlResponse urlResponse = response.readEntity(
@@ -679,8 +646,6 @@ public final class RadioBrowser {
             }
 
             return urlResponse.getUuid();
-        } finally {
-            close(response);
         }
     }
 
@@ -714,15 +679,6 @@ public final class RadioBrowser {
         if (response.getStatus() != HttpURLConnection.HTTP_OK) {
             throw new RadioBrowserException(
                     response.getStatusInfo().getReasonPhrase());
-        }
-    }
-
-    /** Close the response if non-null.
-     * @param response the response to close.
-     * */
-    private static void close(final Response response) {
-        if (response != null) {
-            response.close();
         }
     }
 }
