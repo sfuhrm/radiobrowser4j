@@ -26,7 +26,7 @@ For Maven, you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>2.5.0</version>
+    <version>2.5.1</version>
 </dependency>
 ```
 
@@ -72,6 +72,10 @@ located in the test resources.
 
 ## Version history
 
+* v2.5.1
+  - Removed now unnecessary JAXB dependency (was needed by Jersey before)
+  - Updated Jersey dependency from 3.0.8 -> 3.0.11
+  - Changed resource closing to try-with-resources, reducing code 
 * v2.5.0
   - Added new call listStationsWithAdvancedSearch for creating more complex queries to the API.
   - Added Station geoLatitude and geoLongitude.
