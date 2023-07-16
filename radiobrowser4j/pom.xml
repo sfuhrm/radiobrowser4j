@@ -20,17 +20,17 @@
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-client</artifactId>
-      <version>3.0.8</version>
+      <version>3.0.11</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
       <artifactId>jersey-media-json-jackson</artifactId>
-      <version>3.0.8</version>
+      <version>3.0.11</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.inject</groupId>
       <artifactId>jersey-hk2</artifactId>
-      <version>3.0.8</version>
+      <version>3.0.11</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
