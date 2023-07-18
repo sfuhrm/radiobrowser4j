@@ -32,14 +32,16 @@ public enum SearchMode {
     /** Search by exact codec. */
     BYCODECEXACT,
     /** Search by country.
-     * @deprecated Do NOT use the "country" fields anymore! Use "countrycode" instead, which is standardized.
+     * @deprecated Do NOT use the "country" fields anymore!
+     * Use "countrycode" instead, which is standardized.
      * @see <a href="https://api.radio-browser.info/">api.radio-browser.info</a>
      * @see #BYCOUNTRYCODEEXACT
      * */
     @Deprecated
     BYCOUNTRY,
     /** Search by exact country.
-     * @deprecated Do NOT use the "country" fields anymore! Use "countrycode" instead, which is standardized.
+     * @deprecated Do NOT use the "country" fields anymore!
+     * Use "countrycode" instead, which is standardized.
      * @see <a href="https://api.radio-browser.info/">api.radio-browser.info</a>
      * @see #BYCOUNTRYCODEEXACT
      * */
