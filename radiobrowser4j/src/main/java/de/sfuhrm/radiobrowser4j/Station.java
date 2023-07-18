@@ -79,7 +79,12 @@ public final class Station extends ParameterProvider {
     @Getter @Setter @JsonIgnore
     private List<String> tagList = new ArrayList<>();
 
-    /** The country this station is located at. */
+    /** The country this station is located at.
+     * @deprecated Do NOT use the "country" fields anymore! Use "countrycode" instead, which is standardized.
+     * @see #countryCode
+     * @see <a href="https://api.radio-browser.info/">api.radio-browser.info</a>
+     * */
+    @Deprecated
     @Getter @Setter
     private String country;
 

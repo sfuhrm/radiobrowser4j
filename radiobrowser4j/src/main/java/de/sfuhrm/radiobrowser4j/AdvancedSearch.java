@@ -21,10 +21,20 @@ public final class AdvancedSearch extends ParameterProvider {
     /** True: only exact matches, otherwise all matches. */
     private Boolean nameExact;
 
-    /** Country of the station. */
+    /** Country of the station.
+     * @deprecated Do NOT use the "country" fields anymore! Use "countrycode" instead, which is standardized.
+     * @see #countryCode
+     * @see <a href="https://api.radio-browser.info/">api.radio-browser.info</a>
+     * */
+    @Deprecated
     private String country;
 
-    /** True: only exact matches, otherwise all matches. */
+    /** True: only exact matches, otherwise all matches.
+     * @deprecated Do NOT use the "country" fields anymore! Use "countrycode" instead, which is standardized.
+     * @see #countryCode
+     * @see <a href="https://api.radio-browser.info/">api.radio-browser.info</a>
+     * */
+    @Deprecated
     private Boolean countryExact;
 
     /** 2-digit countrycode of the station (see ISO 3166-1 alpha-2). */
