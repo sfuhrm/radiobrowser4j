@@ -72,6 +72,9 @@ located in the test resources.
 
 ## Version history
 
+* v2.5.2
+  - Add deprecation warnings for countrycode and countrycodeexact fields as suggested in the upstream API. Countrycode should be used instead which is standardized.
+  - Update of some plugins.
 * v2.5.1
   - Removed now unnecessary JAXB dependency (was needed by Jersey before)
   - Updated Jersey dependency from 3.0.8 -> 3.0.11
