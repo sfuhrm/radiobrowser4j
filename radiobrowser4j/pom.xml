@@ -19,7 +19,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jersey.version>3.0.11</jersey.version>
-    <slf4j.version>2.0.9</slf4j.version>
+    <slf4j.version>2.0.10</slf4j.version>
   </properties>
   <dependencies>
     <dependency>
@@ -50,7 +50,7 @@
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-slf4j2-impl</artifactId>
-      <version>2.22.0</version>
+      <version>2.22.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -99,7 +99,7 @@
         <plugins>
           <plugin>
             <artifactId>maven-failsafe-plugin</artifactId>
-            <version>3.2.2</version>
+            <version>3.2.3</version>
             <executions>
               <execution>
                 <goals>
