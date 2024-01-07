@@ -527,18 +527,13 @@ public final class RadioBrowser {
      * voting for the station.
      */
     public void voteForStation(@NonNull final UUID stationUUID) {
-        try (Response response = builder(webTarget
-                .path("json/vote/").path(stationUUID.toString()))
-                .get()) {
-
-            logResponseStatus(response);
-            UrlResponse urlResponse = response.readEntity(UrlResponse.class);
-
-            if (!urlResponse.isOk()) {
-                throw new RadioBrowserException(urlResponse.getMessage());
-            }
+        String path = RestImpl.paths("json/vote",
+                stationUUID.toString());
+        UrlResponse urlResponse = rest.get(path, UrlResponse.class);
+        if (!urlResponse.isOk()) {
+            throw new RadioBrowserException(urlResponse.getMessage());
         }
-    }
+}
 
     /** Get the server statistics.
      * @return the statistics for the configured server
