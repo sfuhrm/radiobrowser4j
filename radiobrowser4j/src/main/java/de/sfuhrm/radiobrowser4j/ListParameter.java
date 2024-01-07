@@ -20,8 +20,7 @@ import lombok.NonNull;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-import jakarta.ws.rs.core.MultivaluedMap;
-import java.util.Collections;
+import java.util.Map;
 
 /** Parameters for list calls.
  * @author Stephan Fuhrmann
@@ -72,15 +71,15 @@ public final class ListParameter extends ParameterProvider {
      * Transfer this list parameter to the passed multi-valued-map.
      * @param requestParams the target of the list params.
      * */
-    protected void apply(final MultivaluedMap<String, String> requestParams) {
+    protected void apply(final Map<String, String> requestParams) {
         log.info("list={}", this);
         if (getOrder() != null) {
             requestParams.put("order",
-                    Collections.singletonList(getOrder().name().toLowerCase()));
+                    getOrder().name().toLowerCase());
         }
         if (getReverseOrder() != null) {
-            requestParams.put("reverse", Collections.singletonList(
-                    getReverseOrder().toString()));
+            requestParams.put("reverse",
+                    getReverseOrder().toString());
         }
     }
 }

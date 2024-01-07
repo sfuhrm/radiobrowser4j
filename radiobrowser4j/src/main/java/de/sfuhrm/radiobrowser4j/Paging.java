@@ -15,13 +15,12 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
-import jakarta.ws.rs.core.MultivaluedMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Collections;
+import java.util.Map;
 
 /** Immutable paging configuration.
  * The paging is used to address a sub list that can be retrieved in
@@ -96,11 +95,11 @@ public final class Paging extends ParameterProvider {
     }
 
     @Override
-    protected void apply(final MultivaluedMap<String, String> requestParams) {
+    protected void apply(final Map<String, String> requestParams) {
         log.info("paging={}", this);
-        requestParams.put("limit", Collections.singletonList(
-                Integer.toString(getLimit())));
-        requestParams.put("offset", Collections.singletonList(
-                Integer.toString(getOffset())));
+        requestParams.put("limit",
+                Integer.toString(getLimit()));
+        requestParams.put("offset",
+                Integer.toString(getOffset()));
     }
 }

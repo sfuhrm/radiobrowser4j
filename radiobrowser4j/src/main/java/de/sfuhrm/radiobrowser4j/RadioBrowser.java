@@ -27,7 +27,6 @@ import jakarta.ws.rs.core.Form;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -35,6 +34,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -158,10 +158,7 @@ public final class RadioBrowser {
      * */
     private Map<String, Integer> retrieveValueStationCountList(
             final String subPath) {
-        MultivaluedMap<String, String> requestParams =
-                new MultivaluedHashMap<>();
-
-        Entity<Form> entity = Entity.form(requestParams);
+        Entity<Form> entity = Entity.form(new MultivaluedHashMap<>());
 
         try (Response response = builder(webTarget.path(subPath))
                     .post(entity)) {
@@ -225,12 +222,13 @@ public final class RadioBrowser {
             final Optional<Paging> paging,
             final String path,
             final ListParameter...listParam) {
-        MultivaluedMap<String, String> requestParams =
-                new MultivaluedHashMap<>();
+        Map<String, String> requestParams =
+                new HashMap<>();
 
         paging.ifPresent(p -> p.apply(requestParams));
         Arrays.stream(listParam).forEach(lp -> lp.apply(requestParams));
-        Entity<Form> entity = Entity.form(requestParams);
+        Entity<Form> entity = Entity.form(
+                new MultivaluedHashMap<>(requestParams));
         try (Response response = builder(webTarget.path(path))
                 .post(entity)) {
             checkResponseStatus(response);
@@ -251,11 +249,12 @@ public final class RadioBrowser {
                                 final Optional<Limit> limit,
                                 final String path,
                                 final ListParameter...listParam) {
-        MultivaluedMap<String, String> requestParams =
-                new MultivaluedHashMap<>();
+        Map<String, String> requestParams =
+                new HashMap<>();
 
         Arrays.stream(listParam).forEach(lp -> lp.apply(requestParams));
-        Entity<Form> entity = Entity.form(requestParams);
+        Entity<Form> entity = Entity.form(
+                new MultivaluedHashMap<>(requestParams));
         WebTarget target = webTarget.path(path);
         if (limit.isPresent()) {
             target = target.path(Integer.toString(limit.get().getSize()));
@@ -455,11 +454,12 @@ public final class RadioBrowser {
                                         @NonNull final SearchMode searchMode,
                                         @NonNull final String searchTerm,
                                         final ListParameter...listParam) {
-        MultivaluedMap<String, String> requestParams =
-                new MultivaluedHashMap<>();
+        Map<String, String> requestParams =
+                new HashMap<>();
         paging.apply(requestParams);
         Arrays.stream(listParam).forEach(l -> l.apply(requestParams));
-        Entity<Form> entity = Entity.form(requestParams);
+        Entity<Form> entity = Entity.form(
+                new MultivaluedHashMap<>(requestParams));
 
         try (Response response = builder(webTarget
                 .path("json/stations")
@@ -484,11 +484,12 @@ public final class RadioBrowser {
             final ListParameter...listParam) {
 
         Function<Paging, List<Station>> fetcher = p -> {
-            MultivaluedMap<String, String> requestParams =
-                    new MultivaluedHashMap<>();
+            Map<String, String> requestParams =
+                    new HashMap<>();
             p.apply(requestParams);
             Arrays.stream(listParam).forEach(l -> l.apply(requestParams));
-            Entity<Form> entity = Entity.form(requestParams);
+            Entity<Form> entity = Entity.form(
+                    new MultivaluedHashMap<>(requestParams));
 
             try (Response response = builder(webTarget
                     .path("json/stations")
@@ -590,11 +591,12 @@ public final class RadioBrowser {
             @NonNull final AdvancedSearch advancedSearch) {
 
         Function<Paging, List<Station>> fetcher = p -> {
-            MultivaluedMap<String, String> requestParams =
-                    new MultivaluedHashMap<>();
+            Map<String, String> requestParams =
+                    new HashMap<>();
             p.apply(requestParams);
             advancedSearch.apply(requestParams);
-            Entity<Form> entity = Entity.form(requestParams);
+            Entity<Form> entity = Entity.form(
+                    new MultivaluedHashMap<>(requestParams));
 
             try (Response response = builder(webTarget
                     .path("/json/stations/search"))
@@ -624,10 +626,11 @@ public final class RadioBrowser {
      */
     private UUID postNewOrEditStation(@NonNull final Station station,
                                         final String path) {
-        MultivaluedMap<String, String> requestParams =
-                new MultivaluedHashMap<>();
+        Map<String, String> requestParams =
+                new HashMap<>();
         station.apply(requestParams);
-        Entity<Form> entity = Entity.form(requestParams);
+        Entity<Form> entity = Entity.form(
+                new MultivaluedHashMap<>(requestParams));
 
         try (Response response = builder(webTarget
                 .path(path))

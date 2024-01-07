@@ -1,6 +1,6 @@
 package de.sfuhrm.radiobrowser4j;
 
-import jakarta.ws.rs.core.MultivaluedMap;
+import java.util.Map;
 
 /** A provider for HTTP request parameters. */
 abstract class ParameterProvider {
@@ -9,5 +9,5 @@ abstract class ParameterProvider {
      * @param requestParams the parameters to apply the instance
      *                      content to.
      * */
-    protected abstract void apply(MultivaluedMap<String, String> requestParams);
+    protected abstract void apply(Map<String, String> requestParams);
 }

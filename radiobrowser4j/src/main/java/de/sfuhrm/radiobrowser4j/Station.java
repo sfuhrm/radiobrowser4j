@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import jakarta.ws.rs.core.MultivaluedMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -238,39 +238,39 @@ public final class Station extends ParameterProvider {
     }
 
     @Override
-    protected void apply(final MultivaluedMap<String, String> requestParams) {
-        requestParams.putSingle("name",
+    protected void apply(final Map<String, String> requestParams) {
+        requestParams.put("name",
                 getName());
-        requestParams.putSingle("url",
+        requestParams.put("url",
                 getUrl());
         if (getHomepage() != null) {
-            requestParams.putSingle("homepage",
+            requestParams.put("homepage",
                     getHomepage());
         }
         if (getFavicon() != null) {
-            requestParams.putSingle("favicon",
+            requestParams.put("favicon",
                     getFavicon());
         }
         if (getCountryCode() != null) {
-            requestParams.putSingle("countrycode",
+            requestParams.put("countrycode",
                     getCountryCode());
         }
         if (getState() != null) {
-            requestParams.putSingle("state",
+            requestParams.put("state",
                     getState());
         }
         if (getLanguage() != null) {
-            requestParams.putSingle("language",
+            requestParams.put("language",
                     getLanguage());
         }
         if (getTagList() != null) {
-            requestParams.putSingle("tagList", getTags());
+            requestParams.put("tagList", getTags());
         }
         if (getGeoLatitude() != null) {
-            requestParams.putSingle("geo_lat", getGeoLatitude().toString());
+            requestParams.put("geo_lat", getGeoLatitude().toString());
         }
         if (getGeoLongitude() != null) {
-            requestParams.putSingle("geo_long", getGeoLongitude().toString());
+            requestParams.put("geo_long", getGeoLongitude().toString());
         }
     }
 }

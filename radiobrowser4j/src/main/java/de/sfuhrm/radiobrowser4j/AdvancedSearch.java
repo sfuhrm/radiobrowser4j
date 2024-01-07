@@ -1,9 +1,9 @@
 package de.sfuhrm.radiobrowser4j;
 
-import jakarta.ws.rs.core.MultivaluedMap;
 import lombok.Builder;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /** Holder for an advanced search query.
@@ -97,73 +97,73 @@ public final class AdvancedSearch extends ParameterProvider {
     private Boolean hideBroken;
 
     @Override
-    protected void apply(final MultivaluedMap<String, String> requestParams) {
+    protected void apply(final Map<String, String> requestParams) {
         if (name != null) {
-            requestParams.putSingle("name", name);
+            requestParams.put("name", name);
         }
         if (nameExact != null) {
-            requestParams.putSingle("nameExact", nameExact.toString());
+            requestParams.put("nameExact", nameExact.toString());
         }
         if (country != null) {
-            requestParams.putSingle("country", country);
+            requestParams.put("country", country);
         }
         if (countryExact != null) {
-            requestParams.putSingle("countryExact", countryExact.toString());
+            requestParams.put("countryExact", countryExact.toString());
         }
         if (countryCode != null) {
-            requestParams.putSingle("countrycode", countryCode);
+            requestParams.put("countrycode", countryCode);
         }
         if (state != null) {
-            requestParams.putSingle("state", state);
+            requestParams.put("state", state);
         }
         if (stateExact != null) {
-            requestParams.putSingle("stateExact", stateExact.toString());
+            requestParams.put("stateExact", stateExact.toString());
         }
         if (language != null) {
-            requestParams.putSingle("language", language);
+            requestParams.put("language", language);
         }
         if (languageExact != null) {
-            requestParams.putSingle("languageExact", languageExact.toString());
+            requestParams.put("languageExact", languageExact.toString());
         }
         if (tag != null) {
-            requestParams.putSingle("tag", tag);
+            requestParams.put("tag", tag);
         }
         if (tagExact != null) {
-            requestParams.putSingle("tagExact", tagExact.toString());
+            requestParams.put("tagExact", tagExact.toString());
         }
         if (tagList != null) {
-            requestParams.putSingle("tagList",
+            requestParams.put("tagList",
                     tagList.stream().collect(Collectors.joining(",")));
         }
         if (codec != null) {
-            requestParams.putSingle("codec", codec);
+            requestParams.put("codec", codec);
         }
         // TODO is the string mapping correct?
         if (bitrateMin != null) {
-            requestParams.putSingle("bitrateMin", bitrateMin.toString());
+            requestParams.put("bitrateMin", bitrateMin.toString());
         }
         if (bitrateMax != null) {
-            requestParams.putSingle("bitrateMax", bitrateMax.toString());
+            requestParams.put("bitrateMax", bitrateMax.toString());
         }
         if (hasGeoInfo != null) {
-            requestParams.putSingle("has_geo_info", hasGeoInfo.toString());
+            requestParams.put("has_geo_info", hasGeoInfo.toString());
         }
         if (hasExtendedInfo != null) {
-            requestParams.putSingle("has_extended_info",
+            requestParams.put("has_extended_info",
                     hasExtendedInfo.toString());
         }
         if (isHttps != null) {
-            requestParams.putSingle("is_https", isHttps.toString());
+            requestParams.put("is_https", isHttps.toString());
         }
         if (order != null) {
-            requestParams.putSingle("order", order.name());
+            requestParams.put("order", order.name());
         }
         if (reverse != null) {
-            requestParams.putSingle("reverse", reverse.toString());
+            requestParams.put("reverse", reverse.toString());
         }
         // limit and offset are left out for Paging
         if (hideBroken != null) {
-            requestParams.putSingle("hidebroken", reverse.toString());
+            requestParams.put("hidebroken", reverse.toString());
         }
     }
 }
