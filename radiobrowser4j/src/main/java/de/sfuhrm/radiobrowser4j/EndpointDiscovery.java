@@ -4,11 +4,9 @@ import lombok.NonNull;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.WebTarget;
-import jakarta.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.URI;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -163,16 +161,8 @@ public class EndpointDiscovery {
                             + timeout);
         }
 
-        Client client = RestClientFactory.newClient(timeout,
-                proxyUri,
-                proxyUser,
-                proxyPassword);
-        WebTarget webTarget = client.target(endpoint);
-        return webTarget.path("json/stats")
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("User-Agent", userAgent)
-                .get(Stats.class);
+        RestImpl rest = new RestImpl(timeout, proxyUri, proxyUser, proxyPassword);
+        return  rest.get(URI.create(endpoint), "json/stats", Stats.class, userAgent);
     }
 
     /** Discovers the best performing endpoint.

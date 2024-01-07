@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.URI;
 import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.List;
@@ -80,7 +81,7 @@ public class EndpointDiscoveryTest {
         new Expectations() {{
             ClientBuilder.newBuilder(); result = clientBuilderMock;
             clientBuilderMock.build(); result = clientMock;
-            clientMock.target("https://127.0.0.1/"); result = webTargetMock;
+            clientMock.target(URI.create("https://127.0.0.1/")); result = webTargetMock;
         }};
 
         List<EndpointDiscovery.DiscoveryResult> results = endpointDiscovery.discoverApiUrls(Collections.singletonList("https://127.0.0.1/"));
@@ -88,7 +89,7 @@ public class EndpointDiscoveryTest {
         assertThat(results.get(0).getDuration(), is(Matchers.greaterThan(0L)));
 
         new Verifications() {{
-            clientMock.target("https://127.0.0.1/"); times = 1;
+            clientMock.target(URI.create("https://127.0.0.1/")); times = 1;
         }};
     }
 
@@ -100,7 +101,7 @@ public class EndpointDiscoveryTest {
         new Expectations() {{
             ClientBuilder.newBuilder(); result = clientBuilderMock;
             clientBuilderMock.build(); result = clientMock;
-            clientMock.target("https://127.0.0.1/"); result = webTargetMock;
+            clientMock.target(URI.create("https://127.0.0.1/")); result = webTargetMock;
             InetAddress.getAllByName(EndpointDiscovery.DNS_API_ADDRESS); result = new InetAddress[] {inetAddressMock};
             inetAddressMock.getCanonicalHostName(); result = "127.0.0.1";
         }};
@@ -119,7 +120,7 @@ public class EndpointDiscoveryTest {
         new Expectations() {{
             ClientBuilder.newBuilder(); result = clientBuilderMock;
             clientBuilderMock.build(); result = clientMock;
-            clientMock.target(RadioBrowser.DEFAULT_API_URL); result = webTargetMock;
+            clientMock.target(URI.create(RadioBrowser.DEFAULT_API_URL)); result = webTargetMock;
             invocationBuilderMock.get(Stats.class); result = myStats;
         }};
 
