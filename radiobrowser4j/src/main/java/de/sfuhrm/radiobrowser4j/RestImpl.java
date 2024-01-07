@@ -78,6 +78,11 @@ public class RestImpl {
         return Arrays.stream(components).collect(Collectors.joining("/"));
     }
 
+    /** Sends a GET request to the remote server.
+     * @param path the path on the web server.
+     * @param resultClass the result class to retrieve.
+     * @return an instance of the result class.
+     * */
     <T> T get(String path, Class<T> resultClass) {
         WebTarget webTarget = client.target(endpoint);
         return webTarget.path(path)
@@ -87,6 +92,16 @@ public class RestImpl {
                 .get(resultClass);
     }
 
+    /** Sends a POST request to the remote server. The
+     * body gets transferred as
+     *  "application/x-www-form-urlencoded" encoded data.
+     * @param path the path on the web server.
+     * @param requestParams the request parameters to send as the POST body in
+     *                       "application/x-www-form-urlencoded" encoding.
+     * @param resultClass the expected resulting class wrapped in a generic type.
+     * @return the resulting type.
+     * @throws RadioBrowserException if the sever sent a non-OK response.
+     * */
     <T> T post(String path, Map<String, String> requestParams, GenericType<T> resultClass) {
         Entity<Form> entity = Entity.form(
                 new MultivaluedHashMap<>(requestParams));
