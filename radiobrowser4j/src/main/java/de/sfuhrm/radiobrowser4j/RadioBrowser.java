@@ -559,17 +559,12 @@ public final class RadioBrowser {
                     new HashMap<>();
             p.apply(requestParams);
             advancedSearch.apply(requestParams);
-            Entity<Form> entity = Entity.form(
-                    new MultivaluedHashMap<>(requestParams));
 
-            try (Response response = builder(webTarget
-                    .path("/json/stations/search"))
-                    .post(entity)) {
-
-                checkResponseStatus(response);
-                return response.readEntity(new GenericType<List<Station>>() {
-                });
-            }
+            return rest.post(
+                    "/json/stations/search",
+                    requestParams,
+                    new GenericType<List<Station>>() {
+            });
         };
 
         return StreamSupport.stream(
