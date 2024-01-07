@@ -19,6 +19,7 @@ import org.glassfish.jersey.message.GZipEncoder;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -116,6 +117,40 @@ final class RestImpl {
      * @param path the path on the web server.
      * @param requestParams the request parameters to send as the POST body in
      *                       "application/x-www-form-urlencoded" encoding.
+     * @return the resulting type.
+     * @throws RadioBrowserException if the sever sent a non-OK response.
+     * */
+    List<Station> postWithListOfStation(final String path,
+                                        final Map<String,
+                                                String> requestParams) {
+        return post(path,
+                requestParams,
+                new GenericType<List<Station>>() { });
+    }
+
+    /** Sends a POST request to the remote server. The
+     * body gets transferred as
+     *  "application/x-www-form-urlencoded" encoded data.
+     * @param path the path on the web server.
+     * @param requestParams the request parameters to send as the POST body in
+     *                       "application/x-www-form-urlencoded" encoding.
+     * @return the resulting type.
+     * @throws RadioBrowserException if the sever sent a non-OK response.
+     * */
+    List<Map<String, String>> postWithListOfMapOfString(
+            final String path,
+            final Map<String, String> requestParams) {
+        return post(path,
+                requestParams,
+                new GenericType<List<Map<String, String>>>() { });
+    }
+
+    /** Sends a POST request to the remote server. The
+     * body gets transferred as
+     *  "application/x-www-form-urlencoded" encoded data.
+     * @param path the path on the web server.
+     * @param requestParams the request parameters to send as the POST body in
+     *                       "application/x-www-form-urlencoded" encoding.
      * @param resultClass the expected resulting class wrapped in a
      *                    generic type.
      * @param <T> the expected return type.
@@ -123,6 +158,32 @@ final class RestImpl {
      * @throws RadioBrowserException if the sever sent a non-OK response.
      * */
     <T> T post(final String path,
+                       final Map<String, String> requestParams,
+                       final Class<T> resultClass) {
+        Entity<Form> entity = Entity.form(
+                new MultivaluedHashMap<>(requestParams));
+        WebTarget webTarget = client.target(endpoint);
+        try (Response response = builder(webTarget.path(path))
+                .post(entity)) {
+            checkResponseStatus(response);
+
+            return response.readEntity(resultClass);
+        }
+    }
+
+    /** Sends a POST request to the remote server. The
+     * body gets transferred as
+     *  "application/x-www-form-urlencoded" encoded data.
+     * @param path the path on the web server.
+     * @param requestParams the request parameters to send as the POST body in
+     *                       "application/x-www-form-urlencoded" encoding.
+     * @param resultClass the expected resulting class wrapped in a
+     *                    generic type.
+     * @param <T> the expected return type.
+     * @return the resulting type.
+     * @throws RadioBrowserException if the sever sent a non-OK response.
+     * */
+    private <T> T post(final String path,
                final Map<String, String> requestParams,
                final GenericType<T> resultClass) {
         Entity<Form> entity = Entity.form(

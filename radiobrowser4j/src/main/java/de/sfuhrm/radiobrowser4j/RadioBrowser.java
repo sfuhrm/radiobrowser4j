@@ -18,7 +18,6 @@ package de.sfuhrm.radiobrowser4j;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
-import jakarta.ws.rs.core.GenericType;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -139,8 +138,8 @@ public final class RadioBrowser {
             final String subPath) {
 
         List<Map<String, String>> map =
-                rest.post(subPath, Collections.emptyMap(),
-                new GenericType<List<Map<String, String>>>() { });
+                rest.postWithListOfMapOfString(subPath,
+                        Collections.emptyMap());
         return map.stream()
                 .collect(Collectors.toMap(
                     m -> m.get("name"),
@@ -202,8 +201,7 @@ public final class RadioBrowser {
         paging.ifPresent(p -> p.apply(requestParams));
         Arrays.stream(listParam).forEach(lp -> lp.apply(requestParams));
 
-        return rest.post(path, requestParams, new GenericType<List<Station>>() {
-        });
+        return rest.postWithListOfStation(path, requestParams);
     }
 
     /** Get a list of all stations on a certain API path.
@@ -226,9 +224,8 @@ public final class RadioBrowser {
             myPath = myPath + '/' + limit.get().getSize();
         }
 
-        return rest.post(myPath,
-                requestParams,
-                new GenericType<List<Station>>() { });
+        return rest.postWithListOfStation(myPath,
+                requestParams);
     }
 
     /** Get a list of all stations. Will return a single batch.
@@ -426,9 +423,8 @@ public final class RadioBrowser {
                 "json/stations",
                 searchMode.name().toLowerCase(),
                 searchTerm);
-        return rest.post(path,
-                requestParams,
-                new GenericType<List<Station>>() { });
+        return rest.postWithListOfStation(path,
+                requestParams);
     }
 
     /** Get a stream of stations matching a certain search criteria.
@@ -452,9 +448,8 @@ public final class RadioBrowser {
                     searchMode.name().toLowerCase(),
                     searchTerm);
 
-            return rest.post(path,
-                    requestParams,
-                    new GenericType<List<Station>>() { });
+            return rest.postWithListOfStation(path,
+                    requestParams);
         };
 
         return StreamSupport.stream(
@@ -537,11 +532,9 @@ public final class RadioBrowser {
             p.apply(requestParams);
             advancedSearch.apply(requestParams);
 
-            return rest.post(
+            return rest.postWithListOfStation(
                     "/json/stations/search",
-                    requestParams,
-                    new GenericType<List<Station>>() {
-            });
+                    requestParams);
         };
 
         return StreamSupport.stream(
@@ -568,7 +561,7 @@ public final class RadioBrowser {
 
         UrlResponse urlResponse = rest.post(path,
                 requestParams,
-                new GenericType<UrlResponse>() { });
+                UrlResponse.class);
 
         if (log.isDebugEnabled()) {
             log.debug("Result: {}", urlResponse);
