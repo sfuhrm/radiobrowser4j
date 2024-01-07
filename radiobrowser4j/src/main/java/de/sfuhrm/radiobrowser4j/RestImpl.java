@@ -14,8 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.net.HttpURLConnection;
 import java.net.URI;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class RestImpl {
@@ -34,9 +35,17 @@ public class RestImpl {
         this.userAgent = userAgent;
     }
 
+    /** Composes URI path components with '/' separators.
+     * @param components the components to compose.
+     * @return the joint path.
+     * */
+    static String paths(String...components) {
+        return Arrays.stream(components).collect(Collectors.joining("/"));
+    }
+
     <T> T get(String path, Class<T> resultClass) {
         WebTarget webTarget = client.target(endpoint);
-        return webTarget.path("json/stats")
+        return webTarget.path(path)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .header("User-Agent", userAgent)

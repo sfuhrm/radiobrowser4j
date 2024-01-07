@@ -447,18 +447,11 @@ public final class RadioBrowser {
                 new HashMap<>();
         paging.apply(requestParams);
         Arrays.stream(listParam).forEach(l -> l.apply(requestParams));
-        Entity<Form> entity = Entity.form(
-                new MultivaluedHashMap<>(requestParams));
 
-        try (Response response = builder(webTarget
-                .path("json/stations")
-                .path(searchMode.name().toLowerCase())
-                .path(searchTerm))
-                .post(entity)) {
-            checkResponseStatus(response);
-            return response.readEntity(new GenericType<List<Station>>() {
-            });
-        }
+        String path = RestImpl.paths("json/stations", searchMode.name().toLowerCase(), searchTerm);
+        return rest.post(path,
+                requestParams,
+                new GenericType<List<Station>>() {});
     }
 
     /** Get a stream of stations matching a certain search criteria.
