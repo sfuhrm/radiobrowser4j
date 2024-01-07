@@ -161,7 +161,7 @@ public class EndpointDiscovery {
                             + timeout);
         }
 
-        RestImpl rest = new RestImpl(
+        RestDelegateJaxRsImpl rest = new RestDelegateJaxRsImpl(
                 URI.create(endpoint),
                 timeout,
                 proxyUri,

@@ -48,7 +48,7 @@ public final class RadioBrowser {
             "https://at1.api.radio-browser.info/";
 
     /** REST implementation. */
-    private final RestImpl rest;
+    private final RestDelegate rest;
 
     /** The user agent name. */
     private final String userAgent;
@@ -102,7 +102,7 @@ public final class RadioBrowser {
                             + timeout);
         }
         this.userAgent = myUserAgent;
-        rest = new RestImpl(
+        rest = new RestDelegateJaxRsImpl(
                 URI.create(apiUrl),
                 timeout,
                 proxyUri,
@@ -128,6 +128,14 @@ public final class RadioBrowser {
     public RadioBrowser(final int timeout,
                         final String myUserAgent) {
         this(DEFAULT_API_URL, timeout, myUserAgent);
+    }
+
+    /** Composes URI path components with '/' separators.
+     * @param components the components to compose.
+     * @return the joint path.
+     * */
+    private static String paths(final String...components) {
+        return Arrays.stream(components).collect(Collectors.joining("/"));
     }
 
     /** Retrieve a generic list containing a value/stationcount mapping.
@@ -419,7 +427,7 @@ public final class RadioBrowser {
         paging.apply(requestParams);
         Arrays.stream(listParam).forEach(l -> l.apply(requestParams));
 
-        String path = RestImpl.paths(
+        String path = paths(
                 "json/stations",
                 searchMode.name().toLowerCase(),
                 searchTerm);
@@ -444,7 +452,7 @@ public final class RadioBrowser {
             p.apply(requestParams);
             Arrays.stream(listParam).forEach(l -> l.apply(requestParams));
 
-            String path = RestImpl.paths("json/stations",
+            String path = paths("json/stations",
                     searchMode.name().toLowerCase(),
                     searchTerm);
 
@@ -463,7 +471,7 @@ public final class RadioBrowser {
      * @throws RadioBrowserException if the URL could not be retrieved
      */
     public URL resolveStreamUrl(@NonNull final UUID stationUUID) {
-        String path = RestImpl.paths("json/url",
+        String path = paths("json/url",
                 stationUUID.toString());
 
         try {
@@ -499,7 +507,7 @@ public final class RadioBrowser {
      * voting for the station.
      */
     public void voteForStation(@NonNull final UUID stationUUID) {
-        String path = RestImpl.paths("json/vote",
+        String path = paths("json/vote",
                 stationUUID.toString());
         UrlResponse urlResponse = rest.get(path, UrlResponse.class);
         if (!urlResponse.isOk()) {
