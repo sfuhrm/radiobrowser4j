@@ -26,8 +26,7 @@ public interface RestDelegate {
      * @throws RadioBrowserException if the sever sent a non-OK response.
      * */
     List<Station> postWithListOfStation(String path,
-                                        Map<String,
-                                                String> requestParams);
+                    Map<String, String> requestParams);
 
     /** Sends a POST request to the remote server. The
      * body gets transferred as
