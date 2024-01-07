@@ -600,7 +600,7 @@ public final class RadioBrowser {
 
             try (Response response = builder(webTarget
                     .path("/json/stations/search"))
-                    .post(entity);) {
+                    .post(entity)) {
 
                 checkResponseStatus(response);
                 return response.readEntity(new GenericType<List<Station>>() {
