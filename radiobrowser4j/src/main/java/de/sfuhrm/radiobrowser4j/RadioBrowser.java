@@ -15,20 +15,10 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
-import jakarta.ws.rs.core.HttpHeaders;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.Entity;
-import jakarta.ws.rs.client.Invocation;
-import jakarta.ws.rs.client.WebTarget;
-import jakarta.ws.rs.core.Form;
 import jakarta.ws.rs.core.GenericType;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.Response;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -57,9 +47,6 @@ public final class RadioBrowser {
     @Deprecated
     protected static final String DEFAULT_API_URL =
             "https://at1.api.radio-browser.info/";
-
-    /** The JAX-RS web target for service access. */
-    private final WebTarget webTarget;
 
     /** REST implementation. */
     private final RestImpl rest;
@@ -116,12 +103,6 @@ public final class RadioBrowser {
                             + timeout);
         }
         this.userAgent = myUserAgent;
-        Client client = RestClientFactory.newClient(
-                timeout,
-                proxyUri,
-                proxyUser,
-                proxyPassword);
-        webTarget = client.target(apiUrl);
         rest = new RestImpl(URI.create(apiUrl), timeout, proxyUri, proxyUser, proxyPassword, myUserAgent);
     }
 
@@ -142,19 +123,6 @@ public final class RadioBrowser {
     public RadioBrowser(final int timeout,
                         final String myUserAgent) {
         this(DEFAULT_API_URL, timeout, myUserAgent);
-    }
-
-    /** Creates a builder from the given web target
-     * applying the standard request and accept
-     * types.
-     * @param in the web target to create a builder from.
-     * @return an invocation builder that is built from the web target.
-     * */
-    private Invocation.Builder builder(final WebTarget in) {
-        return in.request(MediaType.APPLICATION_JSON_TYPE)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header(HttpHeaders.USER_AGENT, userAgent)
-                .header(HttpHeaders.ACCEPT_ENCODING, "gzip");
     }
 
     /** Retrieve a generic list containing a value/stationcount mapping.
@@ -602,39 +570,5 @@ public final class RadioBrowser {
         }
 
         return urlResponse.getUuid();
-    }
-
-
-    /** Log the response.
-     * @param response the response to log the status
-     *                 code of.
-     * */
-    private static void logResponseStatus(final Response response) {
-        if (response.getStatus() != HttpURLConnection.HTTP_OK) {
-            log.warn("Non HTTP OK/200 status: status={}, reason={}",
-                    response.getStatus(),
-                    response.getStatusInfo().getReasonPhrase()
-            );
-        } else {
-            log.debug("HTTP response status={}, reason={}, length={}",
-                    response.getStatus(),
-                    response.getStatusInfo().getReasonPhrase(),
-                    response.getLength());
-        }
-    }
-
-    /** Check the response for a non 200 status code
-     * and throw an exception if needed.
-     * @param response the response to check the status
-     *                 code of.
-     * @throws RadioBrowserException if the HTTP code was not
-     * 200.
-     * */
-    private static void checkResponseStatus(final Response response) {
-        logResponseStatus(response);
-        if (response.getStatus() != HttpURLConnection.HTTP_OK) {
-            throw new RadioBrowserException(
-                    response.getStatusInfo().getReasonPhrase());
-        }
     }
 }
