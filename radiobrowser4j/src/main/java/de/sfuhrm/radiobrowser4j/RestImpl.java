@@ -1,6 +1,7 @@
 package de.sfuhrm.radiobrowser4j;
 
 import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
@@ -11,6 +12,9 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.message.GZipEncoder;
 
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -28,11 +32,42 @@ public class RestImpl {
 
     RestImpl(URI endpoint, int timeout, String proxyUri, String proxyUser, String proxyPassword, String userAgent) {
         this.endpoint = endpoint;
-        client = RestClientFactory.newClient(timeout,
+        client = newClient(timeout,
                 proxyUri,
                 proxyUser,
                 proxyPassword);
         this.userAgent = userAgent;
+    }
+
+    /** Create a new JAX-RS client.
+     * @param timeout connect / read timeout in milliseconds.
+     * @param proxyUri optional proxy URI.
+     * @param proxyUser optional proxy user.
+     * @param proxyPassword optional proxy password.
+     * @return the client instance that has been created.
+     *  */
+    private static Client newClient(final int timeout,
+                            final String proxyUri,
+                            final String proxyUser,
+                            final String proxyPassword) {
+        Client client = ClientBuilder.newBuilder()
+                .register(JacksonFeature.class)
+                .register(GZipEncoder.class)
+                .build();
+        client.property(ClientProperties.CONNECT_TIMEOUT, timeout);
+        client.property(ClientProperties.READ_TIMEOUT, timeout);
+        if (proxyUri != null) {
+            client.property(ClientProperties.PROXY_URI, proxyUri);
+            if (proxyUser != null) {
+                client.property(ClientProperties.PROXY_USERNAME,
+                        proxyUser);
+            }
+            if (proxyPassword != null) {
+                client.property(ClientProperties.PROXY_PASSWORD,
+                        proxyPassword);
+            }
+        }
+        return client;
     }
 
     /** Composes URI path components with '/' separators.
