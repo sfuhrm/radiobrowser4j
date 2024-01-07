@@ -163,20 +163,15 @@ public final class RadioBrowser {
      * */
     private Map<String, Integer> retrieveValueStationCountList(
             final String subPath) {
-        Entity<Form> entity = Entity.form(new MultivaluedHashMap<>());
 
-        try (Response response = builder(webTarget.path(subPath))
-                    .post(entity)) {
-            List<Map<String, String>> map = response.readEntity(
-                    new GenericType<List<Map<String, String>>>() {
-            });
-            checkResponseStatus(response);
-            return map.stream()
-                    .collect(Collectors.toMap(
-                        m -> m.get("name"),
-                        m -> Integer.parseInt(m.get("stationcount")),
-                            (a, b) -> a));
-        }
+        List<Map<String, String>> map =
+                rest.post(subPath, Collections.emptyMap(),
+                new GenericType<List<Map<String, String>>>() {});
+        return map.stream()
+                .collect(Collectors.toMap(
+                    m -> m.get("name"),
+                    m -> Integer.parseInt(m.get("stationcount")),
+                        (a, b) -> a));
     }
 
     /** List the known countries.
@@ -252,19 +247,14 @@ public final class RadioBrowser {
                 new HashMap<>();
 
         Arrays.stream(listParam).forEach(lp -> lp.apply(requestParams));
-        Entity<Form> entity = Entity.form(
-                new MultivaluedHashMap<>(requestParams));
-        WebTarget target = webTarget.path(path);
+        String myPath = path;
         if (limit.isPresent()) {
-            target = target.path(Integer.toString(limit.get().getSize()));
+            myPath = myPath + '/' + limit.get().getSize();
         }
-        try (Response response = builder(target)
-                .post(entity)) {
-            checkResponseStatus(response);
 
-            return response.readEntity(new GenericType<List<Station>>() {
-            });
-        }
+        return rest.post(myPath,
+                requestParams,
+                new GenericType<List<Station>>() {});
     }
 
     /** Get a list of all stations. Will return a single batch.
