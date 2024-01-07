@@ -23,20 +23,37 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class RestImpl {
-    private Client client;
+final class RestImpl {
 
-    private URI endpoint;
+    /** The internal jax-rs client to use.  */
+    private final Client client;
 
-    private String userAgent;
+    /** The URI of the API endpoint. All paths are relative to this one. */
+    private final URI endpoint;
 
-    RestImpl(URI endpoint, int timeout, String proxyUri, String proxyUser, String proxyPassword, String userAgent) {
-        this.endpoint = endpoint;
-        client = newClient(timeout,
-                proxyUri,
-                proxyUser,
-                proxyPassword);
-        this.userAgent = userAgent;
+    /** The String of the user agent to identify with. */
+    private final String userAgent;
+
+    /** Create a new instance.
+     * @param inEndpoint the API endpoint URI address.
+     * @param inTimeout the timeout in millis.
+     * @param inProxyUri the optional proxy URI.
+     * @param inProxyUser the optional proxy user.
+     * @param inProxyPassword the optional proxy password.
+     * @param inUserAgent the mandatory user agent string to send.
+     * */
+    RestImpl(final URI inEndpoint,
+             final int inTimeout,
+             final String inProxyUri,
+             final String inProxyUser,
+             final String inProxyPassword,
+             final String inUserAgent) {
+        this.endpoint = inEndpoint;
+        client = newClient(inTimeout,
+                inProxyUri,
+                inProxyUser,
+                inProxyPassword);
+        this.userAgent = inUserAgent;
     }
 
     /** Create a new JAX-RS client.
@@ -74,16 +91,17 @@ public class RestImpl {
      * @param components the components to compose.
      * @return the joint path.
      * */
-    static String paths(String...components) {
+    static String paths(final String...components) {
         return Arrays.stream(components).collect(Collectors.joining("/"));
     }
 
     /** Sends a GET request to the remote server.
      * @param path the path on the web server.
      * @param resultClass the result class to retrieve.
+     * @param <T> the expected return type.
      * @return an instance of the result class.
      * */
-    <T> T get(String path, Class<T> resultClass) {
+    <T> T get(final String path, final Class<T> resultClass) {
         WebTarget webTarget = client.target(endpoint);
         return webTarget.path(path)
                 .request(MediaType.APPLICATION_JSON_TYPE)
@@ -98,11 +116,15 @@ public class RestImpl {
      * @param path the path on the web server.
      * @param requestParams the request parameters to send as the POST body in
      *                       "application/x-www-form-urlencoded" encoding.
-     * @param resultClass the expected resulting class wrapped in a generic type.
+     * @param resultClass the expected resulting class wrapped in a
+     *                    generic type.
+     * @param <T> the expected return type.
      * @return the resulting type.
      * @throws RadioBrowserException if the sever sent a non-OK response.
      * */
-    <T> T post(String path, Map<String, String> requestParams, GenericType<T> resultClass) {
+    <T> T post(final String path,
+               final Map<String, String> requestParams,
+               final GenericType<T> resultClass) {
         Entity<Form> entity = Entity.form(
                 new MultivaluedHashMap<>(requestParams));
         WebTarget webTarget = client.target(endpoint);

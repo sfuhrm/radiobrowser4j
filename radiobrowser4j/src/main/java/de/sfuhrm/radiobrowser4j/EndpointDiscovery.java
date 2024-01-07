@@ -161,7 +161,13 @@ public class EndpointDiscovery {
                             + timeout);
         }
 
-        RestImpl rest = new RestImpl(URI.create(endpoint), timeout, proxyUri, proxyUser, proxyPassword, userAgent);
+        RestImpl rest = new RestImpl(
+                URI.create(endpoint),
+                timeout,
+                proxyUri,
+                proxyUser,
+                proxyPassword,
+                userAgent);
         return  rest.get("json/stats", Stats.class);
     }
 

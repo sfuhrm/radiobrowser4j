@@ -103,7 +103,13 @@ public final class RadioBrowser {
                             + timeout);
         }
         this.userAgent = myUserAgent;
-        rest = new RestImpl(URI.create(apiUrl), timeout, proxyUri, proxyUser, proxyPassword, myUserAgent);
+        rest = new RestImpl(
+                URI.create(apiUrl),
+                timeout,
+                proxyUri,
+                proxyUser,
+                proxyPassword,
+                myUserAgent);
     }
 
     /**
@@ -134,7 +140,7 @@ public final class RadioBrowser {
 
         List<Map<String, String>> map =
                 rest.post(subPath, Collections.emptyMap(),
-                new GenericType<List<Map<String, String>>>() {});
+                new GenericType<List<Map<String, String>>>() { });
         return map.stream()
                 .collect(Collectors.toMap(
                     m -> m.get("name"),
@@ -222,7 +228,7 @@ public final class RadioBrowser {
 
         return rest.post(myPath,
                 requestParams,
-                new GenericType<List<Station>>() {});
+                new GenericType<List<Station>>() { });
     }
 
     /** Get a list of all stations. Will return a single batch.
@@ -416,10 +422,13 @@ public final class RadioBrowser {
         paging.apply(requestParams);
         Arrays.stream(listParam).forEach(l -> l.apply(requestParams));
 
-        String path = RestImpl.paths("json/stations", searchMode.name().toLowerCase(), searchTerm);
+        String path = RestImpl.paths(
+                "json/stations",
+                searchMode.name().toLowerCase(),
+                searchTerm);
         return rest.post(path,
                 requestParams,
-                new GenericType<List<Station>>() {});
+                new GenericType<List<Station>>() { });
     }
 
     /** Get a stream of stations matching a certain search criteria.
@@ -445,7 +454,7 @@ public final class RadioBrowser {
 
             return rest.post(path,
                     requestParams,
-                    new GenericType<List<Station>>() {});
+                    new GenericType<List<Station>>() { });
         };
 
         return StreamSupport.stream(
@@ -559,7 +568,7 @@ public final class RadioBrowser {
 
         UrlResponse urlResponse = rest.post(path,
                 requestParams,
-                new GenericType<UrlResponse>() {});
+                new GenericType<UrlResponse>() { });
 
         if (log.isDebugEnabled()) {
             log.debug("Result: {}", urlResponse);
