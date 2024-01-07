@@ -588,28 +588,22 @@ public final class RadioBrowser {
         Map<String, String> requestParams =
                 new HashMap<>();
         station.apply(requestParams);
-        Entity<Form> entity = Entity.form(
-                new MultivaluedHashMap<>(requestParams));
 
-        try (Response response = builder(webTarget
-                .path(path))
-                .post(entity)) {
+        UrlResponse urlResponse = rest.post(path,
+                requestParams,
+                new GenericType<UrlResponse>() {});
 
-            logResponseStatus(response);
-            UrlResponse urlResponse = response.readEntity(
-                    UrlResponse.class);
-
-            if (log.isDebugEnabled()) {
-                log.debug("Result: {}", urlResponse);
-            }
-
-            if (!urlResponse.isOk()) {
-                throw new RadioBrowserException(urlResponse.getMessage());
-            }
-
-            return urlResponse.getUuid();
+        if (log.isDebugEnabled()) {
+            log.debug("Result: {}", urlResponse);
         }
+
+        if (!urlResponse.isOk()) {
+            throw new RadioBrowserException(urlResponse.getMessage());
+        }
+
+        return urlResponse.getUuid();
     }
+
 
     /** Log the response.
      * @param response the response to log the status
