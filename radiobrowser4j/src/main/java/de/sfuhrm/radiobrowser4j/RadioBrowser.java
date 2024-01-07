@@ -30,6 +30,7 @@ import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.Response;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,6 +60,9 @@ public final class RadioBrowser {
 
     /** The JAX-RS web target for service access. */
     private final WebTarget webTarget;
+
+    /** REST implementation. */
+    private final RestImpl rest;
 
     /** The user agent name. */
     private final String userAgent;
@@ -118,6 +122,7 @@ public final class RadioBrowser {
                 proxyUser,
                 proxyPassword);
         webTarget = client.target(apiUrl);
+        rest = new RestImpl(URI.create(apiUrl), timeout, proxyUri, proxyUser, proxyPassword, myUserAgent);
     }
 
     /**
@@ -227,15 +232,9 @@ public final class RadioBrowser {
 
         paging.ifPresent(p -> p.apply(requestParams));
         Arrays.stream(listParam).forEach(lp -> lp.apply(requestParams));
-        Entity<Form> entity = Entity.form(
-                new MultivaluedHashMap<>(requestParams));
-        try (Response response = builder(webTarget.path(path))
-                .post(entity)) {
-            checkResponseStatus(response);
 
-            return response.readEntity(new GenericType<List<Station>>() {
-            });
-        }
+        return rest.post(path, requestParams, new GenericType<List<Station>>() {
+        });
     }
 
     /** Get a list of all stations on a certain API path.

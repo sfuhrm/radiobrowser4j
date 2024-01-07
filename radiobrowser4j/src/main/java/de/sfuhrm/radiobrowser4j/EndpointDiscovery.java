@@ -161,8 +161,8 @@ public class EndpointDiscovery {
                             + timeout);
         }
 
-        RestImpl rest = new RestImpl(timeout, proxyUri, proxyUser, proxyPassword);
-        return  rest.get(URI.create(endpoint), "json/stats", Stats.class, userAgent);
+        RestImpl rest = new RestImpl(URI.create(endpoint), timeout, proxyUri, proxyUser, proxyPassword, userAgent);
+        return  rest.get("json/stats", Stats.class);
     }
 
     /** Discovers the best performing endpoint.
