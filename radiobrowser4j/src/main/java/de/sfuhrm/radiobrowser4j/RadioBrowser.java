@@ -491,21 +491,17 @@ public final class RadioBrowser {
      * @throws RadioBrowserException if the URL could not be retrieved
      */
     public URL resolveStreamUrl(@NonNull final UUID stationUUID) {
-        try (Response response = builder(webTarget.path("json/url")
-                .path(stationUUID.toString()))
-                .get()) {
-            checkResponseStatus(response);
-            log.debug("URI is {}", webTarget.getUri());
-            try {
-                UrlResponse urlResponse = response.readEntity(
-                        UrlResponse.class);
-                if (!urlResponse.isOk()) {
-                    throw new RadioBrowserException(urlResponse.getMessage());
-                }
-                return new URL(urlResponse.getUrl());
-            } catch (MalformedURLException e) {
-                throw new RadioBrowserException(e);
+        String path = RestImpl.paths("json/url",
+                stationUUID.toString());
+
+        try {
+            UrlResponse urlResponse = rest.get(path, UrlResponse.class);
+            if (!urlResponse.isOk()) {
+                throw new RadioBrowserException(urlResponse.getMessage());
             }
+            return new URL(urlResponse.getUrl());
+        } catch (MalformedURLException e) {
+            throw new RadioBrowserException(e);
         }
     }
 
