@@ -540,11 +540,7 @@ public final class RadioBrowser {
      * endpoint.
      * */
     public Stats getServerStats() {
-        Response response = builder(webTarget
-                .path("json/stats")
-        ).get();
-        checkResponseStatus(response);
-        return response.readEntity(Stats.class);
+        return rest.get("json/stats", Stats.class);
     }
 
     /** Get a stream of stations matching a certain search criteria.
