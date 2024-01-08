@@ -26,28 +26,55 @@ import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeoutException;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import mockit.*;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import static org.mockito.Mockito.*;
 
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.client.Invocation;
-import jakarta.ws.rs.client.WebTarget;
+import org.mockito.MockedStatic;
+import org.mockito.junit.MockitoJUnitRunner;
 
 /**
  * Test for the EndpointDiscovery class.
  * @author Stephan Fuhrmann
  */
+@RunWith(MockitoJUnitRunner.class)
 public class EndpointDiscoveryTest {
+
+    @Mock
+    private InetAddressHelper inetAddressHelper;
+
+    @Mock
+    private InetAddress inetAddress;
+
+    @Mock
+    private RadioBrowser radioBrowser;
+
+    @Mock
+    private ExecutorService executorService;
+
+    @Mock
+    private Future future;
 
     private EndpointDiscovery endpointDiscovery;
 
     @Before
-    public void init() {
-        endpointDiscovery = new EndpointDiscovery("RadioBrowser4J");
+    public void setUp() {
+        endpointDiscovery = new EndpointDiscovery("my useragent",
+                null, null, null,
+                inetAddressHelper);
+        endpointDiscovery.setExecutorServiceProducer(() -> executorService);
     }
 
     @Test(expected = NullPointerException.class)
@@ -56,57 +83,52 @@ public class EndpointDiscoveryTest {
     }
 
     @Test
-    public void apiUrls(@Mocked InetAddress inetAddressMock) throws UnknownHostException {
+    public void apiUrls() throws UnknownHostException {
         InetAddress[] inetAddresses = new InetAddress[1];
-        inetAddresses[0] = inetAddressMock;
-
-        new Expectations() {{
-            InetAddress.getAllByName(EndpointDiscovery.DNS_API_ADDRESS); result = inetAddresses;
-            inetAddressMock.getCanonicalHostName(); result = "127.0.0.1";
-        }};
+        inetAddresses[0] = inetAddress;
+        when(inetAddressHelper.getAllByName(EndpointDiscovery.DNS_API_ADDRESS)).thenReturn(inetAddresses);
+        when(inetAddress.getCanonicalHostName()).thenReturn("127.0.0.1");
 
         List<String> urls = endpointDiscovery.apiUrls();
 
         assertThat(urls, is(Collections.singletonList("https://127.0.0.1/")));
 
-        new Verifications() {{
-            InetAddress.getAllByName(EndpointDiscovery.DNS_API_ADDRESS); times = 1;
-        }};
+        verify(inetAddressHelper, times(1)).getAllByName(EndpointDiscovery.DNS_API_ADDRESS);
+        verify(inetAddress, times(1)).getCanonicalHostName();
     }
 
     @Test
-    public void discoverApiUrls(@Mocked Client clientMock,
-                                @Mocked ClientBuilder clientBuilderMock,
-                                @Mocked WebTarget webTargetMock) {
-        new Expectations() {{
-            ClientBuilder.newBuilder(); result = clientBuilderMock;
-            clientBuilderMock.build(); result = clientMock;
-            clientMock.target(URI.create("https://127.0.0.1/")); result = webTargetMock;
-        }};
+    public void discoverApiUrls() throws ExecutionException, InterruptedException, TimeoutException {
+        Stats myStats = new Stats();
+        EndpointDiscovery.DiscoveryResult discoveryResult = new EndpointDiscovery.DiscoveryResult("https://127.0.0.1/", 123, myStats);
+
+        when(executorService.submit(ArgumentMatchers.any(Callable.class))).thenReturn(future);
+        when(future.get(anyLong(), any())).thenReturn(discoveryResult);
 
         List<EndpointDiscovery.DiscoveryResult> results = endpointDiscovery.discoverApiUrls(Collections.singletonList("https://127.0.0.1/"));
         assertThat(results.size(), is(1));
         assertThat(results.get(0).getDuration(), is(Matchers.greaterThan(0L)));
+        assertThat(results.get(0).getEndpoint(), is("https://127.0.0.1/"));
 
-        new Verifications() {{
-            clientMock.target(URI.create("https://127.0.0.1/")); times = 1;
-        }};
+        verify(executorService, times(1)).shutdown();
     }
 
     @Test
-    public void discover(@Mocked Client clientMock,
-                         @Mocked ClientBuilder clientBuilderMock,
-                         @Mocked WebTarget webTargetMock,
-                         @Mocked InetAddress inetAddressMock) throws IOException {
-        new Expectations() {{
-            ClientBuilder.newBuilder(); result = clientBuilderMock;
-            clientBuilderMock.build(); result = clientMock;
-            clientMock.target(URI.create("https://127.0.0.1/")); result = webTargetMock;
-            InetAddress.getAllByName(EndpointDiscovery.DNS_API_ADDRESS); result = new InetAddress[] {inetAddressMock};
-            inetAddressMock.getCanonicalHostName(); result = "127.0.0.1";
-        }};
+    public void discover() throws IOException, ExecutionException, InterruptedException, TimeoutException {
+        Stats myStats = new Stats();
+        EndpointDiscovery.DiscoveryResult discoveryResult = new EndpointDiscovery.DiscoveryResult("https://127.0.0.1/", 123, myStats);
+
+        InetAddress[] inetAddresses = new InetAddress[1];
+        inetAddresses[0] = inetAddress;
+        when(inetAddressHelper.getAllByName(EndpointDiscovery.DNS_API_ADDRESS)).thenReturn(inetAddresses);
+        when(executorService.submit(ArgumentMatchers.any(Callable.class))).thenReturn(future);
+        when(future.get(anyLong(), any())).thenReturn(discoveryResult);
 
         Optional<String> name = endpointDiscovery.discover();
         assertThat(name.isPresent(), is(true));
+        assertThat(name.get(), is("https://127.0.0.1/"));
+
+        verify(executorService, times(1)).shutdown();
     }
+
 }

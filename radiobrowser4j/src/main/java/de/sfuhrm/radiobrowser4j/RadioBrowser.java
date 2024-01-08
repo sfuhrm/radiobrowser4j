@@ -40,7 +40,7 @@ import java.util.stream.StreamSupport;
  * @author Stephan Fuhrmann
  * */
 @Slf4j
-public final class RadioBrowser {
+public class RadioBrowser {
 
     /** The base URL of the REST service. */
     @Deprecated

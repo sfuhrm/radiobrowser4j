@@ -1,8 +1,11 @@
 package de.sfuhrm.radiobrowser4j;
 
+import lombok.AccessLevel;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.glassfish.jersey.internal.util.Producer;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -44,6 +47,17 @@ public class EndpointDiscovery {
     /** The optional proxy password. */
     private final String proxyPassword;
 
+    /** Helper for resolving DNS addresses.
+     * @see #DNS_API_ADDRESS
+     * */
+    private final InetAddressHelper inetAddressHelper;
+
+    /** Producer or executor services used for discovery.
+     * */
+    @Setter(AccessLevel.PACKAGE)
+    private Producer<ExecutorService> executorServiceProducer =
+            () -> Executors.newFixedThreadPool(DEFAULT_THREADS);
+
     /** Constructs a new instance.
      * @param myUserAgent the user agent String to use while discovery.
      * */
@@ -63,10 +77,32 @@ public class EndpointDiscovery {
                              final String myProxyUri,
                              final String myProxyUser,
                              final String myProxyPassword) {
+        this(myUserAgent,
+                myProxyUri,
+                myProxyUser,
+                myProxyPassword,
+                new InetAddressHelper());
+    }
+
+    /** Constructs a new instance.
+     * @param myUserAgent the user agent String to use while discovery.
+     * @param myProxyUri the optional URI of a HTTP proxy to use.
+     * @param myProxyUser  the optional username to
+     *                     authenticate with to access the proxy.
+     * @param myProxyPassword the optional password
+     *                        to authenticate with to access the proxy.
+     * @param myInetAddressHelper the internet address resolution helper.
+     * */
+    EndpointDiscovery(@NonNull final String myUserAgent,
+                             final String myProxyUri,
+                             final String myProxyUser,
+                             final String myProxyPassword,
+                             final InetAddressHelper myInetAddressHelper) {
         this.userAgent = myUserAgent;
         this.proxyUri = myProxyUri;
         this.proxyUser = myProxyUser;
         this.proxyPassword = myProxyPassword;
+        this.inetAddressHelper = myInetAddressHelper;
     }
 
     /** Get the URLs of all API endpoints that are returned by the DNS service.
@@ -76,7 +112,8 @@ public class EndpointDiscovery {
      * API DNS name.
      * */
     List<String> apiUrls() throws UnknownHostException {
-        InetAddress[] addresses = InetAddress.getAllByName(DNS_API_ADDRESS);
+        InetAddress[] addresses =
+                inetAddressHelper.getAllByName(DNS_API_ADDRESS);
         List<String> fqdns = new ArrayList<>();
         for (InetAddress inetAddress : addresses) {
             fqdns.add(inetAddress.getCanonicalHostName());
@@ -109,8 +146,7 @@ public class EndpointDiscovery {
      * Unreachable endpoints are not returned.
      * */
     List<DiscoveryResult> discoverApiUrls(final List<String> apiUrls) {
-        ExecutorService executorService =
-                Executors.newFixedThreadPool(DEFAULT_THREADS);
+        ExecutorService executorService = executorServiceProducer.call();
 
         try {
             List<Future<DiscoveryResult>> futureList = new ArrayList<>();

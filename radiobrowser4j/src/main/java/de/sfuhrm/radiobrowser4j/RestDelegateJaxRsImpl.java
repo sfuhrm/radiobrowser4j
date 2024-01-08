@@ -25,7 +25,7 @@ import java.util.Map;
  * @author Stephan Fuhrmann
  * */
 @Slf4j
-final class RestDelegateJaxRsImpl implements RestDelegate {
+class RestDelegateJaxRsImpl implements RestDelegate {
 
     /** The internal jax-rs client to use.  */
     private final Client client;
