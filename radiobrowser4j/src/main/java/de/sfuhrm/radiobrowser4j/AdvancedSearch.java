@@ -163,7 +163,7 @@ public final class AdvancedSearch extends ParameterProvider {
         }
         // limit and offset are left out for Paging
         if (hideBroken != null) {
-            requestParams.put("hidebroken", reverse.toString());
+            requestParams.put("hidebroken", hideBroken.toString());
         }
     }
 }
