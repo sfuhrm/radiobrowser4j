@@ -25,5 +25,5 @@
   "scenarioName" : "scenario-1-json-stations",
   "requiredScenarioState" : "Started",
   "newScenarioState" : "scenario-1-json-stations-2",
-  "insertionIndex" : 1
+  "insertionIndex" : 272
 }

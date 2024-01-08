@@ -24,5 +24,5 @@
   "persistent" : true,
   "scenarioName" : "scenario-5-json-stations",
   "requiredScenarioState" : "scenario-5-json-stations-2",
-  "insertionIndex" : 325
+  "insertionIndex" : 127
 }
