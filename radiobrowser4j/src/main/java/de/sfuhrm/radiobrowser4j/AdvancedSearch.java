@@ -156,7 +156,7 @@ public final class AdvancedSearch extends ParameterProvider {
             requestParams.put("is_https", isHttps.toString());
         }
         if (order != null) {
-            requestParams.put("order", order.name());
+            requestParams.put("order", order.name().toLowerCase());
         }
         if (reverse != null) {
             requestParams.put("reverse", reverse.toString());
