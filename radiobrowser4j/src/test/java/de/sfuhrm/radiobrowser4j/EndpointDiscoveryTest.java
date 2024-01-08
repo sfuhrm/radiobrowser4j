@@ -109,22 +109,4 @@ public class EndpointDiscoveryTest {
         Optional<String> name = endpointDiscovery.discover();
         assertThat(name.isPresent(), is(true));
     }
-
-    @Test
-    public void getStats(@Mocked Client clientMock,
-                         @Mocked ClientBuilder clientBuilderMock,
-                         @Mocked WebTarget webTargetMock,
-                         @Mocked Invocation.Builder invocationBuilderMock) {
-        Stats myStats = new Stats();
-
-        new Expectations() {{
-            ClientBuilder.newBuilder(); result = clientBuilderMock;
-            clientBuilderMock.build(); result = clientMock;
-            clientMock.target(URI.create(RadioBrowser.DEFAULT_API_URL)); result = webTargetMock;
-            invocationBuilderMock.get(Stats.class); result = myStats;
-        }};
-
-        Stats stats = endpointDiscovery.getStats(RadioBrowser.DEFAULT_API_URL, 5000);
-        assertThat(stats, is(myStats));
-    }
 }

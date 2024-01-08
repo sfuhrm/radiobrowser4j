@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.URI;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -119,7 +118,14 @@ public class EndpointDiscovery {
                 Callable<DiscoveryResult> discoveryResultCallable = () -> {
                     long start = System.currentTimeMillis();
                     log.debug("Starting check for {}", apiUrl);
-                    Stats stats = getStats(apiUrl, DEFAULT_TIMEOUT_MILLIS);
+                    RadioBrowser radioBrowser = new RadioBrowser(
+                            apiUrl,
+                            DEFAULT_TIMEOUT_MILLIS,
+                            userAgent,
+                            proxyUri,
+                            proxyUser,
+                            proxyPassword);
+                    Stats stats = radioBrowser.getServerStats();
                     long duration = System.currentTimeMillis() - start;
                     log.debug("Finished check for {}, took {} ms",
                             apiUrl, duration);
@@ -147,28 +153,6 @@ public class EndpointDiscovery {
         } finally {
             executorService.shutdown();
         }
-    }
-
-    /** Get the stats for a specific API endpoint.
-     * @param endpoint the API endpoint URI.
-     * @param timeout the timeout in millis.
-     * @return the stats object from the server.
-     */
-    Stats getStats(final String endpoint, final int timeout) {
-        if (timeout <= 0) {
-            throw new IllegalArgumentException(
-                    "timeout must be > 0, but is "
-                            + timeout);
-        }
-
-        RestDelegateJaxRsImpl rest = new RestDelegateJaxRsImpl(
-                URI.create(endpoint),
-                timeout,
-                proxyUri,
-                proxyUser,
-                proxyPassword,
-                userAgent);
-        return  rest.get("json/stats", Stats.class);
     }
 
     /** Discovers the best performing endpoint.
