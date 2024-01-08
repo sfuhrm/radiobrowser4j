@@ -16,8 +16,9 @@
 package de.sfuhrm.radiobrowser4j;
 
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -35,21 +36,19 @@ import java.util.concurrent.TimeoutException;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 
-import org.mockito.MockedStatic;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Test for the EndpointDiscovery class.
  * @author Stephan Fuhrmann
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class EndpointDiscoveryTest {
 
     @Mock
@@ -69,7 +68,7 @@ public class EndpointDiscoveryTest {
 
     private EndpointDiscovery endpointDiscovery;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         endpointDiscovery = new EndpointDiscovery("my useragent",
                 null, null, null,
@@ -77,9 +76,11 @@ public class EndpointDiscoveryTest {
         endpointDiscovery.setExecutorServiceProducer(() -> executorService);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void createWithNull() {
-        new EndpointDiscovery(null);
+        assertThrows(NullPointerException.class, () -> {
+            new EndpointDiscovery(null);
+        });
     }
 
     @Test

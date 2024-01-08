@@ -16,8 +16,8 @@
 package de.sfuhrm.radiobrowser4j;
 
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Map;
@@ -38,7 +38,7 @@ public class RadioBrowserIT {
 
     private RadioBrowser radioBrowser;
 
-    @Before
+    @BeforeEach
     public void before() throws IOException {
         Optional<String> myEndpoint = new EndpointDiscovery(USER_CLIENT).discover();
         this.endpoint = myEndpoint.get();

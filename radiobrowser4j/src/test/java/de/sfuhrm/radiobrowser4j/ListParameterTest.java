@@ -16,7 +16,6 @@
 package de.sfuhrm.radiobrowser4j;
 
 import org.hamcrest.collection.IsArrayWithSize;
-import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,8 +23,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import org.junit.jupiter.api.Test;
+
 import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Test for the ListParameter class.

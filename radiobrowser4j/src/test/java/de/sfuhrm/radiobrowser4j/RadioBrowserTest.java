@@ -24,17 +24,18 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.hamcrest.CoreMatchers.*;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import org.hamcrest.Matchers;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
  * Some integration tests.
@@ -71,7 +72,7 @@ public class RadioBrowserTest {
      * */
     public final static boolean RECORDING = false;
 
-    @BeforeClass
+    @BeforeAll
     public static void createBrowser() {
         WireMockConfiguration wireMockConfiguration = new WireMockConfiguration();
         wireMockConfiguration.port(WIREMOCK_PORT);
@@ -86,7 +87,7 @@ public class RadioBrowserTest {
         browser = new RadioBrowser(API_URL,20000, USER_AGENT);
     }
 
-    @AfterClass
+    @AfterAll
     public static void shutdownBrowser() {
         if (RECORDING) {
             wireMockClient.stopStubRecording();
@@ -333,15 +334,17 @@ public class RadioBrowserTest {
     }
 
     // this is being accepted by server 0.6.11, so it is not tested anymore
-    @Ignore
-    @Test(expected = RadioBrowserException.class)
+    @Disabled
+    @Test
     public void postNewWithFail() {
-        Station station = new Station();
-        // URL is missing
-        station.setHomepage("https://github.com/sfuhrm/radiobrowser4j");
-        station.setName(TEST_NAME);
-        station.setFavicon("https://github.com/favicon.ico");
-        browser.postNewStation(station);
+        assertThrows(RadioBrowserException.class, () -> {
+            Station station = new Station();
+            // URL is missing
+            station.setHomepage("https://github.com/sfuhrm/radiobrowser4j");
+            station.setName(TEST_NAME);
+            station.setFavicon("https://github.com/favicon.ico");
+            browser.postNewStation(station);
+        });
     }
 
     @Test

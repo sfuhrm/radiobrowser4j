@@ -15,10 +15,10 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Test for the Exception.

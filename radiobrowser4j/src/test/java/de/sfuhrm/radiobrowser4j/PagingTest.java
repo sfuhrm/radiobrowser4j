@@ -15,10 +15,11 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Test for the Paging class.
@@ -33,14 +34,18 @@ public class PagingTest {
         assertThat(paging.getLimit(), is(1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void atWithZeroLimit() {
-        Paging.at(0, 0);
+        assertThrows(IllegalArgumentException.class, () -> {
+            Paging.at(0, 0);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void atWithNegativeOffset() {
-        Paging.at(-1, 1);
+        assertThrows(IllegalArgumentException.class, () -> {
+            Paging.at(-1, 1);
+        });
     }
 
     @Test
