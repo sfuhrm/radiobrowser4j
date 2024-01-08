@@ -70,6 +70,7 @@ final class RestDelegateJaxRsImpl implements RestDelegate {
                             final String proxyUser,
                             final String proxyPassword) {
         Client client = ClientBuilder.newBuilder()
+                .register(ObjectMapperResolver.class)
                 .register(JacksonFeature.class)
                 .register(GZipEncoder.class)
                 .build();

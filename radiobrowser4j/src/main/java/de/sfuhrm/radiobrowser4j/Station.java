@@ -15,12 +15,6 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,17 +31,14 @@ import java.util.UUID;
  * @author Stephan Fuhrmann
  */
 @EqualsAndHashCode(of = {"stationUUID", "name"})
-@JsonIgnoreProperties(ignoreUnknown = true)
 public final class Station extends ParameterProvider {
     /** A globally unique identifier for the change
      * of the station information. */
     @Getter @Setter
-    @JsonProperty("changeuuid")
     private UUID changeUUID;
 
     /** A globally unique identifier for the station. */
     @Getter @Setter
-    @JsonProperty("stationuuid")
     private UUID stationUUID;
 
     /** The name of the station. */
@@ -60,7 +51,6 @@ public final class Station extends ParameterProvider {
 
     /** An automatically "resolved" stream URL. */
     @Getter @Setter
-    @JsonProperty("url_resolved")
     private String urlResolved;
 
     /** The URL of the stations' homepage. */
@@ -76,7 +66,7 @@ public final class Station extends ParameterProvider {
      * {@link #getTags()}.
      * @see #getTags()
      * */
-    @Getter @Setter @JsonIgnore
+    @Getter @Setter
     private List<String> tagList = new ArrayList<>();
 
     /** The country this station is located at.
@@ -91,7 +81,6 @@ public final class Station extends ParameterProvider {
 
     /** Official country codes according to ISO 3166-1 alpha-2. */
     @Getter @Setter
-    @JsonProperty("countrycode")
     private String countryCode;
 
     /** The state this station is located at. */
@@ -103,7 +92,7 @@ public final class Station extends ParameterProvider {
      * {@link #getLanguage()}.
      * @see #getLanguage()
      */
-    @Getter @Setter @JsonIgnore
+    @Getter @Setter
     private List<String> languageList = new ArrayList<>();
 
     /** The votes for this station. */
@@ -130,31 +119,23 @@ public final class Station extends ParameterProvider {
      * the online state of this stream. */
     @Getter
     @Setter
-    @JsonFormat(shape = JsonFormat.Shape.STRING,
-            pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastchecktime;
 
     /** The last time when the stream was checked for
      * the online status with a positive result. */
     @Getter
     @Setter
-    @JsonFormat(shape = JsonFormat.Shape.STRING,
-            pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastcheckoktime;
 
     /** The last time when this server checked the online state
      * and the metadata of this stream. */
     @Getter
     @Setter
-    @JsonFormat(shape = JsonFormat.Shape.STRING,
-            pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastlocalchecktime;
 
     /** The time of the last click recorded for this stream. */
     @Getter
     @Setter
-    @JsonFormat(shape = JsonFormat.Shape.STRING,
-            pattern = "yyyy-MM-dd hh:mm:ss")
     private Date clicktimestamp;
 
     /** Clicks within the last 24 hours. */
@@ -168,20 +149,16 @@ public final class Station extends ParameterProvider {
     /** Timestamp of the last change of the stations' data. */
     @Getter
     @Setter
-    @JsonFormat(shape = JsonFormat.Shape.STRING,
-            pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastchangetime;
 
     /** Geo latitude of the station. */
     @Getter
     @Setter
-    @JsonProperty("geo_lat")
     private Double geoLatitude;
 
     /** Geo longitude of the station. */
     @Getter
     @Setter
-    @JsonProperty("geo_long")
     private Double geoLongitude;
 
     /** Is true, if the stream owner does
@@ -189,7 +166,6 @@ public final class Station extends ParameterProvider {
      * which override the information in the database. */
     @Getter
     @Setter
-    @JsonProperty("has_extended_info")
     private Boolean hasExtendedInfo;
 
     /** JSON getter for the {@link #tagList}.
@@ -197,7 +173,6 @@ public final class Station extends ParameterProvider {
      * @return comma separated tag names.
      * @see #setTags(String)
      * */
-    @JsonGetter("tags")
     public String getTags() {
         return String.join(",", tagList);
     }
@@ -207,7 +182,6 @@ public final class Station extends ParameterProvider {
      * @param commaTags comma separated tag names.
      * @see #getTags()
      * */
-    @JsonSetter("tags")
     public void setTags(final String commaTags) {
         tagList = Arrays.asList(commaTags.split(","));
     }
@@ -217,7 +191,6 @@ public final class Station extends ParameterProvider {
      * @return comma separated languages.
      * @see #setLanguage(String)
      * */
-    @JsonGetter("language")
     public String getLanguage() {
         return String.join(",", languageList);
     }
@@ -227,7 +200,6 @@ public final class Station extends ParameterProvider {
      * @param commaLanguages comma separated languages.
      * @see #getLanguage()
      * */
-    @JsonSetter("language")
     public void setLanguage(final String commaLanguages) {
         languageList = Arrays.asList(commaLanguages.split(","));
     }
