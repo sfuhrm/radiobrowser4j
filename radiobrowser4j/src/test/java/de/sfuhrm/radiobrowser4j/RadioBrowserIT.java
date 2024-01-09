@@ -20,8 +20,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -76,8 +78,8 @@ public class RadioBrowserIT {
     @Test
     public void testListStations() throws IOException {
         Stream<Station> stream = radioBrowser.listStations();
-        long count = stream.limit(1000).count();
-        assertThat((int) count, Matchers.greaterThan(0));
+        List<Station> list = stream.limit(1000).collect(Collectors.toList());
+        assertThat(list.size(), Matchers.greaterThan(0));
     }
 
     @Test
