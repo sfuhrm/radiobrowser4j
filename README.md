@@ -27,7 +27,7 @@ For Maven, you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>2.5.2</version>
+    <version>2.6.0</version>
 </dependency>
 ```
 
@@ -73,6 +73,17 @@ located in the test resources.
 
 ## Version history
 
+* v2.6.0
+  - Refactorings for reducing code duplication.
+  - Major refactorings to limit the JAX-RS / Jersey exposure of the code to a minimum of classes. This is a preparation for possible alternative implementations (see issue #14 ).
+  - Freed the Station class from Jackson annotations (replacing with a mixin class).
+  - Migrate from JMockit to Mockito since JMockit is conflicting in Java 21.
+  - Building with JDK 21 now (still targeting JDK 8) since Mockito is needing this.
+  - Migrate JUnit 4 to JUnit 5. Welcome to 2016.
+* v2.5.3
+  - Update slf4j dependency
+  - Update log4j2 dependency
+  - Update multiple build plugins
 * v2.5.2
   - Add deprecation warnings for countrycode and countrycodeexact fields as suggested in the upstream API. Countrycode should be used instead which is standardized.
   - Update of some plugins.
