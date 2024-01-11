@@ -15,8 +15,6 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,22 +22,18 @@ import lombok.Setter;
  * Representation of an api endpoint statistic.
  * @author Stephan Fuhrmann
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public final class Stats {
 
     /** The supported version. */
     @Getter @Setter
-    @JsonProperty("supported_version")
     private Integer supportedVersion;
 
     /** The version of the API. */
     @Getter @Setter
-    @JsonProperty("software_version")
     private String softwareVersion;
 
     /** The status, should be "OK". */
     @Getter @Setter
-    @JsonProperty("status")
     private String status;
 
     /** The number of stations stored on the server. */
@@ -48,7 +42,6 @@ public final class Stats {
 
     /** The number of broken stations. */
     @Getter @Setter
-    @JsonProperty("stations_broken")
     private Integer stationsBroken;
 
     /** The number of tags. */
@@ -57,12 +50,10 @@ public final class Stats {
 
     /** The number of clicks in the last hour. */
     @Getter @Setter
-    @JsonProperty("clicks_last_hour")
     private Integer clicksLastHour;
 
     /** The number of clicks in the last 24 hours. */
     @Getter @Setter
-    @JsonProperty("clicks_last_day")
     private Integer clicksLastDay;
 
     /** The number of languages. */

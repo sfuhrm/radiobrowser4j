@@ -24,6 +24,8 @@ class ObjectMapperResolver implements ContextResolver<ObjectMapper> {
         mapper.setDateFormat(df);
         Map<Class<?>, Class<?>> mixIns = new HashMap<>();
         mixIns.put(Station.class, StationMixin.class);
+        mixIns.put(UrlResponse.class, UrlResponseMixin.class);
+        mixIns.put(Stats.class, StationMixin.class);
         mapper.setMixIns(mixIns);
     }
 

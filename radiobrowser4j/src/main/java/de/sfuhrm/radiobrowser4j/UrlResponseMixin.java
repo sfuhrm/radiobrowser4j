@@ -15,30 +15,12 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
-import lombok.Getter;
-
-import java.util.UUID;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * API response from the radio browser API.
+ * Mixin for UrlResponse.
  * @author Stephan Fuhrmann
  */
-@Getter
-class UrlResponse {
-    /** Whether this operation went ok. */
-    private boolean ok;
-
-    /** The error message of this operation. */
-    private String message;
-
-    /** The uuid of the referenced entity. */
-    private UUID uuid;
-
-    /** The name of the referenced entity. */
-    private String name;
-
-    /** The url of the referenced entity. */
-    private String url;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
+abstract class UrlResponseMixin {
 }
