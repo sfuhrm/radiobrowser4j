@@ -37,54 +37,38 @@ class RestDelegateJaxRsImpl implements RestDelegate {
     private final String userAgent;
 
     /** Create a new instance.
-     * @param inEndpoint the API endpoint URI address.
-     * @param inTimeout the timeout in millis.
-     * @param inProxyUri the optional proxy URI.
-     * @param inProxyUser the optional proxy user.
-     * @param inProxyPassword the optional proxy password.
-     * @param inUserAgent the mandatory user agent string to send.
+     * @param connectionParams the connection parameters to use.
      * */
-    RestDelegateJaxRsImpl(final URI inEndpoint,
-                                 final int inTimeout,
-                                 final String inProxyUri,
-                                 final String inProxyUser,
-                                 final String inProxyPassword,
-                                 final String inUserAgent) {
-        this.endpoint = inEndpoint;
-        client = newClient(inTimeout,
-                inProxyUri,
-                inProxyUser,
-                inProxyPassword);
-        this.userAgent = inUserAgent;
+    RestDelegateJaxRsImpl(final ConnectionParams connectionParams) {
+        this.endpoint = URI.create(connectionParams.getApiUrl());
+        client = newClient(connectionParams);
+        this.userAgent = connectionParams.getUserAgent();
     }
 
     /** Create a new JAX-RS client.
-     * @param timeout connect / read timeout in milliseconds.
-     * @param proxyUri optional proxy URI.
-     * @param proxyUser optional proxy user.
-     * @param proxyPassword optional proxy password.
+     * @param connectionParams the connection parameters to use.
      * @return the client instance that has been created.
      *  */
-    private static Client newClient(final int timeout,
-                            final String proxyUri,
-                            final String proxyUser,
-                            final String proxyPassword) {
+    private static Client newClient(final ConnectionParams connectionParams) {
         Client client = ClientBuilder.newBuilder()
                 .register(ObjectMapperResolver.class)
                 .register(JacksonFeature.class)
                 .register(GZipEncoder.class)
                 .build();
-        client.property(ClientProperties.CONNECT_TIMEOUT, timeout);
-        client.property(ClientProperties.READ_TIMEOUT, timeout);
-        if (proxyUri != null) {
-            client.property(ClientProperties.PROXY_URI, proxyUri);
-            if (proxyUser != null) {
+        client.property(ClientProperties.CONNECT_TIMEOUT,
+                connectionParams.getTimeout());
+        client.property(ClientProperties.READ_TIMEOUT,
+                connectionParams.getTimeout());
+        if (connectionParams.getProxyUri() != null) {
+            client.property(ClientProperties.PROXY_URI,
+                    connectionParams.getProxyUri());
+            if (connectionParams.getProxyUser() != null) {
                 client.property(ClientProperties.PROXY_USERNAME,
-                        proxyUser);
+                        connectionParams.getProxyUser());
             }
-            if (proxyPassword != null) {
+            if (connectionParams.getProxyPassword() != null) {
                 client.property(ClientProperties.PROXY_PASSWORD,
-                        proxyPassword);
+                        connectionParams.getProxyPassword());
             }
         }
         return client;

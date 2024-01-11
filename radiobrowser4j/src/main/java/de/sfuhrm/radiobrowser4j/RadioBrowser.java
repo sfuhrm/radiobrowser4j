@@ -19,7 +19,6 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,9 +49,6 @@ public class RadioBrowser {
     /** REST implementation. */
     private final RestDelegate rest;
 
-    /** The user agent name. */
-    private final String userAgent;
-
     /**
      * Creates a new API client using a specific api endpoint.
      * @param apiUrl the base URL of the API.
@@ -69,7 +65,11 @@ public class RadioBrowser {
     public RadioBrowser(@NonNull final String apiUrl,
                         final int timeout,
                         @NonNull final String myUserAgent) {
-        this(apiUrl, timeout, myUserAgent, null, null, null);
+        this(new ConnectionParams.ConnectionParamsBuilder()
+                .apiUrl(apiUrl)
+                .timeout(timeout)
+                .userAgent(myUserAgent)
+                .build());
     }
 
     /**
@@ -96,19 +96,25 @@ public class RadioBrowser {
                         final String proxyUri,
                         final String proxyUser,
                         final String proxyPassword) {
-        if (timeout <= 0) {
-            throw new IllegalArgumentException(
-                    "timeout must be > 0, but is "
-                            + timeout);
-        }
-        this.userAgent = myUserAgent;
-        rest = new RestDelegateJaxRsImpl(
-                URI.create(apiUrl),
-                timeout,
-                proxyUri,
-                proxyUser,
-                proxyPassword,
-                myUserAgent);
+
+        this(new ConnectionParams.ConnectionParamsBuilder()
+                .apiUrl(apiUrl)
+                .timeout(timeout)
+                .userAgent(myUserAgent)
+                .proxyUri(proxyUri)
+                .proxyUser(proxyUser)
+                .proxyPassword(proxyPassword)
+                .build());
+    }
+
+    /**
+     * Creates a new API client using a proxy.
+     * @param connectionParams the parameters for creating an API connection.
+     * @see ConnectionParams.ConnectionParamsBuilder
+     * */
+    RadioBrowser(@NonNull final ConnectionParams connectionParams) {
+        connectionParams.check();
+        rest = new RestDelegateJaxRsImpl(connectionParams);
     }
 
     /**
@@ -127,7 +133,11 @@ public class RadioBrowser {
     @Deprecated
     public RadioBrowser(final int timeout,
                         final String myUserAgent) {
-        this(DEFAULT_API_URL, timeout, myUserAgent);
+        this(new ConnectionParams.ConnectionParamsBuilder()
+                .apiUrl(DEFAULT_API_URL)
+                .timeout(timeout)
+                .userAgent(myUserAgent)
+                .build());
     }
 
     /** Composes URI path components with '/' separators.
