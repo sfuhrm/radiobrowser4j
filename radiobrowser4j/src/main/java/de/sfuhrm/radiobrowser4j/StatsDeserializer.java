@@ -18,26 +18,16 @@ class StatsDeserializer implements JsonDeserializer<Stats> {
     ) throws JsonParseException {
         Stats stats = new Stats();
         JsonObject jsonObject = jsonElement.getAsJsonObject();
-        stats.setSupportedVersion(
-                jsonObject.get("supported_version").getAsInt());
-        stats.setSoftwareVersion(
-                jsonObject.get("software_version").getAsString());
-        stats.setStatus(
-                jsonObject.get("status").getAsString());
-        stats.setStations(
-                jsonObject.get("stations").getAsInt());
-        stats.setStationsBroken(
-                jsonObject.get("stations_broken").getAsInt());
-        stats.setTags(
-                jsonObject.get("tags").getAsInt());
-        stats.setClicksLastHour(
-                jsonObject.get("clicks_last_hour").getAsInt());
-        stats.setClicksLastDay(
-                jsonObject.get("clicks_last_day").getAsInt());
-        stats.setLanguages(
-                jsonObject.get("languages").getAsInt());
-        stats.setCountries(
-                jsonObject.get("countries").getAsInt());
+        stats.setSupportedVersion(jsonObject.get("supported_version").getAsInt());
+        stats.setSoftwareVersion(jsonObject.get("software_version").getAsString());
+        stats.setStatus(jsonObject.get("status").getAsString());
+        stats.setStations(jsonObject.get("stations").getAsInt());
+        stats.setStationsBroken(jsonObject.get("stations_broken").getAsInt());
+        stats.setTags(jsonObject.get("tags").getAsInt());
+        stats.setClicksLastHour(jsonObject.get("clicks_last_hour").getAsInt());
+        stats.setClicksLastDay(jsonObject.get("clicks_last_day").getAsInt());
+        stats.setLanguages(jsonObject.get("languages").getAsInt());
+        stats.setCountries(jsonObject.get("countries").getAsInt());
         return stats;
     }
 }

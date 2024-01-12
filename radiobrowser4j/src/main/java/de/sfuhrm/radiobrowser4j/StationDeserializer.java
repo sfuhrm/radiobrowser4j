@@ -69,7 +69,11 @@ class StationDeserializer implements JsonDeserializer<Station> {
         return station;
     }
 
-    <T> void transfer(JsonObject jsonObject, String key, Station station, BiConsumer<Station, T> setter, Class<T> type) throws ParseException {
+    <T> void transfer(JsonObject jsonObject,
+                      String key,
+                      Station station,
+                      BiConsumer<Station, T> setter,
+                      Class<T> type) throws ParseException {
         JsonElement element = jsonObject.get(key);
         if (element == null || element.isJsonNull()) {
             return;
