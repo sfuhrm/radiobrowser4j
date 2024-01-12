@@ -16,6 +16,7 @@ import java.net.Authenticator;
 import java.net.InetSocketAddress;
 import java.net.PasswordAuthentication;
 
+import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -89,8 +90,9 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
     private HttpURLConnection newClient(
             final String path) throws IOException {
         URI fullUri = endpoint.resolve(path);
+        URL url = fullUri.toURL();
 
-        log.debug("Connecting to {}", fullUri);
+        log.debug("Connecting to {}", url.toExternalForm());
         HttpURLConnection connection;
 
         if (null != connectionParams.getProxyUri()) {
@@ -100,10 +102,10 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
                 Authenticator.setDefault(auth);
             }
             connection = (HttpURLConnection)
-                    fullUri.toURL().openConnection(proxy);
+                    url.openConnection(proxy);
         } else {
             connection = (HttpURLConnection)
-                    fullUri.toURL().openConnection();
+                    url.openConnection();
         }
 
         connection.setConnectTimeout(connectionParams.getTimeout());
