@@ -195,6 +195,22 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
         return json;
     }
 
+    private static String asWwwFormUrlEncoded(
+            final Map<String, String> requestParams
+    ) throws UnsupportedEncodingException {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : requestParams.entrySet()) {
+            if (sb.length() > 0) {
+                sb.append("&");
+            }
+            sb.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+            sb.append("=");
+            sb.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+        }
+        return sb.toString();
+    }
+
+
     /** Sends a POST request to the remote server. The
      * body gets transferred as
      *  "application/x-www-form-urlencoded" encoded data.
@@ -211,18 +227,16 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
                        final Map<String, String> requestParams,
                        final TypeToken<T> resultClass) {
         try {
-            String requestBody = asApplicationJson(requestParams);
-            log.debug("POST body: {}", requestBody);
 
             HttpURLConnection connection = newClient(path);
             configure(connection);
             connection.setRequestMethod("POST");
-            connection.setRequestProperty(
-                    "Content-Type",
-                    "application/json; charset=UTF-8");
             connection.setDoOutput(true);
-            connection.getOutputStream()
-                    .write(requestBody.getBytes(StandardCharsets.UTF_8));
+            if (false) {
+                sendJsonRequest(connection, requestParams);
+            } else {
+                sendXWWWFormUrlencodedRequest(connection, requestParams);
+            }
             try (Reader reader = readerFor(connection)) {
                 checkResponseStatus(connection);
                 return gson.fromJson(reader, resultClass);
@@ -232,6 +246,30 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
         } catch (IOException e) {
             throw new RadioBrowserException(e);
         }
+    }
+
+    private void sendXWWWFormUrlencodedRequest(final HttpURLConnection connection,
+                                 final Map<String, String> requestParams) throws IOException {
+        connection.setRequestProperty(
+                "Content-Type",
+                "application/x-www-form-urlencoded; charset=UTF-8");
+        String encoded = asWwwFormUrlEncoded(requestParams);
+        log.debug("POST WWW-Form-UrlEncoded body: {}", encoded);
+        connection.getOutputStream()
+                .write(encoded.getBytes(StandardCharsets.UTF_8));
+        connection.getOutputStream().flush();
+    }
+
+    private void sendJsonRequest(final HttpURLConnection connection,
+                                 final Map<String, String> requestParams) throws IOException {
+        String json = asApplicationJson(requestParams);
+        log.debug("POST JSON body: {}", json);
+        connection.setRequestProperty(
+                "Content-Type",
+                "application/json; charset=UTF-8");
+        connection.getOutputStream()
+                .write(json.getBytes(StandardCharsets.UTF_8));
+        connection.getOutputStream().flush();
     }
 
     @Override
