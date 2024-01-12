@@ -33,6 +33,7 @@ import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,6 @@ public class RadioBrowserTest {
     private final static String USER_AGENT = "https://github.com/sfuhrm/radiobrowser4j";
 
     private static RadioBrowser browser;
-    private static WireMock wireMockClient;
     private static WireMockServer wireMockServer;
 
     /** Paging with 5 elements. */
@@ -70,7 +70,14 @@ public class RadioBrowserTest {
      * WARNING! This calls radiobrowser.info API directly and
      * creates entities which are deleted afterwards!
      * */
-    public final static boolean RECORDING = false;
+    public final static boolean RECORDING = true;
+
+    @AfterEach
+    public void gracefulSleepInterval() throws InterruptedException {
+        if (RECORDING) {
+            Thread.sleep(1000);
+        }
+    }
 
     @BeforeAll
     public static void createBrowser() {
@@ -79,9 +86,8 @@ public class RadioBrowserTest {
         wireMockServer = new WireMockServer(wireMockConfiguration);
         wireMockServer.start();
 
-        wireMockClient = new WireMock(WIREMOCK_PORT);
         if (RECORDING) {
-            wireMockClient.startStubRecording(RadioBrowser.DEFAULT_API_URL);
+            wireMockServer.startRecording(RadioBrowser.DEFAULT_API_URL);
         }
 
         browser = new RadioBrowser(API_URL,20000, USER_AGENT);
@@ -89,15 +95,12 @@ public class RadioBrowserTest {
 
     @AfterAll
     public static void shutdownBrowser() {
-        if (RECORDING) {
-            wireMockClient.stopStubRecording();
-        }
-
-        if (wireMockClient != null) {
-            wireMockClient.saveMappings();
-        }
         if (wireMockServer != null) {
             wireMockServer.shutdown();
+            if (RECORDING) {
+                wireMockServer.stopRecording();
+                wireMockServer.saveMappings();
+            }
         }
     }
 
