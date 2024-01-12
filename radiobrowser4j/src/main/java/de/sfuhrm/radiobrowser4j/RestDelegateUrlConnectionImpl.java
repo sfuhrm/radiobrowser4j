@@ -188,19 +188,11 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
                 new TypeToken<List<Map<String, String>>>() { });
     }
 
-    private static String asWwwFormUrlEncoded(
+    private String asApplicationJson(
             final Map<String, String> requestParams
     ) throws UnsupportedEncodingException {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, String> entry : requestParams.entrySet()) {
-            if (sb.length() > 0) {
-                sb.append("&");
-            }
-            sb.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            sb.append("=");
-            sb.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-        }
-        return sb.toString();
+        String json = gson.toJson(requestParams);
+        return json;
     }
 
     /** Sends a POST request to the remote server. The
@@ -219,7 +211,7 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
                        final Map<String, String> requestParams,
                        final TypeToken<T> resultClass) {
         try {
-            String requestBody = asWwwFormUrlEncoded(requestParams);
+            String requestBody = asApplicationJson(requestParams);
             log.debug("POST body: {}", requestBody);
 
             HttpURLConnection connection = newClient(path);
