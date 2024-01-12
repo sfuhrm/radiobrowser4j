@@ -136,6 +136,9 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
         String encoding = connection.getContentEncoding();
         String contentType = connection.getContentType();
         Charset charset = guessCharsetFor(contentType);
+
+        checkResponseStatus(connection);
+
         if (encoding != null && encoding.equalsIgnoreCase("gzip")) {
             return new InputStreamReader(
                     new GZIPInputStream(connection.getInputStream()),
@@ -152,7 +155,6 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
             HttpURLConnection connection = newClient(path);
             configure(connection);
             try (Reader reader = readerFor(connection)) {
-                checkResponseStatus(connection);
                 return gson.fromJson(reader, resultClass);
             } finally {
                 connection.disconnect();
@@ -238,7 +240,6 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
                 sendXWWWFormUrlencodedRequest(connection, requestParams);
             }
             try (Reader reader = readerFor(connection)) {
-                checkResponseStatus(connection);
                 return gson.fromJson(reader, resultClass);
             } finally {
                 connection.disconnect();
