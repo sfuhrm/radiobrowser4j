@@ -31,6 +31,10 @@ import static org.hamcrest.CoreMatchers.*;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.recording.RecordSpecBuilder;
+import com.github.tomakehurst.wiremock.recording.SnapshotRecordResult;
+import com.github.tomakehurst.wiremock.verification.LoggedRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -44,6 +48,7 @@ import org.junit.jupiter.api.Test;
  * Please trigger {@linkplain #RECORDING} for recording.
  * @author Stephan Fuhrmann
  */
+@Slf4j
 public class RadioBrowserTest {
 
     private final static int WIREMOCK_PORT = 9123;
@@ -53,6 +58,7 @@ public class RadioBrowserTest {
 
     private static RadioBrowser browser;
     private static WireMockServer wireMockServer;
+    private static WireMock wireMockClient;
 
     /** Paging with 5 elements. */
     private final static Paging FIRST_FIVE = Paging.at(0, 5);
@@ -85,9 +91,14 @@ public class RadioBrowserTest {
         wireMockConfiguration.port(WIREMOCK_PORT);
         wireMockServer = new WireMockServer(wireMockConfiguration);
         wireMockServer.start();
+        wireMockClient = new WireMock("localhost", WIREMOCK_PORT);
 
         if (RECORDING) {
-            wireMockServer.startRecording(RadioBrowser.DEFAULT_API_URL);
+            // Wiremock does not support recording of the last slash
+            String originalUrl = RadioBrowser.DEFAULT_API_URL;
+            int lastSlash = originalUrl.lastIndexOf('/');
+            String urlWithoutSlash = originalUrl.substring(0, lastSlash);
+            wireMockClient.startStubRecording(urlWithoutSlash);
         }
 
         browser = new RadioBrowser(API_URL,20000, USER_AGENT);
@@ -96,11 +107,11 @@ public class RadioBrowserTest {
     @AfterAll
     public static void shutdownBrowser() {
         if (wireMockServer != null) {
-            wireMockServer.shutdown();
             if (RECORDING) {
-                wireMockServer.stopRecording();
-                wireMockServer.saveMappings();
+                SnapshotRecordResult snapshotRecordResult = wireMockClient.stopStubRecording();
+                wireMockClient.saveMappings();
             }
+            wireMockServer.shutdown();
         }
     }
 
