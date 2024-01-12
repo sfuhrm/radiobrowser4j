@@ -89,6 +89,8 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
     private HttpURLConnection newClient(
             final String path) throws IOException {
         URI fullUri = endpoint.resolve(path);
+
+        log.debug("Connecting to {}", fullUri);
         HttpURLConnection connection;
 
         if (null != connectionParams.getProxyUri()) {

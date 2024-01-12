@@ -10,7 +10,13 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 class StationDeserializer implements JsonDeserializer<Station> {
 
@@ -26,70 +32,78 @@ class StationDeserializer implements JsonDeserializer<Station> {
         ) throws JsonParseException {
         Station station = new Station();
         JsonObject jsonObject = jsonElement.getAsJsonObject();
-        station.setChangeUUID(
-                UUID.fromString(jsonObject.get("changeuuid").getAsString()));
-        station.setStationUUID(
-                UUID.fromString(jsonObject.get("stationuuid").getAsString()));
-        station.setUrl(
-                jsonObject.get("url").getAsString());
-        station.setUrlResolved(
-                jsonObject.get("url_resolved").getAsString());
-        station.setHomepage(
-                jsonObject.get("homepage").getAsString());
-        station.setFavicon(
-                jsonObject.get("favicon").getAsString());
-        station.setTags(
-                jsonObject.get("tags").getAsString());
-        station.setCountry(
-                jsonObject.get("country").getAsString());
-        station.setCountryCode(
-                jsonObject.get("countrycode").getAsString());
-        station.setState(
-                jsonObject.get("state").getAsString());
 
-        station.setLanguage(
-                jsonObject.get("language").getAsString());
-        station.setVotes(
-                jsonObject.get("votes").getAsInt());
-        station.setCodec(
-                jsonObject.get("codec").getAsString());
-        station.setBitrate(
-                jsonObject.get("bitrate").getAsInt());
-        station.setHls(
-                jsonObject.get("hls").getAsString());
 
         station.setLastcheckok(jsonObject.get("lastcheckok").getAsInt());
         try {
-            station.setLastchecktime(
-                    dateFormat.parse(
-                            jsonObject.get("lastchecktime").getAsString()));
-            station.setLastcheckoktime(
-                    dateFormat.parse(
-                            jsonObject.get("lastcheckoktime").getAsString()));
-            station.setLastchangetime(
-                    dateFormat.parse(
-                            jsonObject.get("lastchangetime").getAsString()));
-            station.setLastlocalchecktime(
-                    dateFormat.parse(
-                            jsonObject.get("lastlocalchecktime")
-                                    .getAsString()));
-            station.setClicktimestamp(
-                    dateFormat.parse(
-                            jsonObject.get("clicktimestamp").getAsString()));
+            transfer(jsonObject, "stationuuid", station, Station::setStationUUID, UUID.class);
+            transfer(jsonObject, "changeuuid", station, Station::setChangeUUID, UUID.class);
+            transfer(jsonObject, "url", station, Station::setUrl, String.class);
+            transfer(jsonObject, "url_resolved", station, Station::setUrlResolved, String.class);
+            transfer(jsonObject, "homepage", station, Station::setHomepage, String.class);
+            transfer(jsonObject, "favicon", station, Station::setFavicon, String.class);
+            transfer(jsonObject, "tags", station, Station::setTags, String.class);
+            transfer(jsonObject, "country", station, Station::setCountry, String.class);
+            transfer(jsonObject, "countrycode", station, Station::setCountryCode, String.class);
+            transfer(jsonObject, "state", station, Station::setState, String.class);
+            transfer(jsonObject, "language", station, Station::setLanguage, String.class);
+            transfer(jsonObject, "votes", station, Station::setVotes, Integer.class);
+            transfer(jsonObject, "codec", station, Station::setCodec, String.class);
+            transfer(jsonObject, "bitrate", station, Station::setBitrate, Integer.class);
+            transfer(jsonObject, "hls", station, Station::setHls, String.class);
+            transfer(jsonObject, "lastchecktime", station, Station::setLastchecktime, Date.class);
+            transfer(jsonObject, "lastcheckoktime", station, Station::setLastcheckoktime, Date.class);
+            transfer(jsonObject, "lastchangetime", station, Station::setLastchangetime, Date.class);
+            transfer(jsonObject, "lastlocalchecktime", station, Station::setLastlocalchecktime, Date.class);
+            transfer(jsonObject, "clicktimestamp", station, Station::setClicktimestamp, Date.class);
+            transfer(jsonObject, "clickcount", station, Station::setClickcount, Integer.class);
+            transfer(jsonObject, "clicktrend", station, Station::setClicktrend, Integer.class);
+            transfer(jsonObject, "name", station, Station::setName, String.class);
+            transfer(jsonObject, "geo_lat", station, Station::setGeoLatitude, Double.class);
+            transfer(jsonObject, "geo_long", station, Station::setGeoLongitude, Double.class);
+            transfer(jsonObject, "has_extended_info", station, Station::setHasExtendedInfo, Boolean.class);
         } catch (ParseException e) {
             throw new RadioBrowserException(e);
         }
 
-        station.setClickcount(jsonObject.get("clickcount").getAsInt());
-        station.setClicktrend(jsonObject.get("clicktrend").getAsInt());
-        station.setName(jsonObject.get("stationname").getAsString());
-
-        station.setGeoLatitude(jsonObject.get("geo_lat").getAsDouble());
-        station.setGeoLongitude(jsonObject.get("geo_long").getAsDouble());
-
-        station.setHasExtendedInfo(jsonObject.get("has_extended_info")
-                .getAsBoolean());
-
         return station;
+    }
+
+    <T> void transfer(JsonObject jsonObject, String key, Station station, BiConsumer<Station, T> setter, Class<T> type) throws ParseException {
+        JsonElement element = jsonObject.get(key);
+        if (element == null || element.isJsonNull()) {
+            return;
+        }
+        if (type == String.class) {
+            setter.accept(station, (T) element.getAsString());
+            return;
+        }
+        if (type == Date.class) {
+            if (element.getAsString().isEmpty()) {
+                return;
+            }
+            setter.accept(station, (T) dateFormat.parse(element.getAsString()));
+            return;
+        }
+        if (type == UUID.class) {
+            if (element.getAsString().isEmpty()) {
+                return;
+            }
+            setter.accept(station, (T) UUID.fromString(element.getAsString()));
+            return;
+        }
+        if (type == Integer.class) {
+            setter.accept(station, (T) (Integer)element.getAsInt());
+            return;
+        }
+        if (type == Double.class) {
+            setter.accept(station, (T) (Double)element.getAsDouble());
+            return;
+        }
+        if (type == Boolean.class) {
+            setter.accept(station, (T) (Boolean)element.getAsBoolean());
+            return;
+        }
+        throw new IllegalArgumentException("Unsupported type: " + type + " for field " + key);
     }
 }
