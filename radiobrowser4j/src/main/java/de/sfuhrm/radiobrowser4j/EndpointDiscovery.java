@@ -5,7 +5,6 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
-import org.glassfish.jersey.internal.util.Producer;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -21,6 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -55,7 +55,7 @@ public class EndpointDiscovery {
     /** Producer or executor services used for discovery.
      * */
     @Setter(AccessLevel.PACKAGE)
-    private Producer<ExecutorService> executorServiceProducer =
+    private Supplier<ExecutorService> executorServiceProducer =
             () -> Executors.newFixedThreadPool(DEFAULT_THREADS);
 
     /** Constructs a new instance.
@@ -146,7 +146,7 @@ public class EndpointDiscovery {
      * Unreachable endpoints are not returned.
      * */
     List<DiscoveryResult> discoverApiUrls(final List<String> apiUrls) {
-        ExecutorService executorService = executorServiceProducer.call();
+        ExecutorService executorService = executorServiceProducer.get();
 
         try {
             List<Future<DiscoveryResult>> futureList = new ArrayList<>();

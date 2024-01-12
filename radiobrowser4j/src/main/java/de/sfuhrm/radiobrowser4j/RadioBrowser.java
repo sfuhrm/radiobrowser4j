@@ -114,7 +114,7 @@ public class RadioBrowser {
      * */
     RadioBrowser(@NonNull final ConnectionParams connectionParams) {
         connectionParams.check();
-        rest = new RestDelegateJaxRsImpl(connectionParams);
+        rest = new RestDelegateUrlConnectionImpl(connectionParams);
     }
 
     /**
