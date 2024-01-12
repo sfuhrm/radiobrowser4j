@@ -132,11 +132,11 @@ public class EndpointDiscovery {
     @Value
     static class DiscoveryResult {
         /** The endpoint address for this result. */
-        private String endpoint;
+        String endpoint;
         /** The connection and retrieval duration in milliseconds. */
-        private long duration;
+        long duration;
         /** The stats read from the endpoint. */
-        private Stats stats;
+        Stats stats;
     }
 
     /**

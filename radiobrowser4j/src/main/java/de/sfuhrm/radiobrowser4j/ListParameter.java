@@ -25,15 +25,14 @@ import java.util.Map;
 /** Parameters for list calls.
  * @author Stephan Fuhrmann
  * */
+@Getter
 @Slf4j
 @ToString
 public final class ListParameter extends ParameterProvider {
     /** The field name to sort by. */
-    @Getter
     private FieldName order;
 
     /** Whether to sort in reverse order. */
-    @Getter
     private Boolean reverseOrder;
 
     /** Private constructor.

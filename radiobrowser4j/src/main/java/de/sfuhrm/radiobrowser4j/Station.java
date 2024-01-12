@@ -30,35 +30,30 @@ import java.util.UUID;
  * Representation of a Radio Station.
  * @author Stephan Fuhrmann
  */
+@Setter
+@Getter
 @EqualsAndHashCode(of = {"stationUUID", "name"})
 public final class Station extends ParameterProvider {
     /** A globally unique identifier for the change
      * of the station information. */
-    @Getter @Setter
     private UUID changeUUID;
 
     /** A globally unique identifier for the station. */
-    @Getter @Setter
     private UUID stationUUID;
 
     /** The name of the station. */
-    @Getter @Setter
     private String name;
 
     /** The URL of the stream. */
-    @Getter @Setter
     private String url;
 
     /** An automatically "resolved" stream URL. */
-    @Getter @Setter
     private String urlResolved;
 
     /** The URL of the stations' homepage. */
-    @Getter @Setter
     private String homepage;
 
     /** The URL of the stations' favicon. */
-    @Getter @Setter
     private String favicon;
 
     /** The tags for this station as a list.
@@ -66,7 +61,6 @@ public final class Station extends ParameterProvider {
      * {@link #getTags()}.
      * @see #getTags()
      * */
-    @Getter @Setter
     private List<String> tagList = new ArrayList<>();
 
     /** The country this station is located at.
@@ -76,15 +70,12 @@ public final class Station extends ParameterProvider {
      * @see <a href="https://api.radio-browser.info/">api.radio-browser.info</a>
      * */
     @Deprecated
-    @Getter @Setter
     private String country;
 
     /** Official country codes according to ISO 3166-1 alpha-2. */
-    @Getter @Setter
     private String countryCode;
 
     /** The state this station is located at. */
-    @Getter @Setter
     private String state;
 
     /** The languages of this station as a list.
@@ -92,80 +83,56 @@ public final class Station extends ParameterProvider {
      * {@link #getLanguage()}.
      * @see #getLanguage()
      */
-    @Getter @Setter
     private List<String> languageList = new ArrayList<>();
 
     /** The votes for this station. */
-    @Getter @Setter
     private Integer votes;
 
     /** The codec used for the stream. */
-    @Getter @Setter
     private String codec;
 
     /** The bitrate used for the stream. */
-    @Getter @Setter
     private Integer bitrate;
 
     /** Mark if this stream is using HLS distribution or non-HLS. */
-    @Getter @Setter
     private String hls;
 
     /** The current online/offline state of this stream. */
-    @Getter @Setter
     private Integer lastcheckok;
 
     /** The last time when any Radio-Browser server checked
      * the online state of this stream. */
-    @Getter
-    @Setter
     private Date lastchecktime;
 
     /** The last time when the stream was checked for
      * the online status with a positive result. */
-    @Getter
-    @Setter
     private Date lastcheckoktime;
 
     /** The last time when this server checked the online state
      * and the metadata of this stream. */
-    @Getter
-    @Setter
     private Date lastlocalchecktime;
 
     /** The time of the last click recorded for this stream. */
-    @Getter
-    @Setter
     private Date clicktimestamp;
 
     /** Clicks within the last 24 hours. */
-    @Getter @Setter
     private Integer clickcount;
 
     /** The difference of the click counts within the last 2 days. */
-    @Getter @Setter
     private Integer clicktrend;
 
     /** Timestamp of the last change of the stations' data. */
-    @Getter
-    @Setter
     private Date lastchangetime;
 
     /** Geo latitude of the station. */
-    @Getter
-    @Setter
     private Double geoLatitude;
 
     /** Geo longitude of the station. */
-    @Getter
-    @Setter
     private Double geoLongitude;
 
     /** Is true, if the stream owner does
      * provide extended information as HTTP headers
      * which override the information in the database. */
-    @Getter
-    @Setter
     private Boolean hasExtendedInfo;
 
     /** JSON getter for the {@link #tagList}.

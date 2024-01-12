@@ -22,46 +22,38 @@ import lombok.Setter;
  * Representation of an api endpoint statistic.
  * @author Stephan Fuhrmann
  */
+@Setter
+@Getter
 public final class Stats {
 
     /** The supported version. */
-    @Getter @Setter
     private Integer supportedVersion;
 
     /** The version of the API. */
-    @Getter @Setter
     private String softwareVersion;
 
     /** The status, should be "OK". */
-    @Getter @Setter
     private String status;
 
     /** The number of stations stored on the server. */
-    @Getter @Setter
     private Integer stations;
 
     /** The number of broken stations. */
-    @Getter @Setter
     private Integer stationsBroken;
 
     /** The number of tags. */
-    @Getter @Setter
     private Integer tags;
 
     /** The number of clicks in the last hour. */
-    @Getter @Setter
     private Integer clicksLastHour;
 
     /** The number of clicks in the last 24 hours. */
-    @Getter @Setter
     private Integer clicksLastDay;
 
     /** The number of languages. */
-    @Getter @Setter
     private Integer languages;
 
     /** The number of countries. */
-    @Getter @Setter
     private Integer countries;
 
 }
