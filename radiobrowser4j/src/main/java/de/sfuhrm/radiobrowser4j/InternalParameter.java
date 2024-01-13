@@ -5,7 +5,7 @@ import java.util.Map;
 /** A provider for HTTP request parameters.
  * @author Stephan Fuhrmann
  * */
-abstract class ParameterProvider {
+abstract class InternalParameter {
     /** Applies the parameters stored in this instance to the given
      * request parameters.
      * @param requestParams the parameters to apply the instance
