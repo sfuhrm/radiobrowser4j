@@ -26,38 +26,38 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * Test for the RestDelegateUrlConnectionImpl.
+ * Test for the RestDelegateImpl.
  * @author Stephan Fuhrmann
  */
-public class RestDelegateUrlConnectionImplTest {
+public class RestDelegateImplTest {
 
     @Test
     public void guessCharsetForWithUnknown() {
-        Charset actual = RestDelegateUrlConnectionImpl.guessCharsetFor("text/plain; charset=-");
+        Charset actual = RestDelegateImpl.guessCharsetFor("text/plain; charset=-");
         assertThat(actual, is(StandardCharsets.UTF_8));
     }
 
     @Test
     public void guessCharsetForWithUndefined() {
-        Charset actual = RestDelegateUrlConnectionImpl.guessCharsetFor("text/plain");
+        Charset actual = RestDelegateImpl.guessCharsetFor("text/plain");
         assertThat(actual, is(StandardCharsets.UTF_8));
     }
 
     @Test
     public void guessCharsetForWithISO() {
-        Charset actual = RestDelegateUrlConnectionImpl.guessCharsetFor("text/plain; charset=ISO-8859-1");
+        Charset actual = RestDelegateImpl.guessCharsetFor("text/plain; charset=ISO-8859-1");
         assertThat(actual, is(StandardCharsets.ISO_8859_1));
     }
 
     @Test
     public void guessCharsetForWithUTF16() {
-        Charset actual = RestDelegateUrlConnectionImpl.guessCharsetFor("text/plain; charset=UTF-16");
+        Charset actual = RestDelegateImpl.guessCharsetFor("text/plain; charset=UTF-16");
         assertThat(actual, is(StandardCharsets.UTF_16));
     }
 
     @Test
     public void guessCharsetForWithNoSpace() {
-        Charset actual = RestDelegateUrlConnectionImpl.guessCharsetFor("text/plain;charset=UTF-16");
+        Charset actual = RestDelegateImpl.guessCharsetFor("text/plain;charset=UTF-16");
         assertThat(actual, is(StandardCharsets.UTF_16));
     }
 }

@@ -55,7 +55,7 @@ public class RadioBrowser {
      * */
     public RadioBrowser(@NonNull final ConnectionParams connectionParams) {
         connectionParams.check();
-        rest = new RestDelegateUrlConnectionImpl(connectionParams);
+        rest = new RestDelegateImpl(connectionParams);
     }
 
     /** Composes URI path components with '/' separators.

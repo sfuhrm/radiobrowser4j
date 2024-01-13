@@ -33,7 +33,7 @@ import java.util.zip.GZIPInputStream;
  * @author Stephan Fuhrmann
  * */
 @Slf4j
-class RestDelegateUrlConnectionImpl implements RestDelegate {
+class RestDelegateImpl implements RestDelegate {
 
     /** The URI of the API endpoint. All paths are relative to this one. */
     private final URI endpoint;
@@ -47,7 +47,7 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
     /** Create a new instance.
      * @param inConnectionParams the connection parameters to use.
      * */
-    RestDelegateUrlConnectionImpl(final ConnectionParams inConnectionParams) {
+    RestDelegateImpl(final ConnectionParams inConnectionParams) {
         this.endpoint = URI.create(inConnectionParams.getApiUrl());
         this.connectionParams = inConnectionParams;
         this.gson = new GsonBuilder()
