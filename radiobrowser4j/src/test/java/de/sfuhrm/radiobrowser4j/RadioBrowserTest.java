@@ -74,7 +74,7 @@ public class RadioBrowserTest {
      * WARNING! This calls radiobrowser.info API directly and
      * creates entities which are deleted afterwards!
      * */
-    public final static boolean RECORDING = true;
+    public final static boolean RECORDING = false;
 
     @AfterEach
     public void gracefulSleepInterval() throws InterruptedException {

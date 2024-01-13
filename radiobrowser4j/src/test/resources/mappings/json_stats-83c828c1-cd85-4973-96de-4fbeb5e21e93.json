@@ -1,0 +1,23 @@
+{
+  "id" : "83c828c1-cd85-4973-96de-4fbeb5e21e93",
+  "name" : "json_stats",
+  "request" : {
+    "url" : "/json/stats",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"supported_version\":1,\"software_version\":\"0.7.24\",\"status\":\"OK\",\"stations\":43888,\"stations_broken\":432,\"tags\":9887,\"clicks_last_hour\":8401,\"clicks_last_day\":182457,\"languages\":537,\"countries\":219}",
+    "headers" : {
+      "Server" : "nginx/1.18.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sat, 13 Jan 2024 11:11:57 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "83c828c1-cd85-4973-96de-4fbeb5e21e93",
+  "persistent" : true,
+  "insertionIndex" : 377
+}
