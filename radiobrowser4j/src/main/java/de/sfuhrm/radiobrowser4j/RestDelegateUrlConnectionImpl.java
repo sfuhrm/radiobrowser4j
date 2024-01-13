@@ -3,6 +3,7 @@ package de.sfuhrm.radiobrowser4j;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -16,11 +17,13 @@ import java.net.Authenticator;
 import java.net.InetSocketAddress;
 import java.net.PasswordAuthentication;
 
+import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.zip.GZIPInputStream;
 
 /** URLConnection implementation of the RestDelegate.
@@ -49,6 +52,21 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
                 .registerTypeAdapter(Stats.class, new StatsDeserializer())
                 .registerTypeAdapter(Station.class, new StationDeserializer())
                 .create();
+    }
+
+    static class HttpException extends RadioBrowserException {
+        @Getter
+        private int code;
+        @Getter
+        private String message;
+
+        HttpException(int inCode, String inMessage) {
+            super("HTTP response "
+                    + inCode + " "
+                    + inMessage);
+            this.code = inCode;
+            this.message = inMessage;
+        }
     }
 
     private static Proxy getProxy(final ConnectionParams connectionParams) {
@@ -89,8 +107,9 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
     private HttpURLConnection newClient(
             final String path) throws IOException {
         URI fullUri = endpoint.resolve(path);
+        URL url = fullUri.toURL();
 
-        log.debug("Connecting to {}", fullUri);
+        log.debug("Connecting to {}", url.toExternalForm());
         HttpURLConnection connection;
 
         if (null != connectionParams.getProxyUri()) {
@@ -100,10 +119,10 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
                 Authenticator.setDefault(auth);
             }
             connection = (HttpURLConnection)
-                    fullUri.toURL().openConnection(proxy);
+                    url.openConnection(proxy);
         } else {
             connection = (HttpURLConnection)
-                    fullUri.toURL().openConnection();
+                    url.openConnection();
         }
 
         connection.setConnectTimeout(connectionParams.getTimeout());
@@ -136,6 +155,9 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
         String encoding = connection.getContentEncoding();
         String contentType = connection.getContentType();
         Charset charset = guessCharsetFor(contentType);
+
+        checkResponseStatus(connection);
+
         if (encoding != null && encoding.equalsIgnoreCase("gzip")) {
             return new InputStreamReader(
                     new GZIPInputStream(connection.getInputStream()),
@@ -148,20 +170,43 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
 
     @Override
     public <T> T get(final String path, final Class<T> resultClass) {
-        try {
-            HttpURLConnection connection = newClient(path);
-            configure(connection);
-            try (Reader reader = readerFor(connection)) {
-                checkResponseStatus(connection);
-                return gson.fromJson(reader, resultClass);
-            } finally {
-                connection.disconnect();
+            return retryLoop(() -> {
+                try {
+                    HttpURLConnection connection = newClient(path);
+                    configure(connection);
+                    try (Reader reader = readerFor(connection)) {
+                        return gson.fromJson(reader, resultClass);
+                    } finally {
+                        connection.disconnect();
+                    }
+                } catch (IOException e) {
+                    throw new RadioBrowserException(e);
+                }
+            });
+    }
+
+    /** Retries on HTTP errors. */
+    private <T> T retryLoop(final Supplier<T> supplier) {
+        int retries = connectionParams.getRetries();
+        long retryInterval = connectionParams.getRetryInterval();
+        while (true) {
+            try {
+                return supplier.get();
+            } catch (HttpException e) {
+                if (retries-- <= 0) {
+                    throw e;
+                }
+                try {
+                    log.debug("Got HTTP {}, retrying in {} ms", e.code, retryInterval);
+                    Thread.sleep(retryInterval);
+                } catch (InterruptedException e1) {
+                    throw new RadioBrowserException(e1);
+                }
             }
-        } catch (IOException e) {
-            throw new RadioBrowserException(e);
         }
     }
 
+    /** Configure the user agent and accept / accept-encoding headers. */
     private void configure(final HttpURLConnection connection) {
         connection.setRequestProperty("User-Agent",
                 connectionParams.getUserAgent());
@@ -188,12 +233,30 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
                 new TypeToken<List<Map<String, String>>>() { });
     }
 
+    /** Get the request body as "application/json". */
     private String asApplicationJson(
             final Map<String, String> requestParams
     ) throws UnsupportedEncodingException {
         String json = gson.toJson(requestParams);
         return json;
     }
+
+    /** Get the request body as "application/x-www-form-urlencoded". */
+    private static String asWwwFormUrlEncoded(
+            final Map<String, String> requestParams
+    ) throws UnsupportedEncodingException {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : requestParams.entrySet()) {
+            if (sb.length() > 0) {
+                sb.append("&");
+            }
+            sb.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+            sb.append("=");
+            sb.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+        }
+        return sb.toString();
+    }
+
 
     /** Sends a POST request to the remote server. The
      * body gets transferred as
@@ -210,28 +273,67 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
     private <T> T post(final String path,
                        final Map<String, String> requestParams,
                        final TypeToken<T> resultClass) {
-        try {
-            String requestBody = asApplicationJson(requestParams);
-            log.debug("POST body: {}", requestBody);
-
-            HttpURLConnection connection = newClient(path);
-            configure(connection);
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty(
-                    "Content-Type",
-                    "application/json; charset=UTF-8");
-            connection.setDoOutput(true);
-            connection.getOutputStream()
-                    .write(requestBody.getBytes(StandardCharsets.UTF_8));
-            try (Reader reader = readerFor(connection)) {
-                checkResponseStatus(connection);
-                return gson.fromJson(reader, resultClass);
-            } finally {
-                connection.disconnect();
+        return retryLoop(() -> {
+            try {
+                HttpURLConnection connection = newClient(path);
+                configure(connection);
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+                if (false) {
+                    sendJsonRequest(connection, requestParams);
+                } else {
+                    sendXWWWFormUrlencodedRequest(connection, requestParams);
+                }
+                try (Reader reader = readerFor(connection)) {
+                    return gson.fromJson(reader, resultClass);
+                } finally {
+                    connection.disconnect();
+                }
+            } catch (IOException e) {
+                throw new RadioBrowserException(e);
             }
-        } catch (IOException e) {
-            throw new RadioBrowserException(e);
-        }
+        });
+    }
+
+    /** Sends a POST request to the remote server. The
+     * body gets transferred as
+     *  "application/x-www-form-urlencoded" encoded data.
+     * @param connection the connection to send the request to.
+     * @param requestParams the request parameters to send as the POST body in
+     *                       "application/x-www-form-urlencoded" encoding.
+     * @throws RadioBrowserException if the sever sent a non-OK response.
+     * */
+    private void sendXWWWFormUrlencodedRequest(final HttpURLConnection connection,
+                                 final Map<String, String> requestParams) throws IOException {
+        connection.setRequestProperty(
+                "Content-Type",
+                "application/x-www-form-urlencoded; charset=UTF-8");
+        String encoded = asWwwFormUrlEncoded(requestParams);
+        log.debug("POST WWW-Form-UrlEncoded body: {}", encoded);
+        connection.getOutputStream()
+                .write(encoded.getBytes(StandardCharsets.UTF_8));
+        connection.getOutputStream().flush();
+    }
+
+
+    /** Sends a POST request to the remote server. The
+     * body gets transferred as
+     *  "application/json" encoded data.
+     * @param connection the connection to send the request to.
+     * @param requestParams the request parameters to send as the POST body in
+     *                       "application/json" encoding.
+     * @throws RadioBrowserException if the sever sent a non-OK response.
+     * */
+    private void sendJsonRequest(final HttpURLConnection connection,
+                                 final Map<String, String> requestParams) throws IOException {
+        String json = asApplicationJson(requestParams);
+        log.debug("POST JSON body: {}", json);
+        connection.setRequestProperty(
+                "Content-Type",
+                "application/json; charset=UTF-8");
+        connection.getOutputStream()
+                .write(json.getBytes(StandardCharsets.UTF_8));
+        connection.getOutputStream().flush();
     }
 
     @Override
@@ -254,9 +356,9 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
             final HttpURLConnection response) throws IOException {
         logResponseStatus(response);
         if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-            throw new RadioBrowserException("HTTP response "
-                    + response.getResponseCode() + " "
-                    + response.getResponseMessage());
+            throw new HttpException(
+                    response.getResponseCode(),
+                    response.getResponseMessage());
         }
     }
 

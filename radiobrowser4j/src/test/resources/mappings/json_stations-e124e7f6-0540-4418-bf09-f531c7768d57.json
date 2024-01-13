@@ -1,0 +1,27 @@
+{
+  "id" : "e124e7f6-0540-4418-bf09-f531c7768d57",
+  "name" : "json_stations",
+  "request" : {
+    "url" : "/json/stations",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=4480&limit=128",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 429,
+    "body" : "<html>\r\n<head><title>429 Too Many Requests</title></head>\r\n<body>\r\n<center><h1>429 Too Many Requests</h1></center>\r\n<hr><center>nginx/1.18.0 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n",
+    "headers" : {
+      "Server" : "nginx/1.18.0 (Ubuntu)",
+      "Date" : "Sat, 13 Jan 2024 00:15:30 GMT",
+      "Content-Type" : "text/html"
+    }
+  },
+  "uuid" : "e124e7f6-0540-4418-bf09-f531c7768d57",
+  "persistent" : true,
+  "scenarioName" : "scenario-22-json-stations",
+  "requiredScenarioState" : "Started",
+  "newScenarioState" : "scenario-22-json-stations-2",
+  "insertionIndex" : 359
+}

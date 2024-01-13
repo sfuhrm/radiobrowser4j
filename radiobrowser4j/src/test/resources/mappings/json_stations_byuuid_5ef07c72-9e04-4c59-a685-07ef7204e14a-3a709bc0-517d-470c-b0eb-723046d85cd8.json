@@ -1,0 +1,30 @@
+{
+  "id" : "3a709bc0-517d-470c-b0eb-723046d85cd8",
+  "name" : "json_stations_byuuid_5ef07c72-9e04-4c59-a685-07ef7204e14a",
+  "request" : {
+    "url" : "/json/stations/byuuid/5ef07c72-9e04-4c59-a685-07ef7204e14a",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=1",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"changeuuid\":\"34263544-f61c-4f09-af76-3adba8b6a118\",\"stationuuid\":\"5ef07c72-9e04-4c59-a685-07ef7204e14a\",\"serveruuid\":null,\"name\":\"Integration test for radiobrowser4j - ignore\",\"url\":\"https://github.com/sfuhrm/radiobrowser4j\",\"url_resolved\":\"\",\"homepage\":\"https://github.com/sfuhrm/radiobrowser4j\",\"favicon\":\"https://github.com/favicon.ico\",\"tags\":\"\",\"country\":\"Germany\",\"countrycode\":\"DE\",\"iso_3166_2\":null,\"state\":\"\",\"language\":\"\",\"languagecodes\":\"\",\"votes\":0,\"lastchangetime\":\"2024-01-13 00:15:14\",\"lastchangetime_iso8601\":\"2024-01-13T00:15:14Z\",\"codec\":\"\",\"bitrate\":0,\"hls\":0,\"lastcheckok\":1,\"lastchecktime\":\"\",\"lastchecktime_iso8601\":null,\"lastcheckoktime\":\"\",\"lastcheckoktime_iso8601\":null,\"lastlocalchecktime\":\"\",\"lastlocalchecktime_iso8601\":null,\"clicktimestamp\":\"\",\"clicktimestamp_iso8601\":null,\"clickcount\":0,\"clicktrend\":0,\"ssl_error\":0,\"geo_lat\":null,\"geo_long\":null,\"has_extended_info\":false}]",
+    "headers" : {
+      "Server" : "nginx/1.18.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sat, 13 Jan 2024 00:15:14 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "3a709bc0-517d-470c-b0eb-723046d85cd8",
+  "persistent" : true,
+  "scenarioName" : "scenario-24-json-stations-byuuid-5ef07c72-9e04-4c59-a685-07ef7204e14a",
+  "requiredScenarioState" : "Started",
+  "newScenarioState" : "scenario-24-json-stations-byuuid-5ef07c72-9e04-4c59-a685-07ef7204e14a-2",
+  "insertionIndex" : 400
+}

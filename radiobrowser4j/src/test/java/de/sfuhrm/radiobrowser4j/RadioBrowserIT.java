@@ -16,6 +16,7 @@
 package de.sfuhrm.radiobrowser4j;
 
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -45,6 +46,11 @@ public class RadioBrowserIT {
         Optional<String> myEndpoint = new EndpointDiscovery(USER_CLIENT).discover();
         this.endpoint = myEndpoint.get();
         radioBrowser = new RadioBrowser(endpoint, TIMEOUT, USER_CLIENT);
+    }
+
+    @AfterEach
+    public void gracefulSleepInterval() throws InterruptedException {
+        Thread.sleep(1000);
     }
 
     @Test

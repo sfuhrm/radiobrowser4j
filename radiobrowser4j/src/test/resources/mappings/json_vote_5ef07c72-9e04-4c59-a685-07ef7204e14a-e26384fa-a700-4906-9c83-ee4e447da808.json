@@ -1,0 +1,26 @@
+{
+  "id" : "e26384fa-a700-4906-9c83-ee4e447da808",
+  "name" : "json_vote_5ef07c72-9e04-4c59-a685-07ef7204e14a",
+  "request" : {
+    "url" : "/json/vote/5ef07c72-9e04-4c59-a685-07ef7204e14a",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"ok\":true,\"message\":\"voted for station successfully\"}",
+    "headers" : {
+      "Cache-Control" : "no-cache, no-store, must-revalidate",
+      "Server" : "nginx/1.18.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Pragma" : "no-cache",
+      "Expires" : "0",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sat, 13 Jan 2024 00:15:14 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "e26384fa-a700-4906-9c83-ee4e447da808",
+  "persistent" : true,
+  "insertionIndex" : 399
+}
