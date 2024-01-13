@@ -6,6 +6,7 @@ import lombok.Getter;
 
 /** A tuple of parameters for creating API connections to the
  * radio browser API.
+ * @author Stephan Fuhrmann
  * */
 @Builder
 @Getter(AccessLevel.PACKAGE)

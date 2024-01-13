@@ -2,7 +2,9 @@ package de.sfuhrm.radiobrowser4j;
 
 import java.util.Map;
 
-/** A provider for HTTP request parameters. */
+/** A provider for HTTP request parameters.
+ * @author Stephan Fuhrmann
+ * */
 abstract class ParameterProvider {
     /** Applies the parameters stored in this instance to the given
      * request parameters.
