@@ -155,12 +155,14 @@ public class EndpointDiscovery {
                     long start = System.currentTimeMillis();
                     log.debug("Starting check for {}", apiUrl);
                     RadioBrowser radioBrowser = new RadioBrowser(
-                            apiUrl,
-                            DEFAULT_TIMEOUT_MILLIS,
-                            userAgent,
-                            proxyUri,
-                            proxyUser,
-                            proxyPassword);
+                            ConnectionParams.builder()
+                                    .apiUrl(apiUrl)
+                                    .timeout(DEFAULT_TIMEOUT_MILLIS)
+                                    .userAgent(userAgent)
+                                    .proxyUri(proxyUri)
+                                    .proxyUser(proxyUser)
+                                    .proxyPassword(proxyPassword)
+                                    .build());
                     Stats stats = radioBrowser.getServerStats();
                     long duration = System.currentTimeMillis() - start;
                     log.debug("Finished check for {}, took {} ms",

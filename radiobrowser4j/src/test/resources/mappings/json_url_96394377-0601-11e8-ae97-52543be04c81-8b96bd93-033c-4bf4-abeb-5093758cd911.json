@@ -1,0 +1,26 @@
+{
+  "id" : "8b96bd93-033c-4bf4-abeb-5093758cd911",
+  "name" : "json_url_96394377-0601-11e8-ae97-52543be04c81",
+  "request" : {
+    "url" : "/json/url/96394377-0601-11e8-ae97-52543be04c81",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"ok\":true,\"message\":\"retrieved station url\",\"stationuuid\":\"96394377-0601-11e8-ae97-52543be04c81\",\"name\":\"Synthradio\",\"url\":\"http://77.51.212.205:8005/live192\"}",
+    "headers" : {
+      "Cache-Control" : "no-cache, no-store, must-revalidate",
+      "Server" : "nginx/1.18.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Pragma" : "no-cache",
+      "Expires" : "0",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sat, 13 Jan 2024 11:15:58 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "8b96bd93-033c-4bf4-abeb-5093758cd911",
+  "persistent" : true,
+  "insertionIndex" : 3
+}

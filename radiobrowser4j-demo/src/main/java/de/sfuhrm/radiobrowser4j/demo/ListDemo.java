@@ -15,6 +15,7 @@
 */
 package de.sfuhrm.radiobrowser4j.demo;
 
+import de.sfuhrm.radiobrowser4j.ConnectionParams;
 import de.sfuhrm.radiobrowser4j.EndpointDiscovery;
 import de.sfuhrm.radiobrowser4j.FieldName;
 import de.sfuhrm.radiobrowser4j.ListParameter;
@@ -47,9 +48,7 @@ public final class ListDemo {
         String myAgent = "https://github.com/sfuhrm/radiobrowser4j";
         Optional<String> endpoint = new EndpointDiscovery(myAgent).discover();
         RadioBrowser radioBrowser = new RadioBrowser(
-                endpoint.get(),
-                TIMEOUT_DEFAULT,
-                myAgent);
+                ConnectionParams.builder().apiUrl(endpoint.get()).userAgent(myAgent).timeout(TIMEOUT_DEFAULT).build());
         radioBrowser
                 .listStations(ListParameter.create().order(FieldName.NAME))
                 .limit(LIMIT_DEFAULT)

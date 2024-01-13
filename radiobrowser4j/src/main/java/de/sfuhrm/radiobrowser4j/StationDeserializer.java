@@ -18,6 +18,9 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/** Gson deserializer for {@linkplain Station}.
+ * @author Stephan Fuhrmann
+ * */
 class StationDeserializer implements JsonDeserializer<Station> {
 
     /** The date format used in the JSON objects of radio browser. */
@@ -43,7 +46,6 @@ class StationDeserializer implements JsonDeserializer<Station> {
             transfer(jsonObject, "homepage", station, Station::setHomepage, String.class);
             transfer(jsonObject, "favicon", station, Station::setFavicon, String.class);
             transfer(jsonObject, "tags", station, Station::setTags, String.class);
-            transfer(jsonObject, "country", station, Station::setCountry, String.class);
             transfer(jsonObject, "countrycode", station, Station::setCountryCode, String.class);
             transfer(jsonObject, "state", station, Station::setState, String.class);
             transfer(jsonObject, "language", station, Station::setLanguage, String.class);

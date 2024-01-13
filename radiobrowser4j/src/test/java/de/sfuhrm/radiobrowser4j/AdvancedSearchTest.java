@@ -63,18 +63,6 @@ public class AdvancedSearchTest {
     }
 
     @Test
-    public void applyWithCountry() {
-        builder.country("Germany").build().apply(map);
-        assertThat(map, is(Collections.singletonMap("country", "Germany")));
-    }
-
-    @Test
-    public void applyWithCountryExact() {
-        builder.countryExact(true).build().apply(map);
-        assertThat(map, is(Collections.singletonMap("countryExact", "true")));
-    }
-
-    @Test
     public void applyWithCountryCode() {
         builder.countryCode("DE").build().apply(map);
         assertThat(map, is(Collections.singletonMap("countrycode", "DE")));

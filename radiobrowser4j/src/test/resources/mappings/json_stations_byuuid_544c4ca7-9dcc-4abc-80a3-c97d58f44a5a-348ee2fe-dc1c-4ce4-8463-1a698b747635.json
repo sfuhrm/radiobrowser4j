@@ -1,0 +1,29 @@
+{
+  "id" : "348ee2fe-dc1c-4ce4-8463-1a698b747635",
+  "name" : "json_stations_byuuid_544c4ca7-9dcc-4abc-80a3-c97d58f44a5a",
+  "request" : {
+    "url" : "/json/stations/byuuid/544c4ca7-9dcc-4abc-80a3-c97d58f44a5a",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=1",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"changeuuid\":\"e6dafe99-c86e-450d-8f94-7258c70ab43e\",\"stationuuid\":\"544c4ca7-9dcc-4abc-80a3-c97d58f44a5a\",\"serveruuid\":null,\"name\":\"Integration test for radiobrowser4j - ignore\",\"url\":\"https://github.com/sfuhrm/radiobrowser4j\",\"url_resolved\":\"\",\"homepage\":\"https://github.com/sfuhrm/radiobrowser4j\",\"favicon\":\"https://github.com/favicon.ico\",\"tags\":\"\",\"country\":\"Germany\",\"countrycode\":\"DE\",\"iso_3166_2\":null,\"state\":\"\",\"language\":\"\",\"languagecodes\":\"\",\"votes\":0,\"lastchangetime\":\"2024-01-13 11:11:55\",\"lastchangetime_iso8601\":\"2024-01-13T11:11:55Z\",\"codec\":\"\",\"bitrate\":0,\"hls\":0,\"lastcheckok\":1,\"lastchecktime\":\"\",\"lastchecktime_iso8601\":null,\"lastcheckoktime\":\"\",\"lastcheckoktime_iso8601\":null,\"lastlocalchecktime\":\"\",\"lastlocalchecktime_iso8601\":null,\"clicktimestamp\":\"\",\"clicktimestamp_iso8601\":null,\"clickcount\":0,\"clicktrend\":0,\"ssl_error\":0,\"geo_lat\":null,\"geo_long\":null,\"has_extended_info\":false}]",
+    "headers" : {
+      "Server" : "nginx/1.18.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sat, 13 Jan 2024 11:11:56 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "348ee2fe-dc1c-4ce4-8463-1a698b747635",
+  "persistent" : true,
+  "scenarioName" : "scenario-4-json-stations-byuuid-544c4ca7-9dcc-4abc-80a3-c97d58f44a5a",
+  "requiredScenarioState" : "scenario-4-json-stations-byuuid-544c4ca7-9dcc-4abc-80a3-c97d58f44a5a-2",
+  "insertionIndex" : 378
+}

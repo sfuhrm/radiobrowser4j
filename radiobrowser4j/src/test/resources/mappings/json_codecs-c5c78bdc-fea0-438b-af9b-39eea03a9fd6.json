@@ -1,0 +1,23 @@
+{
+  "id" : "c5c78bdc-fea0-438b-af9b-39eea03a9fd6",
+  "name" : "json_codecs",
+  "request" : {
+    "url" : "/json/codecs",
+    "method" : "POST"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"name\":\"AAC\",\"stationcount\":4737},{\"name\":\"AAC+\",\"stationcount\":7495},{\"name\":\"AAC+,H.264\",\"stationcount\":4},{\"name\":\"AAC,H.264\",\"stationcount\":80},{\"name\":\"FLV\",\"stationcount\":11},{\"name\":\"MP3\",\"stationcount\":29756},{\"name\":\"MP3,H.264\",\"stationcount\":14},{\"name\":\"OGG\",\"stationcount\":445},{\"name\":\"UNKNOWN\",\"stationcount\":1675},{\"name\":\"UNKNOWN,H.264\",\"stationcount\":1}]",
+    "headers" : {
+      "Server" : "nginx/1.18.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sat, 13 Jan 2024 11:15:40 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "c5c78bdc-fea0-438b-af9b-39eea03a9fd6",
+  "persistent" : true,
+  "insertionIndex" : 23
+}

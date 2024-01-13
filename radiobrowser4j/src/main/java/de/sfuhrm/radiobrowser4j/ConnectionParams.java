@@ -6,10 +6,11 @@ import lombok.Getter;
 
 /** A tuple of parameters for creating API connections to the
  * radio browser API.
+ * @author Stephan Fuhrmann
  * */
 @Builder
 @Getter(AccessLevel.PACKAGE)
-class ConnectionParams {
+public class ConnectionParams {
     /** The URL of the radio browser API.
      * Must not be {@code null}.
      * */
@@ -37,9 +38,11 @@ class ConnectionParams {
     private final String proxyPassword;
 
     /** The wait interval between two retries. */
+    @Builder.Default
     private final long retryInterval = 1000;
 
     /** The number of retries on error. */
+    @Builder.Default
     private final int retries = 3;
 
     /** Checks the parameters.
@@ -54,6 +57,16 @@ class ConnectionParams {
             throw new IllegalArgumentException(
                     "timeout must be > 0, but is "
                             + getTimeout());
+        }
+        if (retries <= 0) {
+            throw new IllegalArgumentException(
+                    "retries must be > 0, but is "
+                            + getRetries());
+        }
+        if (retryInterval <= 0) {
+            throw new IllegalArgumentException(
+                    "retryInterval must be > 0, but is "
+                            + getRetryInterval());
         }
         if (userAgent == null) {
             throw new IllegalArgumentException(
