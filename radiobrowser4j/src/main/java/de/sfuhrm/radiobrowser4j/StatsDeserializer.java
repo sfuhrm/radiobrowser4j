@@ -9,6 +9,7 @@ import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
 
+/** Gson deserializer for {@linkplain Stats}. */
 class StatsDeserializer implements JsonDeserializer<Stats> {
     @Override
     public Stats deserialize(

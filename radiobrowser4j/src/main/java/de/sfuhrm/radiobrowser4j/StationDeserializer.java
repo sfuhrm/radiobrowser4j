@@ -18,6 +18,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/** Gson deserializer for {@linkplain Station}. */
 class StationDeserializer implements JsonDeserializer<Station> {
 
     /** The date format used in the JSON objects of radio browser. */
