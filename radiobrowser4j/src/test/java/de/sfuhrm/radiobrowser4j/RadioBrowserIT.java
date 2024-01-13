@@ -97,10 +97,19 @@ public class RadioBrowserIT {
     }
 
     @Test
-    public void testAdvancedSearch() throws IOException {
+    public void testAdvancedSearchWithCountry() throws IOException {
         AdvancedSearch advancedSearch = AdvancedSearch.builder()
                 .country("Mexico").build();
         Stream<Station> stream = radioBrowser.listStationsWithAdvancedSearch(advancedSearch);
         assertThat((int) stream.count(), Matchers.greaterThan(1));
     }
+
+    @Test
+    public void testAdvancedSearchWithBitRateMin() throws IOException {
+        AdvancedSearch advancedSearch = AdvancedSearch.builder()
+                .bitrateMin(320).build();
+        Stream<Station> stream = radioBrowser.listStationsWithAdvancedSearch(advancedSearch);
+        List<Station> stations = stream.limit(1000).collect(Collectors.toList());
+        assertThat(stations.stream().filter(s -> s.getBitrate() >= 320).count(), Matchers.greaterThan(1L));
+        assertThat(stations.stream().filter(s -> s.getBitrate() < 320).count(), Matchers.equalTo(0L));    }
 }

@@ -138,7 +138,6 @@ public final class AdvancedSearch extends ParameterProvider {
         if (codec != null) {
             requestParams.put("codec", codec);
         }
-        // TODO is the string mapping correct?
         if (bitrateMin != null) {
             requestParams.put("bitrateMin", bitrateMin.toString());
         }
