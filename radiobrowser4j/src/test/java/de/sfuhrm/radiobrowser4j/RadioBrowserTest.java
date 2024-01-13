@@ -31,8 +31,13 @@ import static org.hamcrest.CoreMatchers.*;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.recording.RecordSpecBuilder;
+import com.github.tomakehurst.wiremock.recording.SnapshotRecordResult;
+import com.github.tomakehurst.wiremock.verification.LoggedRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -43,6 +48,7 @@ import org.junit.jupiter.api.Test;
  * Please trigger {@linkplain #RECORDING} for recording.
  * @author Stephan Fuhrmann
  */
+@Slf4j
 public class RadioBrowserTest {
 
     private final static int WIREMOCK_PORT = 9123;
@@ -51,8 +57,8 @@ public class RadioBrowserTest {
     private final static String USER_AGENT = "https://github.com/sfuhrm/radiobrowser4j";
 
     private static RadioBrowser browser;
-    private static WireMock wireMockClient;
     private static WireMockServer wireMockServer;
+    private static WireMock wireMockClient;
 
     /** Paging with 5 elements. */
     private final static Paging FIRST_FIVE = Paging.at(0, 5);
@@ -72,16 +78,27 @@ public class RadioBrowserTest {
      * */
     public final static boolean RECORDING = false;
 
+    @AfterEach
+    public void gracefulSleepInterval() throws InterruptedException {
+        if (RECORDING) {
+            Thread.sleep(1000);
+        }
+    }
+
     @BeforeAll
     public static void createBrowser() {
         WireMockConfiguration wireMockConfiguration = new WireMockConfiguration();
         wireMockConfiguration.port(WIREMOCK_PORT);
         wireMockServer = new WireMockServer(wireMockConfiguration);
         wireMockServer.start();
+        wireMockClient = new WireMock("localhost", WIREMOCK_PORT);
 
-        wireMockClient = new WireMock(WIREMOCK_PORT);
         if (RECORDING) {
-            wireMockClient.startStubRecording(RadioBrowser.DEFAULT_API_URL);
+            // Wiremock does not support recording of the last slash
+            String originalUrl = RadioBrowser.DEFAULT_API_URL;
+            int lastSlash = originalUrl.lastIndexOf('/');
+            String urlWithoutSlash = originalUrl.substring(0, lastSlash);
+            wireMockClient.startStubRecording(urlWithoutSlash);
         }
 
         browser = new RadioBrowser(API_URL,20000, USER_AGENT);
@@ -89,14 +106,11 @@ public class RadioBrowserTest {
 
     @AfterAll
     public static void shutdownBrowser() {
-        if (RECORDING) {
-            wireMockClient.stopStubRecording();
-        }
-
-        if (wireMockClient != null) {
-            wireMockClient.saveMappings();
-        }
         if (wireMockServer != null) {
+            if (RECORDING) {
+                SnapshotRecordResult snapshotRecordResult = wireMockClient.stopStubRecording();
+                wireMockClient.saveMappings();
+            }
             wireMockServer.shutdown();
         }
     }

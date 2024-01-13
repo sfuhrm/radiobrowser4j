@@ -1,0 +1,32 @@
+{
+  "id" : "260adb9c-d797-439e-9b85-f7feeb1ec5a6",
+  "name" : "json_add",
+  "request" : {
+    "url" : "/json/add",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "tagList=&favicon=https%3A%2F%2Fgithub.com%2Ffavicon.ico&countrycode=DE&name=Integration+test+for+radiobrowser4j+-+ignore&language=&url=https%3A%2F%2Fgithub.com%2Fsfuhrm%2Fradiobrowser4j&homepage=https%3A%2F%2Fgithub.com%2Fsfuhrm%2Fradiobrowser4j",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"ok\":true,\"message\":\"added station successfully\",\"uuid\":\"5ef07c72-9e04-4c59-a685-07ef7204e14a\"}",
+    "headers" : {
+      "Cache-Control" : "no-cache, no-store, must-revalidate",
+      "Server" : "nginx/1.18.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Pragma" : "no-cache",
+      "Expires" : "0",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sat, 13 Jan 2024 00:15:14 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "260adb9c-d797-439e-9b85-f7feeb1ec5a6",
+  "persistent" : true,
+  "scenarioName" : "scenario-25-json-add",
+  "requiredScenarioState" : "scenario-25-json-add-2",
+  "insertionIndex" : 401
+}

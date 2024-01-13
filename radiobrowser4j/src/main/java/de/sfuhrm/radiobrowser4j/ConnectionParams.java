@@ -36,6 +36,12 @@ class ConnectionParams {
      * */
     private final String proxyPassword;
 
+    /** The wait interval between two retries. */
+    private final long retryInterval = 1000;
+
+    /** The number of retries on error. */
+    private final int retries = 3;
+
     /** Checks the parameters.
      * @throws IllegalArgumentException if the parameters are invalid.
      * */
