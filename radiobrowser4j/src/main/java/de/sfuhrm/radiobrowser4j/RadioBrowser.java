@@ -20,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -43,7 +42,7 @@ public class RadioBrowser {
 
     /** The base URL of the REST service. */
     @Deprecated
-    protected static final String DEFAULT_API_URL =
+    static final String DEFAULT_API_URL =
             "https://at1.api.radio-browser.info/";
 
     /** REST implementation. */
