@@ -7,7 +7,7 @@ import java.util.Map;
  * client.
  * @author Stephan Fuhrmann
  * */
-public interface RestDelegate {
+interface RestDelegate {
     /** Sends a GET request to the remote server.
      * @param path the path on the web server.
      * @param resultClass the result class to retrieve.

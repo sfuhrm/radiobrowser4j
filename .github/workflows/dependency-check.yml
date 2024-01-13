@@ -26,6 +26,7 @@ jobs:
       with:
         path: |
           ~/.m2/repository
+        key: dependencycheck
 
     - name: Maven install
       run: mvn install

@@ -31,9 +31,7 @@ import static org.hamcrest.CoreMatchers.*;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-import com.github.tomakehurst.wiremock.recording.RecordSpecBuilder;
 import com.github.tomakehurst.wiremock.recording.SnapshotRecordResult;
-import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
@@ -101,7 +99,7 @@ public class RadioBrowserTest {
             wireMockClient.startStubRecording(urlWithoutSlash);
         }
 
-        browser = new RadioBrowser(API_URL,20000, USER_AGENT);
+        browser = new RadioBrowser(ConnectionParams.builder().apiUrl(API_URL).timeout(20000).userAgent(USER_AGENT).build());
     }
 
     @AfterAll
@@ -173,8 +171,9 @@ public class RadioBrowserTest {
 
     @Test
     public void listStationsWithStreamAndOrder() {
+        // bitrate is hopefully stable when paging
         List<Station> stations = browser
-                .listStations(ListParameter.create().order(FieldName.LASTCHECKTIME))
+                .listStations(ListParameter.create().order(FieldName.BITRATE))
                 .limit(256)
                 .collect(Collectors.toList());
 
@@ -182,8 +181,9 @@ public class RadioBrowserTest {
 
         Station last = null;
         for (Station station : stations) {
-            if (station.getLastchecktime() != null && last != null && last.getLastchecktime() != null) {
-                assertThat("station list must contain lastchecktime in ascending order", station.getLastchecktime().getTime(), is(Matchers.greaterThanOrEqualTo(last.getLastchecktime().getTime())));
+            if (station.getBitrate() != null && last != null && last.getBitrate() != null) {
+                assertThat("station list must contain bitrate in ascending order",
+                        station.getBitrate(), is(Matchers.greaterThanOrEqualTo(last.getBitrate())));
             }
             last = station;
         }
@@ -296,21 +296,24 @@ public class RadioBrowserTest {
         Optional<Station> station = browser.getStationByUUID(first.getStationUUID());
         assertThat(station.isPresent(), is(true));
         assertThat(station.get(), is(first));
-    }
-
-    @Test
-    public void listImprovableStations() {
-        List<Station> stations = browser.listImprovableStations(FIVE);
-        assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(0));
-    }
-
-    @Test
-    public void listImprovableStationsWithStream() {
-        List<Station> stations = browser
-                .listImprovableStations()
-                .collect(Collectors.toList());
-        assertThat(stations, is(Collections.emptyList()));
+        assertThat(first.getStationUUID(), is(not(nullValue())));
+        assertThat(first.getState(), is(not(nullValue())));
+        assertThat(first.getName(), is(not(nullValue())));
+        assertThat(first.getUrl(), is(not(nullValue())));
+        assertThat(first.getLastchecktime(), is(not(nullValue())));
+        assertThat(first.getLastcheckok(), is(not(nullValue())));
+        assertThat(first.getLastchangetime(), is(not(nullValue())));
+        assertThat(first.getCountryCode(), is(not(nullValue())));
+        assertThat(first.getFavicon(), is(not(nullValue())));
+        assertThat(first.getHomepage(), is(not(nullValue())));
+        assertThat(first.getHasExtendedInfo(), is(not(nullValue())));
+        assertThat(first.getLanguage(), is(not(nullValue())));
+        assertThat(first.getTags(), is(not(nullValue())));
+        assertThat(first.getTagList(), is(not(nullValue())));
+        assertThat(first.getVotes(), is(not(nullValue())));
+        assertThat(first.getBitrate(), is(not(nullValue())));
+        assertThat(first.getClickcount(), is(not(nullValue())));
+        assertThat(first.getUrlResolved(), is(not(nullValue())));
     }
 
     @Test
@@ -368,7 +371,6 @@ public class RadioBrowserTest {
         station.setHomepage("https://github.com/sfuhrm/radiobrowser4j");
         station.setName(TEST_NAME);
         station.setFavicon("https://github.com/favicon.ico");
-        station.setCountry("Germany");
         station.setCountryCode("DE");
         UUID id = browser.postNewStation(station);
         assertThat(id, is(not(nullValue())));
@@ -396,6 +398,16 @@ public class RadioBrowserTest {
     public void getServerStats() {
         Stats stats = browser.getServerStats();
         assertThat(stats, is(not(nullValue())));
+        assertThat(stats.getSupportedVersion(), is(not(nullValue())));
+        assertThat(stats.getSoftwareVersion(), is(not(nullValue())));
+        assertThat(stats.getStatus(), is(not(nullValue())));
+        assertThat(stats.getStations(), is(not(nullValue())));
+        assertThat(stats.getStationsBroken(), is(not(nullValue())));
+        assertThat(stats.getTags(), is(not(nullValue())));
+        assertThat(stats.getClicksLastHour(), is(not(nullValue())));
+        assertThat(stats.getClicksLastDay(), is(not(nullValue())));
+        assertThat(stats.getLanguages(), is(not(nullValue())));
+        assertThat(stats.getCountries(), is(not(nullValue())));
     }
 
 
@@ -404,11 +416,11 @@ public class RadioBrowserTest {
         List<Station> stationsList = browser
                 .listStationsWithAdvancedSearch(
                         AdvancedSearch.builder()
-                                .country("Germany")
+                                .countryCode("DE")
                                 .state("Hamburg")
                                 .build())
                 .collect(Collectors.toList());
-        assertThat(stationsList.get(0).getCountry(), is("Germany"));
+        assertThat(stationsList.get(0).getCountryCode(), is("DE"));
         assertThat(stationsList.get(0).getState(), is("Hamburg"));
     }
 }

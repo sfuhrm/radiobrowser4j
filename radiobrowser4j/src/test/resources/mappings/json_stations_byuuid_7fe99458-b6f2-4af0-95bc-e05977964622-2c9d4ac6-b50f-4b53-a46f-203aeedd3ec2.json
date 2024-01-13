@@ -1,0 +1,27 @@
+{
+  "id" : "2c9d4ac6-b50f-4b53-a46f-203aeedd3ec2",
+  "name" : "json_stations_byuuid_7fe99458-b6f2-4af0-95bc-e05977964622",
+  "request" : {
+    "url" : "/json/stations/byuuid/7fe99458-b6f2-4af0-95bc-e05977964622",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=1",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"changeuuid\":\"febb83a7-0423-4961-9c93-9e8df9f274b9\",\"stationuuid\":\"7fe99458-b6f2-4af0-95bc-e05977964622\",\"serveruuid\":null,\"name\":\"\\tBBC Radio 5 Live Proper\",\"url\":\"http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio%3d96000.norewind.m3u8\",\"url_resolved\":\"http://as-hls-ww-live.akamaized.net/pool_904/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio%3d96000.norewind.m3u8\",\"homepage\":\"https://www.bbc.co.uk/sounds/schedules/bbc_radio_five_live\",\"favicon\":\"https://static.files.bbci.co.uk/sounds/web/sounds-web/img/sounds-apple-touch-icon.ead169771d.png\",\"tags\":\"\",\"country\":\"The United Kingdom Of Great Britain And Northern Ireland\",\"countrycode\":\"GB\",\"iso_3166_2\":null,\"state\":\"\",\"language\":\"\",\"languagecodes\":\"\",\"votes\":68,\"lastchangetime\":\"2023-11-05 13:38:13\",\"lastchangetime_iso8601\":\"2023-11-05T13:38:13Z\",\"codec\":\"UNKNOWN\",\"bitrate\":0,\"hls\":1,\"lastcheckok\":1,\"lastchecktime\":\"2024-01-12 20:29:41\",\"lastchecktime_iso8601\":\"2024-01-12T20:29:41Z\",\"lastcheckoktime\":\"2024-01-12 20:29:41\",\"lastcheckoktime_iso8601\":\"2024-01-12T20:29:41Z\",\"lastlocalchecktime\":\"\",\"lastlocalchecktime_iso8601\":null,\"clicktimestamp\":\"2024-01-13 10:58:23\",\"clicktimestamp_iso8601\":\"2024-01-13T10:58:23Z\",\"clickcount\":40,\"clicktrend\":4,\"ssl_error\":0,\"geo_lat\":null,\"geo_long\":null,\"has_extended_info\":false}]",
+    "headers" : {
+      "Server" : "nginx/1.18.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sat, 13 Jan 2024 11:11:49 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "2c9d4ac6-b50f-4b53-a46f-203aeedd3ec2",
+  "persistent" : true,
+  "insertionIndex" : 388
+}

@@ -3,7 +3,9 @@ package de.sfuhrm.radiobrowser4j;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-/** Helper class for simplifying testing. */
+/** Helper class for simplifying testing.
+ * @author Stephan Fuhrmann
+ * */
 class InetAddressHelper {
 
     /**

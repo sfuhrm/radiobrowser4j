@@ -1,0 +1,27 @@
+{
+  "id" : "b7fd486d-4910-45f7-8400-aec5c5be48bd",
+  "name" : "json_stations",
+  "request" : {
+    "url" : "/json/stations",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=44416&limit=128",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[]",
+    "headers" : {
+      "Server" : "nginx/1.18.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sat, 13 Jan 2024 11:15:35 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "b7fd486d-4910-45f7-8400-aec5c5be48bd",
+  "persistent" : true,
+  "insertionIndex" : 28
+}
