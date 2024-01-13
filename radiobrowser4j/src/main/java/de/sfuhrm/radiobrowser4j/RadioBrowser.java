@@ -34,7 +34,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /** API facade for the RadioBrowser.
- * You usually create a new {@linkplain #RadioBrowser(int, String) instance}
+ * You usually create a new {@linkplain #RadioBrowser(ConnectionParams) instance}
  * and then use the methods to invoke API calls.
  * @author Stephan Fuhrmann
  * */
@@ -50,94 +50,13 @@ public class RadioBrowser {
     private final RestDelegate rest;
 
     /**
-     * Creates a new API client using a specific api endpoint.
-     * @param apiUrl the base URL of the API.
-     *               Can be determined by
-     *               {@linkplain  EndpointDiscovery#discover()}
-     *               or set to {@linkplain #DEFAULT_API_URL}.
-     * @param timeout the timeout in milliseconds for connecting
-     *                and reading.
-     * @param myUserAgent the user agent string to use.
-     *                    Please use a user agent string that somehow
-     *                    points to your github project, home page,
-     *                    or what ever.
-     * */
-    public RadioBrowser(@NonNull final String apiUrl,
-                        final int timeout,
-                        @NonNull final String myUserAgent) {
-        this(new ConnectionParams.ConnectionParamsBuilder()
-                .apiUrl(apiUrl)
-                .timeout(timeout)
-                .userAgent(myUserAgent)
-                .build());
-    }
-
-    /**
-     * Creates a new API client using a proxy.
-     * @param apiUrl the base URL of the API. Can be determined
-     *               by {@linkplain  EndpointDiscovery#discover()}
-     *               or set to {@linkplain #DEFAULT_API_URL}.
-     * @param timeout the timeout in milliseconds for connecting
-     *                and reading.
-     * @param myUserAgent the user agent string to use.
-     *                    Please use a user agent string that somehow
-     *                    points to your github project,
-     *                    home page, or what ever.
-     * @param proxyUri optional URI of the proxy server, or {@code null}
-     *                 if no proxy is required.
-     * @param proxyUser optional username to authenticate
-     *                  with if using a proxy.
-     * @param proxyPassword optional password to authenticate
-     *                      with if using a proxy
-     * */
-    public RadioBrowser(@NonNull final String apiUrl,
-                         final int timeout,
-                         @NonNull final String myUserAgent,
-                        final String proxyUri,
-                        final String proxyUser,
-                        final String proxyPassword) {
-
-        this(new ConnectionParams.ConnectionParamsBuilder()
-                .apiUrl(apiUrl)
-                .timeout(timeout)
-                .userAgent(myUserAgent)
-                .proxyUri(proxyUri)
-                .proxyUser(proxyUser)
-                .proxyPassword(proxyPassword)
-                .build());
-    }
-
-    /**
      * Creates a new API client using a proxy.
      * @param connectionParams the parameters for creating an API connection.
      * @see ConnectionParams.ConnectionParamsBuilder
      * */
-    RadioBrowser(@NonNull final ConnectionParams connectionParams) {
+    public RadioBrowser(@NonNull final ConnectionParams connectionParams) {
         connectionParams.check();
         rest = new RestDelegateUrlConnectionImpl(connectionParams);
-    }
-
-    /**
-     * Creates a new API client using the default endpoint.
-     * @param timeout the timeout for connect and read requests in milliseconds.
-     *                Must be greater than zero.
-     * @param myUserAgent the user agent String for your user agent.
-     *                    Please use a user agent string that somehow
-     *                    points to your github project,
-     *                    home page, or what ever.
-     * @deprecated This method is deprecated since it can use an
-     * obsolete endpoint. Using the endpoint discovery
-     * and passing the result to one of the other
-     * constructors is recommended.
-     */
-    @Deprecated
-    public RadioBrowser(final int timeout,
-                        final String myUserAgent) {
-        this(new ConnectionParams.ConnectionParamsBuilder()
-                .apiUrl(DEFAULT_API_URL)
-                .timeout(timeout)
-                .userAgent(myUserAgent)
-                .build());
     }
 
     /** Composes URI path components with '/' separators.
@@ -212,7 +131,7 @@ public class RadioBrowser {
     private List<Station> listStationsPathWithPaging(
             final Optional<Paging> paging,
             final String path,
-            final ListParameter...listParam) {
+            final Parameter...listParam) {
         Map<String, String> requestParams =
                 new HashMap<>();
 
@@ -232,7 +151,7 @@ public class RadioBrowser {
     private List<Station> listStationsPathWithLimit(
                                 final Optional<Limit> limit,
                                 final String path,
-                                final ListParameter...listParam) {
+                                final Parameter...listParam) {
         Map<String, String> requestParams =
                 new HashMap<>();
 
@@ -253,7 +172,7 @@ public class RadioBrowser {
      * possible stations.
      */
     public List<Station> listStations(@NonNull final Paging paging,
-                                      final ListParameter...listParam) {
+                                      final Parameter...listParam) {
         return listStationsPathWithPaging(Optional.of(paging),
                 "json/stations",
                 listParam);
@@ -264,7 +183,7 @@ public class RadioBrowser {
      * @param listParam the optional listing parameters.
      * @return the full stream of stations.
      */
-    public Stream<Station> listStations(final ListParameter...listParam) {
+    public Stream<Station> listStations(final Parameter...listParam) {
         return StreamSupport.stream(
                 new PagingSpliterator<>(
                         p -> listStations(p, listParam)),
@@ -291,26 +210,6 @@ public class RadioBrowser {
                         p -> listStationsPathWithPaging(Optional.of(p),
                                 "json/stations/broken")),
                 false);
-    }
-
-    /** Get a list of all improvable stations. Will return a single batch.
-     * @param limit the limit of the page to retrieve.
-     * @return an empty list of improvable stations as a placeholder
-     * for the removed API endpoint.
-     * @deprecated This API endpoint has been removed.
-     */
-    public List<Station> listImprovableStations(@NonNull final Limit limit) {
-        return Collections.emptyList();
-    }
-
-    /** Get a list of all broken stations as one continuous stream.
-     * @return an empty stream of improvable stations as a placeholder
-     * for the removed API endpoint.
-     * @deprecated This API endpoint has been removed.
-     */
-    @Deprecated
-    public Stream<Station> listImprovableStations() {
-        return new ArrayList<Station>().stream();
     }
 
     /** Get a list of the top click stations. Will return a single batch.
@@ -431,7 +330,7 @@ public class RadioBrowser {
     public List<Station> listStationsBy(@NonNull final Paging paging,
                                         @NonNull final SearchMode searchMode,
                                         @NonNull final String searchTerm,
-                                        final ListParameter...listParam) {
+                                        final Parameter...listParam) {
         Map<String, String> requestParams =
                 new HashMap<>();
         paging.apply(requestParams);
@@ -454,7 +353,7 @@ public class RadioBrowser {
     public Stream<Station> listStationsBy(
             @NonNull final SearchMode searchMode,
             @NonNull final String searchTerm,
-            final ListParameter...listParam) {
+            final Parameter...listParam) {
 
         Function<Paging, List<Station>> fetcher = p -> {
             Map<String, String> requestParams =

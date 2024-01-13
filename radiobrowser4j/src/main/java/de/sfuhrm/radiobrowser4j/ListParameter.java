@@ -28,7 +28,7 @@ import java.util.Map;
 @Getter
 @Slf4j
 @ToString
-public final class ListParameter extends ParameterProvider {
+public final class ListParameter extends Parameter {
     /** The field name to sort by. */
     private FieldName order;
 

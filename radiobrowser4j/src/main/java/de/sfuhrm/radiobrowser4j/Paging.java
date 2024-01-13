@@ -32,7 +32,7 @@ import java.util.Map;
 @ToString
 @EqualsAndHashCode
 @Slf4j
-public final class Paging extends ParameterProvider {
+public final class Paging extends Parameter {
     /** A default start page with offset 0 and limit 64.
      * */
     public static final Paging DEFAULT_START = new Paging(0, 64);

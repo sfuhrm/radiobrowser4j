@@ -45,7 +45,8 @@ public class RadioBrowserIT {
     public void before() throws IOException {
         Optional<String> myEndpoint = new EndpointDiscovery(USER_CLIENT).discover();
         this.endpoint = myEndpoint.get();
-        radioBrowser = new RadioBrowser(endpoint, TIMEOUT, USER_CLIENT);
+        radioBrowser = new RadioBrowser(ConnectionParams.builder()
+                .apiUrl(endpoint).timeout(TIMEOUT).userAgent(USER_CLIENT).build());
     }
 
     @AfterEach
@@ -99,7 +100,7 @@ public class RadioBrowserIT {
     @Test
     public void testAdvancedSearchWithCountry() throws IOException {
         AdvancedSearch advancedSearch = AdvancedSearch.builder()
-                .country("Mexico").build();
+                .countryCode("MX").build();
         Stream<Station> stream = radioBrowser.listStationsWithAdvancedSearch(advancedSearch);
         assertThat((int) stream.count(), Matchers.greaterThan(1));
     }

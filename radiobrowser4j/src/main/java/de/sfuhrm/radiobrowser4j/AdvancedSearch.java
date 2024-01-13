@@ -11,33 +11,16 @@ import java.util.stream.Collectors;
 * {@code AdvancedSearch.builder()},
 * and then when you are finished
 * {@code AdvancedSearch.AdvancedSearchBuilder.build()}.
+ * Please note that this
 * @author Stephan Fuhrmann
  * */
 @Builder
-public final class AdvancedSearch extends ParameterProvider {
+public final class AdvancedSearch extends InternalParameter {
     /** Name of the station. */
     private String name;
 
     /** True: only exact matches, otherwise all matches. */
     private Boolean nameExact;
-
-    /** Country of the station.
-     * @deprecated Do NOT use the "country" fields anymore!
-     * Use "countrycode" instead, which is standardized.
-     * @see #countryCode
-     * @see <a href="https://api.radio-browser.info/">api.radio-browser.info</a>
-     * */
-    @Deprecated
-    private String country;
-
-    /** True: only exact matches, otherwise all matches.
-     * @deprecated Do NOT use the "country" fields anymore!
-     * Use "countrycode" instead, which is standardized.
-     * @see #countryCode
-     * @see <a href="https://api.radio-browser.info/">api.radio-browser.info</a>
-     * */
-    @Deprecated
-    private Boolean countryExact;
 
     /** 2-digit countrycode of the station (see ISO 3166-1 alpha-2). */
     private String countryCode;
@@ -103,12 +86,6 @@ public final class AdvancedSearch extends ParameterProvider {
         }
         if (nameExact != null) {
             requestParams.put("nameExact", nameExact.toString());
-        }
-        if (country != null) {
-            requestParams.put("country", country);
-        }
-        if (countryExact != null) {
-            requestParams.put("countryExact", countryExact.toString());
         }
         if (countryCode != null) {
             requestParams.put("countrycode", countryCode);

@@ -33,7 +33,7 @@ import java.util.UUID;
 @Setter
 @Getter
 @EqualsAndHashCode(of = {"stationUUID", "name"})
-public final class Station extends ParameterProvider {
+public final class Station extends Parameter {
     /** A globally unique identifier for the change
      * of the station information. */
     private UUID changeUUID;
@@ -62,15 +62,6 @@ public final class Station extends ParameterProvider {
      * @see #getTags()
      * */
     private List<String> tagList = new ArrayList<>();
-
-    /** The country this station is located at.
-     * @deprecated Do NOT use the "country" fields anymore!
-     * Use "countrycode" instead, which is standardized.
-     * @see #countryCode
-     * @see <a href="https://api.radio-browser.info/">api.radio-browser.info</a>
-     * */
-    @Deprecated
-    private String country;
 
     /** Official country codes according to ISO 3166-1 alpha-2. */
     private String countryCode;

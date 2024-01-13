@@ -74,7 +74,7 @@ public class RadioBrowserTest {
      * WARNING! This calls radiobrowser.info API directly and
      * creates entities which are deleted afterwards!
      * */
-    public final static boolean RECORDING = false;
+    public final static boolean RECORDING = true;
 
     @AfterEach
     public void gracefulSleepInterval() throws InterruptedException {
@@ -99,7 +99,7 @@ public class RadioBrowserTest {
             wireMockClient.startStubRecording(urlWithoutSlash);
         }
 
-        browser = new RadioBrowser(API_URL,20000, USER_AGENT);
+        browser = new RadioBrowser(ConnectionParams.builder().apiUrl(API_URL).timeout(20000).userAgent(USER_AGENT).build());
     }
 
     @AfterAll
@@ -171,8 +171,9 @@ public class RadioBrowserTest {
 
     @Test
     public void listStationsWithStreamAndOrder() {
+        // bitrate is hopefully stable when paging
         List<Station> stations = browser
-                .listStations(ListParameter.create().order(FieldName.LASTCHECKTIME))
+                .listStations(ListParameter.create().order(FieldName.BITRATE))
                 .limit(256)
                 .collect(Collectors.toList());
 
@@ -180,8 +181,9 @@ public class RadioBrowserTest {
 
         Station last = null;
         for (Station station : stations) {
-            if (station.getLastchecktime() != null && last != null && last.getLastchecktime() != null) {
-                assertThat("station list must contain lastchecktime in ascending order", station.getLastchecktime().getTime(), is(Matchers.greaterThanOrEqualTo(last.getLastchecktime().getTime())));
+            if (station.getBitrate() != null && last != null && last.getBitrate() != null) {
+                assertThat("station list must contain bitrate in ascending order",
+                        station.getBitrate(), is(Matchers.greaterThanOrEqualTo(last.getBitrate())));
             }
             last = station;
         }
@@ -315,21 +317,6 @@ public class RadioBrowserTest {
     }
 
     @Test
-    public void listImprovableStations() {
-        List<Station> stations = browser.listImprovableStations(FIVE);
-        assertThat(stations, notNullValue());
-        assertThat(stations.size(), is(0));
-    }
-
-    @Test
-    public void listImprovableStationsWithStream() {
-        List<Station> stations = browser
-                .listImprovableStations()
-                .collect(Collectors.toList());
-        assertThat(stations, is(Collections.emptyList()));
-    }
-
-    @Test
     public void listStationsByWithName() {
         List<Station> stations = browser.listStationsBy(FIRST_FIVE, SearchMode.BYNAME, "synthradio");
         assertThat(stations, notNullValue());
@@ -384,7 +371,6 @@ public class RadioBrowserTest {
         station.setHomepage("https://github.com/sfuhrm/radiobrowser4j");
         station.setName(TEST_NAME);
         station.setFavicon("https://github.com/favicon.ico");
-        station.setCountry("Germany");
         station.setCountryCode("DE");
         UUID id = browser.postNewStation(station);
         assertThat(id, is(not(nullValue())));
@@ -430,11 +416,11 @@ public class RadioBrowserTest {
         List<Station> stationsList = browser
                 .listStationsWithAdvancedSearch(
                         AdvancedSearch.builder()
-                                .country("Germany")
+                                .countryCode("DE")
                                 .state("Hamburg")
                                 .build())
                 .collect(Collectors.toList());
-        assertThat(stationsList.get(0).getCountry(), is("Germany"));
+        assertThat(stationsList.get(0).getCountryCode(), is("DE"));
         assertThat(stationsList.get(0).getState(), is("Hamburg"));
     }
 }

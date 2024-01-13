@@ -16,8 +16,7 @@
 package de.sfuhrm.radiobrowser4j;
 
 /** The mode to search for.
- * @see RadioBrowser#listStationsBy(Paging,
- * SearchMode, String, ListParameter...)
+ * @see RadioBrowser#listStationsBy(SearchMode, String, Parameter...)
  * @author Stephan Fuhrmann
  * */
 public enum SearchMode {
