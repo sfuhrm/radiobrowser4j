@@ -1,0 +1,29 @@
+{
+  "id" : "da30a240-15ea-4605-8e0c-7978eb88c1df",
+  "name" : "json_stations_byname_synthradio",
+  "request" : {
+    "url" : "/json/stations/byname/synthradio",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=5",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"changeuuid\":\"5734e439-927c-4af8-a0a4-0287562caa1e\",\"stationuuid\":\"96394377-0601-11e8-ae97-52543be04c81\",\"serveruuid\":null,\"name\":\"Synthradio\",\"url\":\"http://synth-radio.ru/synthradio192.m3u\",\"url_resolved\":\"http://77.51.212.205:8005/live192\",\"homepage\":\"http://synth-radio.ru/\",\"favicon\":\"\",\"tags\":\"new wave,synth,synthesizer,synthwave\",\"country\":\"The Russian Federation\",\"countrycode\":\"RU\",\"iso_3166_2\":null,\"state\":\"\",\"language\":\"english\",\"languagecodes\":\"\",\"votes\":1153,\"lastchangetime\":\"2023-11-04 16:41:02\",\"lastchangetime_iso8601\":\"2023-11-04T16:41:02Z\",\"codec\":\"MP3\",\"bitrate\":192,\"hls\":0,\"lastcheckok\":1,\"lastchecktime\":\"2024-01-12 20:34:44\",\"lastchecktime_iso8601\":\"2024-01-12T20:34:44Z\",\"lastcheckoktime\":\"2024-01-12 20:34:44\",\"lastcheckoktime_iso8601\":\"2024-01-12T20:34:44Z\",\"lastlocalchecktime\":\"\",\"lastlocalchecktime_iso8601\":null,\"clicktimestamp\":\"2024-01-12 23:48:21\",\"clicktimestamp_iso8601\":\"2024-01-12T23:48:21Z\",\"clickcount\":14,\"clicktrend\":-5,\"ssl_error\":0,\"geo_lat\":null,\"geo_long\":null,\"has_extended_info\":false}]",
+    "headers" : {
+      "Server" : "nginx/1.18.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sat, 13 Jan 2024 00:18:29 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "da30a240-15ea-4605-8e0c-7978eb88c1df",
+  "persistent" : true,
+  "scenarioName" : "scenario-1-json-stations-byname-synthradio",
+  "requiredScenarioState" : "scenario-1-json-stations-byname-synthradio-2",
+  "insertionIndex" : 4
+}
