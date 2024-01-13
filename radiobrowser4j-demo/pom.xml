@@ -5,7 +5,7 @@
   <parent>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j-parent</artifactId>
-    <version>2.6.2-SNAPSHOT</version>
+    <version>3.0.0</version>
   </parent>
 
   <artifactId>radiobrowser4j-demo</artifactId>
