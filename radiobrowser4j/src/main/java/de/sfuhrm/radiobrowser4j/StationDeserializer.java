@@ -19,6 +19,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /** Gson deserializer for {@linkplain Station}.
+ * @see <a href="https://at1.api.radio-browser.info/">API documentation</a>
  * @author Stephan Fuhrmann
  * */
 class StationDeserializer implements JsonDeserializer<Station> {

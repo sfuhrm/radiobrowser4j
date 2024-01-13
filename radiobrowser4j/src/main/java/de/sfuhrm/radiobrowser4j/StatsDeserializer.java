@@ -10,6 +10,7 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 
 /** Gson deserializer for {@linkplain Stats}.
+ * @see <a href="https://at1.api.radio-browser.info/">API documentation</a>
  * @author Stephan Fuhrmann
  * */
 class StatsDeserializer implements JsonDeserializer<Stats> {

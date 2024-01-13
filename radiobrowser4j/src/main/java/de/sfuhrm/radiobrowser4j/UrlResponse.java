@@ -22,6 +22,7 @@ import java.util.UUID;
 
 /**
  * API response from the radio browser API.
+ * @see <a href="https://at1.api.radio-browser.info/">API documentation</a>
  * @author Stephan Fuhrmann
  */
 @Getter
