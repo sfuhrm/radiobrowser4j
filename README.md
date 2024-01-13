@@ -49,14 +49,6 @@ browser.listStations(ListParameter.create().order(FieldName.name))
 You can take a look at the [javadoc](https://javadoc.io/doc/de.sfuhrm/radiobrowser4j)
 documentation to get the full concepts of the API.
 
-### Gradle for Android targets
-
-A list of adjustments for creating an android app with
-radiobrowser4j is listed here: [ANDROID.md](ANDROID.md).
-
-For more details, please see 
-[issue 14](https://github.com/sfuhrm/radiobrowser4j/issues/14).
-
 ### More examples
 
 The library was extracted from an internet radio player and recorder program
@@ -73,6 +65,12 @@ located in the test resources.
 
 ## Version history
 
+* v3.0.0
+  - Replacement of JAX-RS / Jersey with more lightweight URLConnection / GSon.
+    Will make Android usage work out of the box.
+  - Removed deprecations (Station country, deprecated constructors).
+  - Introduced new ConnectionParams object.
+  - Introduced retry mechnism (see ConnectionParams).
 * v2.6.0
   - Refactorings for reducing code duplication.
   - Major refactorings to limit the JAX-RS / Jersey exposure of the code to a minimum of classes. This is a preparation for possible alternative implementations (see issue #14 ).
@@ -105,7 +103,7 @@ located in the test resources.
   - Default to GZIP encoding if supported by the server (#27).
 * v2.3.1:
   - Bugfix when dealing with duplicate data  (fixes #15)
-  - Add special info for  [Android setup](ANDROID.md)
+  - Add special info for  Android setup (obsolete)
 * v2.2.5:
   - Update slf4j dependency to 2.0.7.
   - Update lombok dependency to 1.8.26.
