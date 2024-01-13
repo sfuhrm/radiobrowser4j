@@ -12,16 +12,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+
     - uses: actions/checkout@v3
+
     - name: Set up JDK 21
       uses: actions/setup-java@v3
       with:
         distribution: 'adopt'
         java-version: 21
+
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.m2/repository
+
     - name: Maven install
       run: mvn install
-    - name: Run maven dependency check
+
+    - name: Run Maven dependency check
       run: mvn org.owasp:dependency-check-maven:check
+
     - uses: actions/upload-artifact@v3
       if: always()
       with:
