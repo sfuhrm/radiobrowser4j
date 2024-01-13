@@ -31,9 +31,7 @@ import static org.hamcrest.CoreMatchers.*;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-import com.github.tomakehurst.wiremock.recording.RecordSpecBuilder;
 import com.github.tomakehurst.wiremock.recording.SnapshotRecordResult;
-import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
@@ -296,6 +294,24 @@ public class RadioBrowserTest {
         Optional<Station> station = browser.getStationByUUID(first.getStationUUID());
         assertThat(station.isPresent(), is(true));
         assertThat(station.get(), is(first));
+        assertThat(first.getStationUUID(), is(not(nullValue())));
+        assertThat(first.getState(), is(not(nullValue())));
+        assertThat(first.getName(), is(not(nullValue())));
+        assertThat(first.getUrl(), is(not(nullValue())));
+        assertThat(first.getLastchecktime(), is(not(nullValue())));
+        assertThat(first.getLastcheckok(), is(not(nullValue())));
+        assertThat(first.getLastchangetime(), is(not(nullValue())));
+        assertThat(first.getCountryCode(), is(not(nullValue())));
+        assertThat(first.getFavicon(), is(not(nullValue())));
+        assertThat(first.getHomepage(), is(not(nullValue())));
+        assertThat(first.getHasExtendedInfo(), is(not(nullValue())));
+        assertThat(first.getLanguage(), is(not(nullValue())));
+        assertThat(first.getTags(), is(not(nullValue())));
+        assertThat(first.getTagList(), is(not(nullValue())));
+        assertThat(first.getVotes(), is(not(nullValue())));
+        assertThat(first.getBitrate(), is(not(nullValue())));
+        assertThat(first.getClickcount(), is(not(nullValue())));
+        assertThat(first.getUrlResolved(), is(not(nullValue())));
     }
 
     @Test
@@ -396,6 +412,16 @@ public class RadioBrowserTest {
     public void getServerStats() {
         Stats stats = browser.getServerStats();
         assertThat(stats, is(not(nullValue())));
+        assertThat(stats.getSupportedVersion(), is(not(nullValue())));
+        assertThat(stats.getSoftwareVersion(), is(not(nullValue())));
+        assertThat(stats.getStatus(), is(not(nullValue())));
+        assertThat(stats.getStations(), is(not(nullValue())));
+        assertThat(stats.getStationsBroken(), is(not(nullValue())));
+        assertThat(stats.getTags(), is(not(nullValue())));
+        assertThat(stats.getClicksLastHour(), is(not(nullValue())));
+        assertThat(stats.getClicksLastDay(), is(not(nullValue())));
+        assertThat(stats.getLanguages(), is(not(nullValue())));
+        assertThat(stats.getCountries(), is(not(nullValue())));
     }
 
 
