@@ -20,7 +20,9 @@ import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.StandardCharsets;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -131,7 +133,7 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
         return connection;
     }
 
-    private static Charset guessCharsetFor(
+    static Charset guessCharsetFor(
             final String contentType) {
         if (null == contentType) {
             return StandardCharsets.UTF_8;
@@ -144,13 +146,23 @@ class RestDelegateUrlConnectionImpl implements RestDelegate {
             if (part.trim().startsWith("charset=")) {
                 String charsetName = part.trim().substring(
                         "charset=".length());
-                return Charset.forName(charsetName);
+                try {
+                    return Charset.forName(charsetName);
+                }
+                catch(IllegalCharsetNameException e) {
+                    log.warn("Illegal charset name: {}", charsetName);
+                    return StandardCharsets.UTF_8;
+                }
+                catch(UnsupportedCharsetException e) {
+                    log.warn("Unsupported charset name: {}", charsetName);
+                    return StandardCharsets.UTF_8;
+                }
             }
         }
         return StandardCharsets.UTF_8;
     }
 
-    private Reader readerFor(
+    private static Reader readerFor(
             final HttpURLConnection connection) throws IOException {
         String encoding = connection.getContentEncoding();
         String contentType = connection.getContentType();
