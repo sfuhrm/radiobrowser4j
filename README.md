@@ -31,7 +31,23 @@ For Maven, you need this dependency:
 </dependency>
 ```
 
-After adding this dependency, you can start
+### Use within Android projects
+
+The library works well with Android projects simply by referencing the library within the build.gradle
+
+```gradle
+    implementation 'de.sfuhrm:radiobrowser4j:3.0.0'
+```
+
+If Proguard or R8 code shrinking and obfuscation is being used, then the following entries should be added to the Proguard configuration file (usually proguard-rules.pro):
+
+```
+-dontwarn lombok**
+-keep class de.sfuhrm.radiobrowser4j.** { *; }
+```
+### Java use
+
+After adding the dependency, you can start
 by creating one instance and using it
 
 ```java
@@ -61,21 +77,6 @@ You can take a look at real-life usage patterns
 The API is tested using the [WireMock](http://wiremock.org/) REST testing
 framework. Mocked web requests/responses are
 located in the test resources.
-
-### Use within Android projects
-
-The library works well with Android projects simply by referencing the library within the build.gradle
-
-```gradle
-    implementation 'de.sfuhrm:radiobrowser4j:3.0.0'
-```
-
-If Proguard or R8 code shrinking and obfuscation is being used, then the following entries should be added to the Proguard configuration file (usually proguard-rules.pro):
-
-```
--dontwarn lombok**
--keep class de.sfuhrm.radiobrowser4j.** { *; }
-```
 
 ## Version history
 
