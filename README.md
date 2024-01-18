@@ -51,10 +51,15 @@ After adding the dependency, you can start
 by creating one instance and using it
 
 ```java
-// 5000ms timeout, user agent is Demo agent/1.0
-RadioBrowser browser = new RadioBrowser(5000, "Demo agent/1.0");
-// print the first 64 stations in station name order
-browser.listStations(ListParameter.create().order(FieldName.name))
+// discover endpoint
+Optional<String> endpoint = new EndpointDiscovery(myAgent).discover();
+
+// build instance
+RadioBrowser radioBrowser = new RadioBrowser(
+    ConnectionParams.builder().apiUrl(endpoint.get()).userAgent("Demo agent/1.0").timeout(5000).build());
+
+// list stations
+radioBrowser.listStations(ListParameter.create().order(FieldName.name))
     .limit(64)
     .forEach(s -> System.out.printf("%s: %s%n",
         s.getName(),
