@@ -44,6 +44,9 @@ If Proguard or R8 code shrinking and obfuscation is being used, then the followi
 ```
 -dontwarn lombok**
 -keep class de.sfuhrm.radiobrowser4j.** { *; }
+-keepattributes Signature
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken
 ```
 ### Java use
 
