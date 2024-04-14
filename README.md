@@ -27,7 +27,7 @@ For Maven, you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
 </dependency>
 ```
 
@@ -88,6 +88,8 @@ located in the test resources.
 
 ## Version history
 
+* v3.0.1
+  - Minor updates of dependencies and plugins
 * v3.0.0
   - Replacement of JAX-RS / Jersey with more lightweight URLConnection / GSon.
     Will make Android usage work out of the box.
