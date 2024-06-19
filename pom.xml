@@ -4,7 +4,7 @@
 
   <groupId>de.sfuhrm</groupId>
   <artifactId>radiobrowser4j-parent</artifactId>
-  <version>3.0.3-SNAPSHOT</version>
+  <version>3.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>RadioBrowser4j Parent</name>
@@ -194,7 +194,7 @@
             <artifactId>maven-gpg-plugin</artifactId>
             <version>3.2.3</version>
             <configuration>
-              <keyname>9C3D5D0E75C71CE338930BF073FA841FE7DCB91F</keyname>
+              <keyname>0AC5A45E91FA93DA25380017B0D87B063EAD41F1</keyname>
             </configuration>
             <executions>
               <execution>
