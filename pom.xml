@@ -4,7 +4,7 @@
 
   <groupId>de.sfuhrm</groupId>
   <artifactId>radiobrowser4j-parent</artifactId>
-  <version>3.0.4-SNAPSHOT</version>
+  <version>3.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>RadioBrowser4j Parent</name>
