@@ -120,4 +120,22 @@ public class RadioBrowserIT {
         List<Station> stations = stream.limit(1000).collect(Collectors.toList());
         assertThat(stations.stream().filter(s -> s.getBitrate() >= 320).count(), Matchers.greaterThan(1L));
         assertThat(stations.stream().filter(s -> s.getBitrate() < 320).count(), Matchers.equalTo(0L));    }
+
+    @Test
+    public void testAdvancedSearchWithBitRateMinAndPagingMultipleFetch() throws IOException {
+        AdvancedSearch advancedSearch = AdvancedSearch.builder()
+                .bitrateMin(10).build();
+        Stream<Station> stream = radioBrowser.listStationsWithAdvancedSearch(advancedSearch, Paging.at(10, 200));
+        List<Station> stations = stream.collect(Collectors.toList());
+        assertThat(stations.size(), Matchers.equalTo(200));
+    }
+
+    @Test
+    public void testAdvancedSearchWithBitRateMinAndPagingSingleFetch() throws IOException {
+        AdvancedSearch advancedSearch = AdvancedSearch.builder()
+                .bitrateMin(10).build();
+        Stream<Station> stream = radioBrowser.listStationsWithAdvancedSearch(advancedSearch, Paging.at(10, 20));
+        List<Station> stations = stream.collect(Collectors.toList());
+        assertThat(stations.size(), Matchers.equalTo(20));
+    }
 }

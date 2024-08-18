@@ -58,6 +58,24 @@ public class RadioBrowser {
         rest = new RestDelegateImpl(connectionParams);
     }
 
+    /** Finds the optional paging parameter, or returns null.
+     * @param listParam the list parameters that might contain a Paging.
+     * @return the first found paging parameter or {@code null} of not found.
+     * */
+    private static Paging findPaging(final Parameter...listParam) {
+        Optional<Parameter> pagingParameter = Arrays.stream(listParam).filter(param -> param instanceof Paging).findFirst();
+        return (Paging) pagingParameter.orElse(null);
+    }
+
+    /** Removes paging from the list of parameters.
+     * @param listParam the list parameters that might contain a Paging.
+     * @return the list of parameters without a posible Paging param.
+     * */
+    private static List<Parameter> exceptPaging(final Parameter...listParam) {
+        List<Parameter> nonPagingParameters = Arrays.stream(listParam).filter(param -> !(param instanceof Paging)).collect(Collectors.toList());
+        return nonPagingParameters;
+    }
+
     /** Composes URI path components with '/' separators.
      * @param components the components to compose.
      * @return the joint path.
@@ -200,9 +218,10 @@ public class RadioBrowser {
      * @return the full stream of stations.
      */
     public Stream<Station> listStations(final Parameter...listParam) {
+        Parameter[] nonPaging = exceptPaging(listParam).toArray(new Parameter[0]);
         return StreamSupport.stream(
                 new PagingSpliterator<>(
-                        p -> listStations(p, listParam)),
+                        p -> listStations(p, nonPaging), findPaging(listParam)),
                 false);
     }
 
@@ -224,7 +243,8 @@ public class RadioBrowser {
         return StreamSupport.stream(
                 new PagingSpliterator<>(
                         p -> listStationsPathWithPaging(Optional.of(p),
-                                "json/stations/broken")),
+                                "json/stations/broken"),
+                        null),
                 false);
     }
 
@@ -246,7 +266,8 @@ public class RadioBrowser {
         return StreamSupport.stream(
                 new PagingSpliterator<>(
                         p -> listStationsPathWithPaging(Optional.of(p),
-                                "json/stations/topclick")),
+                                "json/stations/topclick"),
+                        null),
                 false);
     }
 
@@ -268,7 +289,8 @@ public class RadioBrowser {
         return StreamSupport.stream(
                 new PagingSpliterator<>(
                         p -> listStationsPathWithPaging(Optional.of(p),
-                                "json/stations/topvote")),
+                                "json/stations/topvote"),
+                        null),
                 false);
     }
 
@@ -290,7 +312,8 @@ public class RadioBrowser {
         return StreamSupport.stream(
                 new PagingSpliterator<>(
                         p -> listStationsPathWithPaging(Optional.of(p),
-                                "json/stations/lastclick")),
+                                "json/stations/lastclick"),
+                        null),
                 false);
     }
 
@@ -312,7 +335,8 @@ public class RadioBrowser {
         return StreamSupport.stream(
                 new PagingSpliterator<>(
                         p -> listStationsPathWithPaging(Optional.of(p),
-                                "json/stations/lastchange")),
+                                "json/stations/lastchange"),
+                        null),
                 false);
     }
 
@@ -375,7 +399,7 @@ public class RadioBrowser {
             Map<String, String> requestParams =
                     new HashMap<>();
             p.apply(requestParams);
-            Arrays.stream(listParam).forEach(l -> l.apply(requestParams));
+            exceptPaging(listParam).stream().forEach(l -> l.apply(requestParams));
 
             String path = paths("json/stations",
                     searchMode.name().toLowerCase(),
@@ -387,7 +411,8 @@ public class RadioBrowser {
 
         return StreamSupport.stream(
                 new PagingSpliterator<>(
-                        fetcher), false);
+                        fetcher,
+                        findPaging(listParam)), false);
     }
 
     /** Resolves the streaming URL for the given station.
@@ -454,16 +479,19 @@ public class RadioBrowser {
      *          {@code AdvancedSearch.builder()},
      *          and then when you are finished
      *          {@code AdvancedSearch.AdvancedSearchBuilder.build()}.
+     * @param listParam the optional listing parameters.
      * @return the full stream of matching stations.
      */
     public Stream<Station> listStationsWithAdvancedSearch(
-            @NonNull final AdvancedSearch advancedSearch) {
+            @NonNull final AdvancedSearch advancedSearch,
+            final Parameter...listParam) {
 
         Function<Paging, List<Station>> fetcher = p -> {
             Map<String, String> requestParams =
                     new HashMap<>();
             p.apply(requestParams);
             advancedSearch.apply(requestParams);
+            exceptPaging(listParam).stream().forEach(l -> l.apply(requestParams));
 
             return rest.postWithListOfStation(
                     "/json/stations/search",
@@ -472,7 +500,8 @@ public class RadioBrowser {
 
         return StreamSupport.stream(
                 new PagingSpliterator<>(
-                        fetcher), false);
+                        fetcher,
+                        findPaging(listParam)), false);
     }
 
 

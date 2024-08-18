@@ -33,7 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class PagingSpliteratorTest {
 
     @Test
-    public void testPagingSpliterator() {
+    public void testPagingSpliteratorWithNoView() {
         PagingSpliterator<Integer> integerPagingSpliterator = new PagingSpliterator<>(
                 paging -> {
                     List<Integer> data;
@@ -50,13 +50,78 @@ public class PagingSpliteratorTest {
                         data = Collections.emptyList();
                     }
                     return data;
-                }
+                },
+                null
         );
 
         List<Integer> actual = StreamSupport.stream(integerPagingSpliterator, false)
                 .collect(Collectors.toList());
 
         List<Integer> expected = IntStream.range(0, 128)
+                .boxed()
+                .collect(Collectors.toList());
+
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void testPagingSpliteratorWithSingleFetchView() {
+        PagingSpliterator<Integer> integerPagingSpliterator = new PagingSpliterator<>(
+                paging -> {
+                    List<Integer> data;
+
+                    if (paging.getOffset() < 200) {
+                        data = IntStream.range(paging.getOffset(),
+                                        paging.getOffset() + paging.getLimit())
+                                .boxed()
+                                .collect(Collectors.toList());
+                        if (data.size() > paging.getLimit()) {
+                            throw new IllegalStateException();
+                        }
+                    } else {
+                        data = Collections.emptyList();
+                    }
+                    return data;
+                },
+                Paging.at(5, 100)
+        );
+
+        List<Integer> actual = StreamSupport.stream(integerPagingSpliterator, false)
+                .collect(Collectors.toList());
+
+        List<Integer> expected = IntStream.range(0+5, 100+5)
+                .boxed()
+                .collect(Collectors.toList());
+
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void testPagingSpliteratorWithMultipleFetchView() {
+        PagingSpliterator<Integer> integerPagingSpliterator = new PagingSpliterator<>(
+                paging -> {
+                    List<Integer> data;
+
+                    if (paging.getOffset() < 400) {
+                        data = IntStream.range(paging.getOffset(),
+                                        paging.getOffset() + paging.getLimit())
+                                .boxed()
+                                .collect(Collectors.toList());
+                        if (data.size() > paging.getLimit()) {
+                            throw new IllegalStateException();
+                        }
+                    } else {
+                        data = Collections.emptyList();
+                    }
+                    return data;
+                },
+                Paging.at(5, 300)
+        );
+
+        List<Integer> actual = StreamSupport.stream(integerPagingSpliterator, false)
+                .collect(Collectors.toList());
+
+        List<Integer> expected = IntStream.range(0+5, 300+5)
                 .boxed()
                 .collect(Collectors.toList());
 
