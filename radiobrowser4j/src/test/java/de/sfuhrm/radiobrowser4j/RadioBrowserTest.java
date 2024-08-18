@@ -122,6 +122,14 @@ public class RadioBrowserTest {
     }
 
     @Test
+    public void listCountryCodes() {
+        Map<String, Integer> countries = browser.listCountryCodes();
+        assertThat(countries, notNullValue());
+        assertThat(countries.size(), is(not(0)));
+        assertThat(countries.get("DE"), is(not(0)));
+    }
+
+    @Test
     public void listCodecs() {
         Map<String, Integer> codecs = browser.listCodecs();
         assertThat(codecs, notNullValue());

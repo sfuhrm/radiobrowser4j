@@ -62,6 +62,13 @@ public class RadioBrowserIT {
     }
 
     @Test
+    public void testListCountryCodes() throws IOException {
+        Map<String, Integer> countries = radioBrowser.listCountryCodes();
+        assertThat(countries.size(), Matchers.greaterThan(0));
+        assertThat(countries.get("DE"), Matchers.notNullValue());
+    }
+
+    @Test
     public void testListCodecs() throws IOException {
         Map<String, Integer> codecs = radioBrowser.listCodecs();
         assertThat(codecs.size(), Matchers.greaterThan(0));

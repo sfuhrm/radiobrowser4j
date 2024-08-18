@@ -67,10 +67,12 @@ public class RadioBrowser {
     }
 
     /** Retrieve a generic list containing a value/stationcount mapping.
+     * @param keyFieldName the API key name in the list of results. Usually 'name'.
      * @param subPath the API sub path to use for the call.
      * @return map of value and stationcount pairs.
      * */
     private Map<String, Integer> retrieveValueStationCountList(
+            final String keyFieldName,
             final String subPath) {
 
         List<Map<String, String>> map =
@@ -78,18 +80,33 @@ public class RadioBrowser {
                         Collections.emptyMap());
         return map.stream()
                 .collect(Collectors.toMap(
-                    m -> m.get("name"),
+                    m -> m.get(keyFieldName),
                     m -> Integer.parseInt(m.get("stationcount")),
                         (a, b) -> a));
     }
 
-    /** List the known countries.
+    /** List the known clear-text countries.
      * @return a list of countries (keys) and country usages (values).
+     * Example for key-value pair is  @code{"Germany"} and @code{1}.
+     * @deprecated Since clear-text country names are deprecated in all parts of
+     * the HTTP API, please use the call {@link #listCountryCodes()}
      * @see <a href="https://de1.api.radio-browser.info/#List_of_countries">
      *     API</a>
      * */
+    @Deprecated
     public Map<String, Integer> listCountries() {
-        return retrieveValueStationCountList("json/countries");
+        return retrieveValueStationCountList("name", "json/countries");
+    }
+
+    /** List the known country codes.
+     * @return a list of ISO-3166-1 country codes (keys) and country usages (values).
+     * Example for key-value pair is  @code{"DE"} and @code{1}.
+     * @see <a href="https://de1.api.radio-browser.info/#List_of_countries">
+     *     API</a>
+     * @see #listCountries()
+     * */
+    public Map<String, Integer> listCountryCodes() {
+        return retrieveValueStationCountList("iso_3166_1", "json/countries");
     }
 
     /** List the known codecs.
@@ -98,7 +115,7 @@ public class RadioBrowser {
      *     API</a>
      * */
     public Map<String, Integer> listCodecs() {
-        return retrieveValueStationCountList("json/codecs");
+        return retrieveValueStationCountList("name", "json/codecs");
     }
 
     /** List the known languages.
@@ -107,7 +124,7 @@ public class RadioBrowser {
      *     API</a>
      * */
     public Map<String, Integer> listLanguages() {
-        return retrieveValueStationCountList("json/languages");
+        return retrieveValueStationCountList("name", "json/languages");
     }
 
     /** List the known tags.
@@ -116,7 +133,7 @@ public class RadioBrowser {
      *     API</a>
      * */
     public Map<String, Integer> listTags() {
-        return retrieveValueStationCountList("json/tags");
+        return retrieveValueStationCountList("name", "json/tags");
     }
 
 
