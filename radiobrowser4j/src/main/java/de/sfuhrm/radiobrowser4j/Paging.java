@@ -96,7 +96,6 @@ public final class Paging extends Parameter {
 
     @Override
     protected void apply(final Map<String, String> requestParams) {
-        log.info("paging={}", this);
         requestParams.put("limit",
                 Integer.toString(getLimit()));
         requestParams.put("offset",
