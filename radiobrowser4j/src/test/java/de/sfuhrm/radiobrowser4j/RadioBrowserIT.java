@@ -18,9 +18,12 @@ package de.sfuhrm.radiobrowser4j;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -137,5 +140,30 @@ public class RadioBrowserIT {
         Stream<Station> stream = radioBrowser.listStationsWithAdvancedSearch(advancedSearch, Paging.at(10, 20));
         List<Station> stations = stream.collect(Collectors.toList());
         assertThat(stations.size(), Matchers.equalTo(20));
+    }
+
+
+    @Test
+    public void testAdvancedSearchWithBitRateMinAndPagingSingleFetchAsList() throws IOException {
+        AdvancedSearch advancedSearch = AdvancedSearch.builder()
+                .bitrateMin(10).build();
+        List<Station> stations = radioBrowser.listStationsWithAdvancedSearch(Paging.at(10, 20), advancedSearch);
+        assertThat(stations.size(), Matchers.equalTo(20));
+    }
+
+    // the order seems to be broken at the moment for the RadioBrowser HTTP API
+    @Disabled
+    @Test
+    public void testAdvancedSearchWithBitRateMinAndPagingSingleFetchAsListOrderedByName() throws IOException {
+        AdvancedSearch advancedSearch = AdvancedSearch.builder()
+                .bitrateMin(10).build();
+        List<Station> stations = radioBrowser.listStationsWithAdvancedSearch(
+                Paging.at(10, 20),
+                advancedSearch,
+                ListParameter.create().order(FieldName.LASTCHECKTIME).reverseOrder(false));
+        List<Date> actualName = stations.stream().map(station -> station.getLastchangetime()).collect(Collectors.toList());
+        List<Date> expectedName = new ArrayList<>(actualName);
+        expectedName.sort(Date::compareTo);
+        assertThat(actualName, Matchers.equalTo(expectedName));
     }
 }

@@ -473,6 +473,32 @@ public class RadioBrowser {
         return rest.get("json/stats", Stats.class);
     }
 
+    /** Get a list of stations matching a certain search criteria.
+     * @param paging the paging offset and limit of the station sublist to fetch.
+     * @param advancedSearch the advanced search query object.
+     *          A builder can be created by calling
+     *          {@code AdvancedSearch.builder()},
+     *          and then when you are finished
+     *          {@code AdvancedSearch.AdvancedSearchBuilder.build()}.
+     * @param listParam the optional listing parameters. See {@link ListParameter}.
+     * @return the list of matching stations.
+     */
+    public List<Station> listStationsWithAdvancedSearch(
+            @NonNull final Paging paging,
+            @NonNull final AdvancedSearch advancedSearch,
+            final Parameter... listParam) {
+
+        Map<String, String> requestParams =
+                new HashMap<>();
+        advancedSearch.apply(requestParams);
+        paging.apply(requestParams);
+        exceptPaging(listParam).stream().forEach(l -> l.apply(requestParams));
+
+        return rest.postWithListOfStation(
+                "/json/stations/search",
+                requestParams);
+    }
+
     /** Get a stream of stations matching a certain search criteria.
      * @param advancedSearch the advanced search query object.
      *          A builder can be created by calling
