@@ -27,7 +27,7 @@ For Maven, you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>3.0.3</version>
+    <version>3.1.0</version>
 </dependency>
 ```
 
@@ -36,7 +36,7 @@ For Maven, you need this dependency:
 The library works well with Android projects simply by referencing the library within the build.gradle
 
 ```gradle
-    implementation 'de.sfuhrm:radiobrowser4j:3.0.0'
+    implementation 'de.sfuhrm:radiobrowser4j:3.1.0'
 ```
 
 If Proguard or R8 code shrinking and obfuscation is being used, then the following entries should be added to the Proguard configuration file (usually proguard-rules.pro):
@@ -88,6 +88,13 @@ located in the test resources.
 
 ## Version history
 
+* v3.1.0
+  - Improvement: Provide `listCountryCodes()` call as a symmetric replacement for now deprecated `listCountries()`. #123 
+  - Deprecation: Deprecated `listCountries()` since the HTTP API has deprecated all country fields in favor of ISO 3166-1 country codes. #123 
+  - Improvement: Provide new `List<>` returning call for advanced search. #126 
+  - Bugfix: Use view boundary on `Stream<>` returning calls. The stream will page through the view. #126 
+  - Minor library updates (slf4j, hamcrest, lombok, wiremock, etc).
+  - Minor Maven plugin updates.
 * v3.0.3
   - Minor updates of dependencies and plugins
 * v3.0.1
