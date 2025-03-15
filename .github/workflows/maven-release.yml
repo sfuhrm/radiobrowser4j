@@ -38,17 +38,17 @@ jobs:
       id: version
       shell: bash
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: radiobrowser4j-${{ steps.version.outputs.version }}.jar
         path: radiobrowser4j/target/radiobrowser4j-${{ steps.version.outputs.version }}.jar
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: radiobrowser4j-${{ steps.version.outputs.version }}-javadoc.jar
         path: radiobrowser4j/target/radiobrowser4j-${{ steps.version.outputs.version }}-javadoc.jar
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: radiobrowser4j-${{ steps.version.outputs.version }}-sources.jar
         path: radiobrowser4j/target/radiobrowser4j-${{ steps.version.outputs.version }}-sources.jar
