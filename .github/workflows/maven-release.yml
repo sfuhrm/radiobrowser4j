@@ -34,7 +34,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Extract current maven version
-      run: echo "name=version::$(mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
+      run: echo "version=$(mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
       id: version
       shell: bash
 
