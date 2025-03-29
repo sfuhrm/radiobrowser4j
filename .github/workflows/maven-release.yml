@@ -34,21 +34,21 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Extract current maven version
-      run: echo "::set-output name=version::$(mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout)"
+      run: echo "version=$(mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
       id: version
       shell: bash
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: radiobrowser4j-${{ steps.version.outputs.version }}.jar
         path: radiobrowser4j/target/radiobrowser4j-${{ steps.version.outputs.version }}.jar
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: radiobrowser4j-${{ steps.version.outputs.version }}-javadoc.jar
         path: radiobrowser4j/target/radiobrowser4j-${{ steps.version.outputs.version }}-javadoc.jar
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: radiobrowser4j-${{ steps.version.outputs.version }}-sources.jar
         path: radiobrowser4j/target/radiobrowser4j-${{ steps.version.outputs.version }}-sources.jar
