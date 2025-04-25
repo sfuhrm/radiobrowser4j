@@ -18,8 +18,11 @@ package de.sfuhrm.radiobrowser4j;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -81,7 +84,15 @@ public class RadioBrowser {
      * @return the joint path.
      * */
     private static String paths(final String...components) {
-        return Arrays.stream(components).collect(Collectors.joining("/"));
+        return Arrays.stream(components).map(component -> escape(component)).collect(Collectors.joining("/"));
+    }
+
+    private static String escape(final String pathComponent) {
+        try {
+            return URLEncoder.encode(pathComponent, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /** Retrieve a generic list containing a value/stationcount mapping.
@@ -377,7 +388,7 @@ public class RadioBrowser {
         Arrays.stream(listParam).forEach(l -> l.apply(requestParams));
 
         String path = paths(
-                "json/stations",
+                "json","stations",
                 searchMode.name().toLowerCase(),
                 searchTerm);
         return rest.postWithListOfStation(path,
@@ -401,7 +412,7 @@ public class RadioBrowser {
             p.apply(requestParams);
             exceptPaging(listParam).stream().forEach(l -> l.apply(requestParams));
 
-            String path = paths("json/stations",
+            String path = paths("json","stations",
                     searchMode.name().toLowerCase(),
                     searchTerm);
 
@@ -421,7 +432,7 @@ public class RadioBrowser {
      * @throws RadioBrowserException if the URL could not be retrieved
      */
     public URL resolveStreamUrl(@NonNull final UUID stationUUID) {
-        String path = paths("json/url",
+        String path = paths("json","url",
                 stationUUID.toString());
 
         try {
@@ -457,7 +468,7 @@ public class RadioBrowser {
      * voting for the station.
      */
     public void voteForStation(@NonNull final UUID stationUUID) {
-        String path = paths("json/vote",
+        String path = paths("json","vote",
                 stationUUID.toString());
         UrlResponse urlResponse = rest.get(path, UrlResponse.class);
         if (!urlResponse.isOk()) {
