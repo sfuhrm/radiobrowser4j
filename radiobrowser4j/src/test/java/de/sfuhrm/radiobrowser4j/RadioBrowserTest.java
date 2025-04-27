@@ -84,7 +84,7 @@ public class RadioBrowserTest {
     }
 
     private static String REAL_URL_TO_USE = "https://de2.api.radio-browser.info/";
-    private static String MOCK_URL_TO_USE = "http://localhost:"+WIREMOCK_PORT;
+    private static String MOCK_URL_TO_USE = "http://localhost:"+WIREMOCK_PORT+"/";
 
     @BeforeAll
     public static void createBrowser() {
