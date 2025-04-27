@@ -21,8 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -84,15 +82,33 @@ public class RadioBrowser {
      * @return the joint path.
      * */
     private static String paths(final String...components) {
-        return Arrays.stream(components).map(component -> escape(component)).collect(Collectors.joining("/"));
+        return Arrays.stream(components).map(component -> escapeUrl(component)).collect(Collectors.joining("/"));
     }
 
-    private static String escape(final String pathComponent) {
-        try {
-            return URLEncoder.encode(pathComponent, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+    private final static String NO_ESCAPE_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~";
+    /** Escape non-alnum characters to fit in an url.
+     * @param pathComponent input string that might contain non-alnum chars.
+     * @return result with escaped non-alnum chars.
+     * */
+    static String escapeUrl(final String pathComponent) {
+        StringBuilder response = new StringBuilder();
+        for (char c : pathComponent.toCharArray()) {
+            if (NO_ESCAPE_CHARS.indexOf(c) != -1) {
+                response.append(c);
+            } else {
+                byte[] bytes;
+                try {
+                    bytes = Character.toString(c).getBytes("UTF-8");
+                    for (byte b : bytes) {
+                        response.append("%");
+                        response.append(String.format("%02x", b));
+                    }
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
+        return response.toString();
     }
 
     /** Retrieve a generic list containing a value/stationcount mapping.
@@ -104,10 +120,16 @@ public class RadioBrowser {
             final String keyFieldName,
             final String subPath) {
 
-        List<Map<String, String>> map =
-                rest.postWithListOfMapOfString(subPath,
-                        Collections.emptyMap());
-        return map.stream()
+        List<Map<String,  String>> maps = StreamSupport.stream(
+                new PagingSpliterator<>(
+                        p -> {
+                            Map<String, String> params = new HashMap<>();
+                            p.apply(params);
+                            return rest.postWithListOfMapOfString(subPath, params);
+                        }, null),
+                false).collect(Collectors.toList());
+
+        return maps.stream()
                 .collect(Collectors.toMap(
                     m -> m.get(keyFieldName),
                     m -> Integer.parseInt(m.get("stationcount")),

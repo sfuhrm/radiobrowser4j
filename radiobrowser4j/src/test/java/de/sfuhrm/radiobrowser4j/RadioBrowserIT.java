@@ -166,4 +166,25 @@ public class RadioBrowserIT {
         expectedName.sort(Date::compareTo);
         assertThat(actualName, Matchers.equalTo(expectedName));
     }
+
+    @Test
+    public void testEscapeUrl() {
+        String actual;
+        String expected;
+
+        actual = RadioBrowser.escapeUrl("stays");
+        assertThat(actual, Matchers.equalTo("stays"));
+
+        actual = RadioBrowser.escapeUrl("");
+        assertThat(actual, Matchers.equalTo(""));
+
+        actual = RadioBrowser.escapeUrl("foo/bar");
+        assertThat(actual, Matchers.equalTo("foo%2fbar"));
+
+        actual = RadioBrowser.escapeUrl("foo\nbar");
+        assertThat(actual, Matchers.equalTo("foo%0abar"));
+
+        actual = RadioBrowser.escapeUrl("fooübar");
+        assertThat(actual, Matchers.equalTo("foo%c3%bcbar"));
+    }
 }
