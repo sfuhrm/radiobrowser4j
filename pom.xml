@@ -4,7 +4,7 @@
 
   <groupId>de.sfuhrm</groupId>
   <artifactId>radiobrowser4j-parent</artifactId>
-  <version>3.1.3</version>
+  <version>3.1.4-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>RadioBrowser4j Parent</name>
@@ -34,7 +34,7 @@
   <scm>
     <url>git@github.com:sfuhrm/radiobrowser4j.git</url>
     <connection>scm:git:git@github.com:sfuhrm/radiobrowser4j.git</connection>
-    <tag>radiobrowser4j-parent-3.1.3</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <properties>
