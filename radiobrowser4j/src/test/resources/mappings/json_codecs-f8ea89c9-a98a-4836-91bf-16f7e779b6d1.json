@@ -1,0 +1,27 @@
+{
+  "id" : "f8ea89c9-a98a-4836-91bf-16f7e779b6d1",
+  "name" : "json_codecs",
+  "request" : {
+    "url" : "/json/codecs",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=128&limit=128",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[]",
+    "headers" : {
+      "Server" : "nginx/1.24.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sun, 27 Apr 2025 19:55:03 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "f8ea89c9-a98a-4836-91bf-16f7e779b6d1",
+  "persistent" : true,
+  "insertionIndex" : 117
+}

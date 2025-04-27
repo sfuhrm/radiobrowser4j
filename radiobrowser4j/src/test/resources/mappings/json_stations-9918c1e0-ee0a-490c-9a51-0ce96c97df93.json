@@ -1,0 +1,27 @@
+{
+  "id" : "9918c1e0-ee0a-490c-9a51-0ce96c97df93",
+  "name" : "json_stations",
+  "request" : {
+    "url" : "/json/stations",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=55168&limit=128",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"changeuuid\":\"fede5e22-4377-413f-bc0d-96b352a2d830\",\"stationuuid\":\"7625289a-5744-4000-bd4a-e8baaf6de01f\",\"serveruuid\":\"02b4b408-8efe-4b90-8159-17bb88f9f848\",\"name\":\"𝔼𝕃 ℕ𝕌𝔼𝕍𝕆 ℤ𝕆𝕃 𝟙𝟘𝟞.𝟟 \",\"url\":\"https://liveaudio.lamusica.com/MIA_WXDJ_icy\",\"url_resolved\":\"\",\"homepage\":\"https://mytuner-radio.com/es/emisora/wxdj-el-zol-1067-fm-419914/\",\"favicon\":\"https://firebasestorage.googleapis.com/v0/b/radiogalaxy-580f4.appspot.com/o/images%2FIMG_20240108_163234165.jpg?alt=media&token=7cec1618-4457-43ee-9dd0-ff6373b9f7bf\",\"tags\":\"variedad\",\"country\":\"The United States Of America\",\"countrycode\":\"US\",\"iso_3166_2\":\"\",\"state\":\"\",\"language\":\"spanish\",\"languagecodes\":\"es\",\"votes\":1,\"lastchangetime\":\"2025-04-27 15:17:06\",\"lastchangetime_iso8601\":\"2025-04-27T15:17:06Z\",\"codec\":\"AAC\",\"bitrate\":320,\"hls\":0,\"lastcheckok\":1,\"lastchecktime\":\"2025-04-27 02:09:12\",\"lastchecktime_iso8601\":\"2025-04-27T02:09:12Z\",\"lastcheckoktime\":\"2025-04-27 02:09:12\",\"lastcheckoktime_iso8601\":\"2025-04-27T02:09:12Z\",\"lastlocalchecktime\":\"2025-04-27 02:09:12\",\"lastlocalchecktime_iso8601\":\"2025-04-27T02:09:12Z\",\"clicktimestamp\":\"\",\"clicktimestamp_iso8601\":null,\"clickcount\":0,\"clicktrend\":0,\"ssl_error\":0,\"geo_lat\":null,\"geo_long\":null,\"geo_distance\":null,\"has_extended_info\":false},{\"changeuuid\":\"622a7891-c30d-43c6-b673-41b1996b32ad\",\"stationuuid\":\"a374af5b-e187-4464-9706-387949baeae4\",\"serveruuid\":\"c3c76e3e-8f66-40f8-871f-398b11afa18f\",\"name\":\"𝔅𝔲𝔷𝔷𝔦𝔫 ℜ𝔞𝔡𝔦𝔬\",\"url\":\"https://stream.zeno.fm/s9owlwmedskuv\",\"url_resolved\":\"https://stream-175.zeno.fm/s9owlwmedskuv?zt=eyJhbGciOiJIUzI1NiJ9.eyJzdHJlYW0iOiJzOW93bHdtZWRza3V2IiwiaG9zdCI6InN0cmVhbS0xNzUuemVuby5mbSIsInRtIjpmYWxzZSwicnR0bCI6NSwianRpIjoiT2ZNdmtGNnNUR3VBTzg2SG5zMTRTUSIsImlhdCI6MTc0NTc1NTc5OSwiZXhwIjoxNzQ1NzU1ODU5fQ.pJCFoJTzyIOTJHATKtqJxvtemAzwHcZ1uaTuHYvhAAM\",\"homepage\":\"https://stream.zeno.fm/s9owlwmedskuv\",\"favicon\":\"\",\"tags\":\"\",\"country\":\"The United States Of America\",\"countrycode\":\"US\",\"iso_3166_2\":\"\",\"state\":\"\",\"language\":\"\",\"languagecodes\":\"\",\"votes\":1,\"lastchangetime\":\"2025-04-22 21:02:27\",\"lastchangetime_iso8601\":\"2025-04-22T21:02:27Z\",\"codec\":\"MP3\",\"bitrate\":0,\"hls\":0,\"lastcheckok\":1,\"lastchecktime\":\"2025-04-27 12:10:13\",\"lastchecktime_iso8601\":\"2025-04-27T12:10:13Z\",\"lastcheckoktime\":\"2025-04-27 12:10:13\",\"lastcheckoktime_iso8601\":\"2025-04-27T12:10:13Z\",\"lastlocalchecktime\":\"2025-04-27 12:10:13\",\"lastlocalchecktime_iso8601\":\"2025-04-27T12:10:13Z\",\"clicktimestamp\":\"2025-04-27 10:15:50\",\"clicktimestamp_iso8601\":\"2025-04-27T10:15:50Z\",\"clickcount\":2,\"clicktrend\":1,\"ssl_error\":0,\"geo_lat\":34.74159891336018,\"geo_long\":-79.89255523348712,\"geo_distance\":null,\"has_extended_info\":false}]",
+    "headers" : {
+      "Server" : "nginx/1.24.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sun, 27 Apr 2025 19:54:57 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "9918c1e0-ee0a-490c-9a51-0ce96c97df93",
+  "persistent" : true,
+  "insertionIndex" : 127
+}

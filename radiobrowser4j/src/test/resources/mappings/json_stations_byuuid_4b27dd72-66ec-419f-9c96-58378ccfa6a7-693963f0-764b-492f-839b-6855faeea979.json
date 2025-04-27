@@ -1,0 +1,29 @@
+{
+  "id" : "693963f0-764b-492f-839b-6855faeea979",
+  "name" : "json_stations_byuuid_4b27dd72-66ec-419f-9c96-58378ccfa6a7",
+  "request" : {
+    "url" : "/json/stations/byuuid/4b27dd72-66ec-419f-9c96-58378ccfa6a7",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=1",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"changeuuid\":\"712609bc-5e3e-4df1-86bd-fdafcb8bb0d3\",\"stationuuid\":\"4b27dd72-66ec-419f-9c96-58378ccfa6a7\",\"serveruuid\":null,\"name\":\"Integration test for radiobrowser4j - ignore\",\"url\":\"https://github.com/sfuhrm/radiobrowser4j\",\"url_resolved\":\"\",\"homepage\":\"https://github.com/sfuhrm/radiobrowser4j\",\"favicon\":\"https://github.com/favicon.ico\",\"tags\":\"\",\"country\":\"Germany\",\"countrycode\":\"DE\",\"iso_3166_2\":null,\"state\":\"\",\"language\":\"\",\"languagecodes\":\"\",\"votes\":0,\"lastchangetime\":\"2025-04-27 19:52:20\",\"lastchangetime_iso8601\":\"2025-04-27T19:52:20Z\",\"codec\":\"\",\"bitrate\":0,\"hls\":0,\"lastcheckok\":1,\"lastchecktime\":\"\",\"lastchecktime_iso8601\":null,\"lastcheckoktime\":\"\",\"lastcheckoktime_iso8601\":null,\"lastlocalchecktime\":\"\",\"lastlocalchecktime_iso8601\":null,\"clicktimestamp\":\"\",\"clicktimestamp_iso8601\":null,\"clickcount\":0,\"clicktrend\":0,\"ssl_error\":0,\"geo_lat\":null,\"geo_long\":null,\"geo_distance\":null,\"has_extended_info\":false}]",
+    "headers" : {
+      "Server" : "nginx/1.24.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sun, 27 Apr 2025 19:52:20 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "693963f0-764b-492f-839b-6855faeea979",
+  "persistent" : true,
+  "scenarioName" : "scenario-6-json-stations-byuuid-4b27dd72-66ec-419f-9c96-58378ccfa6a7",
+  "requiredScenarioState" : "scenario-6-json-stations-byuuid-4b27dd72-66ec-419f-9c96-58378ccfa6a7-2",
+  "insertionIndex" : 561
+}

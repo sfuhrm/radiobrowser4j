@@ -1,0 +1,26 @@
+{
+  "id" : "498bcf48-1a41-4b4f-9838-8e8589d3e7d6",
+  "name" : "json_url_7e994572-00e1-4cd4-99bb-506d368b8e4d",
+  "request" : {
+    "url" : "/json/url/7e994572-00e1-4cd4-99bb-506d368b8e4d",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"ok\":true,\"message\":\"retrieved station url\",\"stationuuid\":\"7e994572-00e1-4cd4-99bb-506d368b8e4d\",\"name\":\"Rock Antenne\",\"url\":\"http://s2-webradio.rockantenne.de/rockantenne/stream/mp3\"}",
+    "headers" : {
+      "Cache-Control" : "no-cache, no-store, must-revalidate",
+      "Server" : "nginx/1.24.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Pragma" : "no-cache",
+      "Expires" : "0",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sun, 27 Apr 2025 19:55:23 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "498bcf48-1a41-4b4f-9838-8e8589d3e7d6",
+  "persistent" : true,
+  "insertionIndex" : 3
+}

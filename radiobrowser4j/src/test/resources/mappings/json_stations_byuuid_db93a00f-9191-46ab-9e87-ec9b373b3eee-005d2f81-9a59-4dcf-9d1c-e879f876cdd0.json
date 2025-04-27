@@ -1,0 +1,27 @@
+{
+  "id" : "005d2f81-9a59-4dcf-9d1c-e879f876cdd0",
+  "name" : "json_stations_byuuid_db93a00f-9191-46ab-9e87-ec9b373b3eee",
+  "request" : {
+    "url" : "/json/stations/byuuid/db93a00f-9191-46ab-9e87-ec9b373b3eee",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=1",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"changeuuid\":\"647c930b-ba03-4723-8807-496e548fea45\",\"stationuuid\":\"db93a00f-9191-46ab-9e87-ec9b373b3eee\",\"serveruuid\":\"dfcb0258-c60e-4b6a-9e3b-c53839092fa4\",\"name\":\"\\tArrow Classic Rock\",\"url\":\"http://stream.gal.io/arrow\",\"url_resolved\":\"http://stream.gal.io/arrow\",\"homepage\":\"https://www.arrow.nl/\",\"favicon\":\"https://www.arrow.nl/wp-content/uploads/2020/08/logo.png\",\"tags\":\"\",\"country\":\"The Netherlands\",\"countrycode\":\"NL\",\"iso_3166_2\":\"\",\"state\":\"\",\"language\":\"\",\"languagecodes\":\"\",\"votes\":164,\"lastchangetime\":\"2025-04-22 21:02:29\",\"lastchangetime_iso8601\":\"2025-04-22T21:02:29Z\",\"codec\":\"MP3\",\"bitrate\":192,\"hls\":0,\"lastcheckok\":1,\"lastchecktime\":\"2025-04-27 15:17:31\",\"lastchecktime_iso8601\":\"2025-04-27T15:17:31Z\",\"lastcheckoktime\":\"2025-04-27 15:17:31\",\"lastcheckoktime_iso8601\":\"2025-04-27T15:17:31Z\",\"lastlocalchecktime\":\"2025-04-27 04:15:44\",\"lastlocalchecktime_iso8601\":\"2025-04-27T04:15:44Z\",\"clicktimestamp\":\"2025-04-27 19:08:37\",\"clicktimestamp_iso8601\":\"2025-04-27T19:08:37Z\",\"clickcount\":94,\"clicktrend\":-5,\"ssl_error\":0,\"geo_lat\":52.07963259545092,\"geo_long\":4.303894042968751,\"geo_distance\":null,\"has_extended_info\":false}]",
+    "headers" : {
+      "Server" : "nginx/1.24.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sun, 27 Apr 2025 19:52:14 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "005d2f81-9a59-4dcf-9d1c-e879f876cdd0",
+  "persistent" : true,
+  "insertionIndex" : 571
+}

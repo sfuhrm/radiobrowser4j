@@ -83,6 +83,9 @@ public class RadioBrowserTest {
         }
     }
 
+    private static String REAL_URL_TO_USE = "https://de2.api.radio-browser.info/";
+    private static String MOCK_URL_TO_USE = "http://localhost:"+WIREMOCK_PORT;
+
     @BeforeAll
     public static void createBrowser() {
         WireMockConfiguration wireMockConfiguration = new WireMockConfiguration();
@@ -93,13 +96,13 @@ public class RadioBrowserTest {
 
         if (RECORDING) {
             // Wiremock does not support recording of the last slash
-            String originalUrl = RadioBrowser.DEFAULT_API_URL;
+            String originalUrl = REAL_URL_TO_USE;
             int lastSlash = originalUrl.lastIndexOf('/');
             String urlWithoutSlash = originalUrl.substring(0, lastSlash);
             wireMockClient.startStubRecording(urlWithoutSlash);
         }
 
-        browser = new RadioBrowser(ConnectionParams.builder().apiUrl(API_URL).timeout(20000).userAgent(USER_AGENT).build());
+        browser = new RadioBrowser(ConnectionParams.builder().apiUrl(MOCK_URL_TO_USE).timeout(20000).userAgent(USER_AGENT).build());
     }
 
     @AfterAll
@@ -334,10 +337,10 @@ public class RadioBrowserTest {
 
     @Test
     public void resolveStreamUrl() throws MalformedURLException {
-        List<Station> stations = browser.listStationsBy(FIRST_FIVE, SearchMode.BYNAME, "synthradio");
+        List<Station> stations = browser.listStationsBy(FIRST_FIVE, SearchMode.BYNAME, "Rock Antenne");
         URL response = browser.resolveStreamUrl(stations.get(0).getStationUUID());
         assertThat(response, notNullValue());
-        assertThat(response, is(new URL("http://77.51.212.205:8005/live192")));
+        assertThat(response, is(new URL("http://s2-webradio.rockantenne.de/rockantenne/stream/mp3")));
     }
 
     @Test

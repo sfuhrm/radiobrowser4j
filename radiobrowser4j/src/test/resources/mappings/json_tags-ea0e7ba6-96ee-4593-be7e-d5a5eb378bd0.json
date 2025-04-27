@@ -1,0 +1,27 @@
+{
+  "id" : "ea0e7ba6-96ee-4593-be7e-d5a5eb378bd0",
+  "name" : "json_tags",
+  "request" : {
+    "url" : "/json/tags",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=11136&limit=128",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[]",
+    "headers" : {
+      "Server" : "nginx/1.24.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sun, 27 Apr 2025 19:55:19 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "ea0e7ba6-96ee-4593-be7e-d5a5eb378bd0",
+  "persistent" : true,
+  "insertionIndex" : 8
+}

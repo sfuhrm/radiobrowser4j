@@ -1,0 +1,30 @@
+{
+  "id" : "885c212c-09e8-462f-9610-36a4314b6321",
+  "name" : "json_countries",
+  "request" : {
+    "url" : "/json/countries",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=256&limit=128",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[]",
+    "headers" : {
+      "Server" : "nginx/1.24.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sun, 27 Apr 2025 19:55:01 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "885c212c-09e8-462f-9610-36a4314b6321",
+  "persistent" : true,
+  "scenarioName" : "scenario-1-json-countries",
+  "requiredScenarioState" : "Started",
+  "newScenarioState" : "scenario-1-json-countries-2",
+  "insertionIndex" : 119
+}

@@ -1,0 +1,27 @@
+{
+  "id" : "64f685ab-e0f9-4fd8-a975-747110ac0a68",
+  "name" : "json_stations_byname_synthradio",
+  "request" : {
+    "url" : "/json/stations/byname/synthradio",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=0&limit=5",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[{\"changeuuid\":\"aef51eaf-31f6-45d6-8e10-57c548fc1677\",\"stationuuid\":\"96394377-0601-11e8-ae97-52543be04c81\",\"serveruuid\":\"3f372d4c-7618-4e8d-8088-e6faa267941e\",\"name\":\"Synthradio\",\"url\":\"http://synth-radio.ru/synthradio192.m3u\",\"url_resolved\":\"\",\"homepage\":\"http://synth-radio.ru/\",\"favicon\":\"\",\"tags\":\"new wave,synth,synthesizer,synthwave\",\"country\":\"The Russian Federation\",\"countrycode\":\"RU\",\"iso_3166_2\":\"\",\"state\":\"\",\"language\":\"english\",\"languagecodes\":\"en\",\"votes\":1232,\"lastchangetime\":\"2025-04-27 15:17:03\",\"lastchangetime_iso8601\":\"2025-04-27T15:17:03Z\",\"codec\":\"MP3\",\"bitrate\":192,\"hls\":0,\"lastcheckok\":1,\"lastchecktime\":\"2025-04-27 10:45:02\",\"lastchecktime_iso8601\":\"2025-04-27T10:45:02Z\",\"lastcheckoktime\":\"2025-04-27 10:45:02\",\"lastcheckoktime_iso8601\":\"2025-04-27T10:45:02Z\",\"lastlocalchecktime\":\"2025-04-27 09:22:07\",\"lastlocalchecktime_iso8601\":\"2025-04-27T09:22:07Z\",\"clicktimestamp\":\"2025-04-27 19:40:48\",\"clicktimestamp_iso8601\":\"2025-04-27T19:40:48Z\",\"clickcount\":5,\"clicktrend\":5,\"ssl_error\":0,\"geo_lat\":null,\"geo_long\":null,\"geo_distance\":null,\"has_extended_info\":false}]",
+    "headers" : {
+      "Server" : "nginx/1.24.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sun, 27 Apr 2025 19:52:22 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "64f685ab-e0f9-4fd8-a975-747110ac0a68",
+  "persistent" : true,
+  "insertionIndex" : 559
+}

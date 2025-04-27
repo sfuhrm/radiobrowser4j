@@ -1,0 +1,27 @@
+{
+  "id" : "fd7cd08f-f4a6-411c-8fdb-1cff5f822176",
+  "name" : "json_stations_search",
+  "request" : {
+    "url" : "/json/stations/search",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=128&countrycode=DE&limit=128&state=Hamburg",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[]",
+    "headers" : {
+      "Server" : "nginx/1.24.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sun, 27 Apr 2025 19:55:09 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "fd7cd08f-f4a6-411c-8fdb-1cff5f822176",
+  "persistent" : true,
+  "insertionIndex" : 106
+}

@@ -1,0 +1,27 @@
+{
+  "id" : "5f97a596-c7eb-43cc-92a4-a2b8098a3146",
+  "name" : "json_languages",
+  "request" : {
+    "url" : "/json/languages",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalTo" : "offset=640&limit=128",
+      "caseInsensitive" : false
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "[]",
+    "headers" : {
+      "Server" : "nginx/1.24.0 (Ubuntu)",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Methods" : "GET,POST",
+      "Access-Control-Allow-Headers" : "origin, x-requested-with, content-type, User-Agent",
+      "Date" : "Sun, 27 Apr 2025 19:55:10 GMT",
+      "Content-Type" : "application/json"
+    }
+  },
+  "uuid" : "5f97a596-c7eb-43cc-92a4-a2b8098a3146",
+  "persistent" : true,
+  "insertionIndex" : 100
+}
