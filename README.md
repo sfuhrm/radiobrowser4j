@@ -78,7 +78,7 @@ documentation to get the full concepts of the API.
 The library was extracted from an internet radio player and recorder program
 in Java, [radiorecorder](https://github.com/sfuhrm/radiorecorder).
 You can take a look at real-life usage patterns
-[there](https://github.com/sfuhrm/radiorecorder/blob/master/src/main/java/de/sfuhrm/radiorecorder/Main.java).
+[there](https://github.com/sfuhrm/radiorecorder/blob/master/radiorecorder/src/main/java/de/sfuhrm/radiorecorder/Main.java).
 
 ### How it is tested
 
