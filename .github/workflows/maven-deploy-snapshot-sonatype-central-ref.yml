@@ -1,12 +1,12 @@
-name: Deploy Snapshot SonaType OSS
+name: Deploy Snapshot SonaType Central
 
 on:
   push:
     branches: [ master ]
 
 jobs:
-  deploy-to-sonatype-oss:
-    uses: sfuhrm/github_workflows/.github/workflows/maven-deploy-snapshot-sonatype-oss.yml@main
+  deploy-to-sonatype-central:
+    uses: sfuhrm/github_workflows/.github/workflows/maven-deploy-snapshot-sonatype-central.yml@main
     with:
       environment: deploy
     secrets:
