@@ -3,6 +3,7 @@ name: Deploy Snapshot SonaType Central
 on:
   push:
     branches: [ master ]
+  workflow_dispatch:       # manual start via UI
 
 jobs:
   deploy-to-sonatype-central:
