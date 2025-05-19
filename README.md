@@ -27,7 +27,7 @@ For Maven, you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>3.1.0</version>
+    <version>3.2.0</version>
 </dependency>
 ```
 
@@ -36,7 +36,7 @@ For Maven, you need this dependency:
 The library works well with Android projects simply by referencing the library within the build.gradle
 
 ```gradle
-    implementation 'de.sfuhrm:radiobrowser4j:3.1.0'
+    implementation 'de.sfuhrm:radiobrowser4j:3.2.0'
 ```
 
 If Proguard or R8 code shrinking and obfuscation is being used, then the following entries should be added to the Proguard configuration file (usually proguard-rules.pro):
