@@ -55,14 +55,15 @@ by creating one instance and using it
 
 ```java
 // discover endpoint
+String myAgent = "www.superradioplayer.com";
 Optional<String> endpoint = new EndpointDiscovery(myAgent).discover();
 
 // build instance
 RadioBrowser radioBrowser = new RadioBrowser(
-    ConnectionParams.builder().apiUrl(endpoint.get()).userAgent("Demo agent/1.0").timeout(5000).build());
+    ConnectionParams.builder().apiUrl(endpoint.get()).userAgent(myAgent).timeout(5000).build());
 
 // list stations
-radioBrowser.listStations(ListParameter.create().order(FieldName.name))
+radioBrowser.listStations(ListParameter.create().order(FieldName.NAME))
     .limit(64)
     .forEach(s -> System.out.printf("%s: %s%n",
         s.getName(),
