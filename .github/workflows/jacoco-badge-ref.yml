@@ -1,0 +1,19 @@
+---
+name: Jacoco Coverage and Badge Generator
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  call-workflow-passing-data:
+    uses: sfuhrm/github_workflows/.github/workflows/jacoco-badge.yml@main
+    with:
+      java_version: 21
+      artifact_name: jacoco-report
+      artifact_path: ./radiobrowser4j/target/site/jacoco/
+      jacoco_csv_path: >
+        ./radiobrowser4j/target/site/jacoco/jacoco.csv
+    
