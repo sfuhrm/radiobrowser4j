@@ -1,6 +1,6 @@
 RadioBrowser4j 
 ===================
-[![Java CI](https://github.com/sfuhrm/radiobrowser4j/actions/workflows/maven.yml/badge.svg)](https://github.com/sfuhrm/radiobrowser4j/actions/workflows/maven.yml)
+[![Java CI](https://github.com/sfuhrm/radiobrowser4j/actions/workflows/maven-ref.yml/badge.svg)](https://github.com/sfuhrm/radiobrowser4j/actions/workflows/maven-ref.yml)
 [![Java Integration](https://github.com/sfuhrm/radiobrowser4j/actions/workflows/maven-integration.yml/badge.svg)](https://github.com/sfuhrm/radiobrowser4j/actions/workflows/maven-integration.yml)
 [![Coverage](https://raw.githubusercontent.com/sfuhrm/radiobrowser4j/gh-pages/jacoco.svg)]() 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/radiobrowser4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.sfuhrm/radiobrowser4j)
