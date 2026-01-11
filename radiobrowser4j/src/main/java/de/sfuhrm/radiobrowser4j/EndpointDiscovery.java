@@ -47,6 +47,11 @@ public class EndpointDiscovery {
     /** The optional proxy password. */
     private final String proxyPassword;
 
+
+    /** Discovery timeout in millis. */
+    private final int timeoutMillis;
+
+
     /** Helper for resolving DNS addresses.
      * @see #DNS_API_ADDRESS
      * */
@@ -81,7 +86,8 @@ public class EndpointDiscovery {
                 myProxyUri,
                 myProxyUser,
                 myProxyPassword,
-                new InetAddressHelper());
+                new InetAddressHelper(),
+                DEFAULT_TIMEOUT_MILLIS);
     }
 
     /** Constructs a new instance.
@@ -92,17 +98,34 @@ public class EndpointDiscovery {
      * @param myProxyPassword the optional password
      *                        to authenticate with to access the proxy.
      * @param myInetAddressHelper the internet address resolution helper.
+     * @param myTimoutMillis timeout for discovery in millis.
      * */
     EndpointDiscovery(@NonNull final String myUserAgent,
                              final String myProxyUri,
                              final String myProxyUser,
                              final String myProxyPassword,
-                             final InetAddressHelper myInetAddressHelper) {
+                             final InetAddressHelper myInetAddressHelper,
+                             final int myTimoutMillis) {
         this.userAgent = myUserAgent;
         this.proxyUri = myProxyUri;
         this.proxyUser = myProxyUser;
         this.proxyPassword = myProxyPassword;
         this.inetAddressHelper = myInetAddressHelper;
+        this.timeoutMillis = myTimoutMillis;
+    }
+
+    /** Returns a new instance with the given timeout.
+     * @param myTimeoutMillis timeout for discovery in milliseconds.
+     * */
+    public EndpointDiscovery withTimeout(int myTimeoutMillis) {
+        return new EndpointDiscovery(
+                userAgent,
+                proxyUri,
+                proxyUser,
+                proxyPassword,
+                inetAddressHelper,
+                myTimeoutMillis
+        );
     }
 
     /** Get the URLs of all API endpoints that are returned by the DNS service.
@@ -157,7 +180,7 @@ public class EndpointDiscovery {
                     RadioBrowser radioBrowser = new RadioBrowser(
                             ConnectionParams.builder()
                                     .apiUrl(apiUrl)
-                                    .timeout(DEFAULT_TIMEOUT_MILLIS)
+                                    .timeout(timeoutMillis)
                                     .userAgent(userAgent)
                                     .proxyUri(proxyUri)
                                     .proxyUser(proxyUser)
@@ -177,7 +200,7 @@ public class EndpointDiscovery {
                 try {
                     DiscoveryResult discoveryResult =
                             future.get(
-                                    DEFAULT_TIMEOUT_MILLIS,
+                                    timeoutMillis,
                                     TimeUnit.MILLISECONDS);
                     discoveryResults.add(discoveryResult);
                 } catch (ExecutionException

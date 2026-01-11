@@ -72,7 +72,8 @@ public class EndpointDiscoveryTest {
     public void setUp() {
         endpointDiscovery = new EndpointDiscovery("my useragent",
                 null, null, null,
-                inetAddressHelper);
+                inetAddressHelper,
+                EndpointDiscovery.DEFAULT_TIMEOUT_MILLIS);
         endpointDiscovery.setExecutorServiceProducer(() -> executorService);
     }
 
