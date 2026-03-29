@@ -1,6 +1,6 @@
 # Getting Started with RadioBrowser4j
 
-This `GETTINGSTARTED.md` provides a quick introduction to the RadioBrowser4j API and shows the steps for both simple and complex requests.
+This `GETTING_STARTED.md` provides a quick introduction to the RadioBrowser4j API and shows the steps for both simple and complex requests.
 
 ## 1. Add dependency
 
