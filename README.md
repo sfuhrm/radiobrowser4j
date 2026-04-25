@@ -17,6 +17,9 @@ internet radio station URLs, streams and meta information.
 
 ## How to use
 
+A detailed introduction on how to use the library can be found
+in [Radiobrowser4j - A Java API for Internet radio stations](https://sfuhrm.de/open-source-java/radiobrowser4j-a-java-api-for-internet-radio-stations/).
+
 ### Maven for JDK targets
 
 First step is to include the dependency in your Maven or
