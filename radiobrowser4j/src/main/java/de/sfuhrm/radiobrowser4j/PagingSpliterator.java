@@ -97,7 +97,7 @@ class PagingSpliterator<T> extends Spliterators.AbstractSpliterator<T> {
             currentData = fetchPage.apply(physicalPage);
             log.debug("Elements in loaded page: {}", currentData.size());
             currentDataIndex = 0;
-            if (currentData.isEmpty()) {
+            if (currentData.size() < physicalPage.getLimit()) {
                 endOfList = true;
             }
         }

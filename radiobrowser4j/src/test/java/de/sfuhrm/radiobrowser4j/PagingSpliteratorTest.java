@@ -15,8 +15,10 @@
 */
 package de.sfuhrm.radiobrowser4j;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
@@ -126,5 +128,24 @@ public class PagingSpliteratorTest {
                 .collect(Collectors.toList());
 
         assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void testPagingSpliteratorPartialPageStopsWithoutExtraFetch() {
+        AtomicInteger fetchCount = new AtomicInteger(0);
+        List<Integer> sourceData = Arrays.asList(1, 2, 3); // fewer than FETCH_SIZE_DEFAULT (128)
+
+        PagingSpliterator<Integer> spliterator = new PagingSpliterator<>(
+                paging -> {
+                    fetchCount.incrementAndGet();
+                    return paging.getOffset() == 0 ? sourceData : Collections.emptyList();
+                },
+                null
+        );
+
+        List<Integer> actual = StreamSupport.stream(spliterator, false).collect(Collectors.toList());
+
+        assertThat(actual, is(sourceData));
+        assertThat("partial page should not trigger a second fetch", fetchCount.get(), is(1));
     }
 }
