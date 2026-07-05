@@ -30,7 +30,7 @@ For Maven, you need this dependency:
 <dependency>
     <groupId>de.sfuhrm</groupId>
     <artifactId>radiobrowser4j</artifactId>
-    <version>3.2.0</version>
+    <version>3.4.0</version>
 </dependency>
 ```
 
@@ -39,7 +39,7 @@ For Maven, you need this dependency:
 The library works well with Android projects simply by referencing the library within the build.gradle
 
 ```gradle
-    implementation 'de.sfuhrm:radiobrowser4j:3.2.0'
+    implementation 'de.sfuhrm:radiobrowser4j:3.4.0'
 ```
 
 If Proguard or R8 code shrinking and obfuscation is being used, then the following entries should be added to the Proguard configuration file (usually proguard-rules.pro):
@@ -90,113 +90,9 @@ The API is tested using the [WireMock](http://wiremock.org/) REST testing
 framework. Mocked web requests/responses are
 located in the test resources.
 
-## Version history
-
-* v3.1.0
-  - Improvement: Provide `listCountryCodes()` call as a symmetric replacement for now deprecated `listCountries()`. #123 
-  - Deprecation: Deprecated `listCountries()` since the HTTP API has deprecated all country fields in favor of ISO 3166-1 country codes. #123 
-  - Improvement: Provide new `List<>` returning call for advanced search. #126 
-  - Bugfix: Use view boundary on `Stream<>` returning calls. The stream will page through the view. #126 
-  - Minor library updates (slf4j, hamcrest, lombok, wiremock, etc).
-  - Minor Maven plugin updates.
-* v3.0.3
-  - Minor updates of dependencies and plugins
-* v3.0.1
-  - Minor updates of dependencies and plugins
-* v3.0.0
-  - Replacement of JAX-RS / Jersey with more lightweight URLConnection / GSon.
-    Will make Android usage work out of the box.
-  - Removed deprecations (Station country, deprecated constructors).
-  - Introduced new ConnectionParams object.
-  - Introduced retry mechnism (see ConnectionParams).
-* v2.6.0
-  - Refactorings for reducing code duplication.
-  - Major refactorings to limit the JAX-RS / Jersey exposure of the code to a minimum of classes. This is a preparation for possible alternative implementations (see issue #14 ).
-  - Freed the Station class from Jackson annotations (replacing with a mixin class).
-  - Migrate from JMockit to Mockito since JMockit is conflicting in Java 21.
-  - Building with JDK 21 now (still targeting JDK 8) since Mockito is needing this.
-  - Migrate JUnit 4 to JUnit 5. Welcome to 2016.
-* v2.5.3
-  - Update slf4j dependency
-  - Update log4j2 dependency
-  - Update multiple build plugins
-* v2.5.2
-  - Add deprecation warnings for countrycode and countrycodeexact fields as suggested in the upstream API. Countrycode should be used instead which is standardized.
-  - Update of some plugins.
-* v2.5.1
-  - Removed now unnecessary JAXB dependency (was needed by Jersey before)
-  - Updated Jersey dependency from 3.0.8 -> 3.0.11
-  - Changed resource closing to try-with-resources, reducing code 
-* v2.5.0
-  - Added new call listStationsWithAdvancedSearch for creating more complex queries to the API.
-  - Added Station geoLatitude and geoLongitude.
-  - Added the getServerStats call.
-  - Fix: Mapping of now necessary CountryCode was broken.
-  - Fix: Deprecation of the RadioBrowser.DEFAULT_API_URL and the related constructor. The cluster concept of radiobrowser is to rely on DNS roundrobin and probing. The German RadioBrowser.DEFAULT_API_URL returned HTTP 503 today which sucks.
-  - Fix: "Improvable stations" are gone in the REST API, they are now deprecated and return empty lists/streams.
-  - Refactored code to use a common ParameterProvider for mapping parameters to Maps.
-  - Re-created offline wiremock tests
-  - Integration test or real-world tests with real radiobrowser API
-* v2.4.0
-  - Default to GZIP encoding if supported by the server (#27).
-* v2.3.1:
-  - Bugfix when dealing with duplicate data  (fixes #15)
-  - Add special info for  Android setup (obsolete)
-* v2.2.5:
-  - Update slf4j dependency to 2.0.7.
-  - Update lombok dependency to 1.8.26.
-  - Update log4j dependency to 2.20.0.
-* v2.2.4:
-  - Introduce RestClientFactory to deal at one place with Proxy config.
-  - Update Jersey dependency to 3.0.8.
-  - Update lombok dependency to 1.8.24.
-  - Update log4j dependency to 2.19.0.
-  - Update slf4j dependency to 2.0.3.
-* v2.2.3:
-  - Add proxy support for EndpointDiscovery also.
-  - Update Jersey dependency to 3.0.4.
-  - Fix multiple typos, rework some Javadoc.
-* v2.2.2:
-  - Support for HTTP proxy usage.
-* v2.2.1:
-  - Update log4j2 test dependency.
-* v2.2.0:
-  - Update multiple dependencies.
-* v2.1.0:
-  - Switch Jersey JAX-RS 2.3.3 -> 3.0.1.
-  - Updated lombok/junit/log4j2 dependencies.
-* v2.0.5:
-  - Android support!
-* v2.0.4:
-  - Updated dependencies.
-* v2.0.3:
-  - Updated dependencies.
-* v2.0.2:
-  - Minor code improvements.
-  - Updated dependencies.
-* v2.0.0:
-  - Support new radiobrowser API.
-  - Clients will have to do minor changes to calling the library.
-* v1.3.0:
-  - Use new API DNS names.
-  - Update maven plugins / dependencies.
-* v1.2.1:
-  - Made building with JDK 11 possible.
-  - JDK 10/11 building in TravisCI.
-  - Updated dependencies.
-* v1.2.0:
-  - Minor code improvements.
-  - Updated many dependencies, for example Jersey JAX-RS.
-* v1.1.0:
-  - Added stream API calls.
-  - Added tags list version to Station.
-  - ListParameter for list order control.
-  - editStation call in RadioBrowser.
-* v1.0.0: First maven release.
-
 ## License
 
-Copyright 2017-2024 Stephan Fuhrmann
+Copyright 2017-2026 Stephan Fuhrmann
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
